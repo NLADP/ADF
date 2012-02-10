@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adf.Base</RootNamespace>
+    <AssemblyName>Adf.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Output\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\ADF.Core\Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authorization\Actions.cs" />
+    <Compile Include="Authorization\AllAuthorizationProvider.cs" />
+    <Compile Include="Authorization\NoAuthorizationProvider.cs" />
+    <Compile Include="Data\CompositeState.cs" />
+    <Compile Include="Data\DictionaryQueryHandler.cs" />
+    <Compile Include="Data\DictionaryState.cs" />
+    <Compile Include="Data\InvalidColumnException.cs" />
+    <Compile Include="Data\QueryExtensions.cs" />
+    <Compile Include="Data\SqlProvider.cs" />
+    <Compile Include="Domain\CompositionAttribute.cs" />
+    <Compile Include="Domain\DefaultPropertyParser.cs" />
+    <Compile Include="Domain\DescriptorPropertyParser.cs" />
+    <Compile Include="Domain\DomainCollection.cs" />
+    <Compile Include="Domain\DomainCollectionExtensions.cs" />
+    <Compile Include="Domain\DomainObject.cs" />
+    <Compile Include="Domain\DomainObjectExtensions.cs" />
+    <Compile Include="Domain\DomainObjectPropertyParser.cs" />
+    <Compile Include="Domain\EnumPropertyParser.cs" />
+    <Compile Include="Domain\GuidPropertyParser.cs" />
+    <Compile Include="Domain\ListSorter.cs" />
+    <Compile Include="Domain\Money.cs" />
+    <Compile Include="Domain\NullablePropertyParser.cs" />
+    <Compile Include="Domain\ObjectScope.cs" />
+    <Compile Include="Domain\ValueObjectPropertyParser.cs" />
+    <Compile Include="Encryption\EncryptionExtensions.cs" />
+    <Compile Include="Encryption\MD5EncryptionProvider.cs" />
+    <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
+    <Compile Include="Extensions\ValueObjectExtensions.cs" />
+    <Compile Include="Formatting\FormatHelper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Identity\GuidProvider.cs" />
+    <Compile Include="Identity\IntIdProvider.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\EventLogProvider.cs" />
+    <Compile Include="Logging\FlatFileLogProvider.cs" />
+    <Compile Include="Mail\DummyMailProvider.cs" />
+    <Compile Include="Mail\SmtpMailProvider.cs" />
+    <Compile Include="Messaging\CsvMessageHandler.cs" />
+    <Compile Include="Messaging\FixedLengthMessageHandler.cs" />
+    <Compile Include="Messaging\MessagingException.cs" />
+    <Compile Include="Messaging\MessagingExtensions.cs" />
+    <Compile Include="Messaging\XmlMessageDefinitionProvider.cs" />
+    <Compile Include="Messaging\XmlMessageHandler.cs" />
+    <Compile Include="Panels\PanelExtensions.cs" />
+    <Compile Include="Panels\PanelItemExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\AdfQuery.cs" />
+    <Compile Include="Query\Expression.cs" />
+    <Compile Include="Query\ExpressionExtensions.cs" />
+    <Compile Include="Query\GroupByExtensions.cs" />
+    <Compile Include="Query\InExtensions.cs" />
+    <Compile Include="Query\IsNotEqualOrEmptyExtensions.cs" />
+    <Compile Include="Query\Join.cs" />
+    <Compile Include="Query\JoinExtensions.cs" />
+    <Compile Include="Query\IsSmallerExtensions.cs" />
+    <Compile Include="Query\IsEqualOrSmallerExtensions.cs" />
+    <Compile Include="Query\IsEqualOrLargerExtensions.cs" />
+    <Compile Include="Query\IsLargerExtensions.cs" />
+    <Compile Include="Query\LikeExtensions.cs" />
+    <Compile Include="Query\FromExtensions.cs" />
+    <Compile Include="Query\OrderBy.cs" />
+    <Compile Include="Query\OrderByExtensions.cs" />
+    <Compile Include="Query\QueryTypeExtension.cs" />
+    <Compile Include="Query\SqlServerQueryParser.cs" />
+    <Compile Include="Query\IsNotEqualExtensions.cs" />
+    <Compile Include="Query\IsEqualExtensions.cs" />
+    <Compile Include="Query\Where.cs" />
+    <Compile Include="Query\PredicateExtensions.cs" />
+    <Compile Include="Resources\ResourcesFileResourceProvider.cs" />
+    <Compile Include="Resources\StateResourceProvider.cs" />
+    <Compile Include="State\ConfigStateProvider.cs" />
+    <Compile Include="State\NullStateProvider.cs" />
+    <Compile Include="State\SimpleStateProvider.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskExecutionExtensions.cs" />
+    <Compile Include="Tasks\TaskNotFoundException.cs" />
+    <Compile Include="Tasks\TaskViewExtensions.cs" />
+    <Compile Include="Tasks\TaskProvider.cs" />
+    <Compile Include="Types\EnumTypeConverter.cs" />
+    <Compile Include="Types\ValueObjectTypeConverter.cs" />
+    <Compile Include="Types\NullableTypeConverter.cs" />
+    <Compile Include="Types\TypeExtensions.cs" />
+    <Compile Include="Validation\AttributeValidationPolicy.cs" />
+    <Compile Include="Validation\BusinessRuleValidationContext.cs" />
+    <Compile Include="Validation\BusinessRuleValidationPolicy.cs" />
+    <Compile Include="Validation\ChildValidationPolicy.cs" />
+    <Compile Include="Validation\InRangeAttribute.cs" />
+    <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
+    <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
+    <Compile Include="Validation\MaxLengthAttribute.cs" />
+    <Compile Include="Validation\MinLengthAttribute.cs" />
+    <Compile Include="Validation\NonEmptyAttribute.cs" />
+    <Compile Include="Validation\NotInPastAttribute.cs" />
+    <Compile Include="Validation\PropertyInfoExtensions.cs" />
+    <Compile Include="Validation\RegexAttribute.cs" />
+    <Compile Include="Validation\ValidationResultExtensions.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+      <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
+      <Name>ADF.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="ADF.snk" />
+    <None Include="Messaging\MessageDefinitionSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRunConfiguration name="Local Test Run" id="b1f6b76c-22bf-4292-ab5a-a1fdf2a66833" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Description>This is a default test run configuration for a local test run.</Description>
+  <CodeCoverage enabled="true" keyFile="ADF.snk">
+    <Regular>
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Business.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Business.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Authorization.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Authorization.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Core.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Core.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Data.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Data.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Data.NHibernate.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Data.NHibernate.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.Odbc.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.Odbc.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.OleDB.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.OleDB.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.SQLServer.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Database.SQLServer.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Logging.Custom.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Logging.Custom.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Logging.EntLib.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Logging.EntLib.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\ADF.Logging.Log4Net.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\ADF.Logging.Log4Net.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Process.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Process.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Web.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Web.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Win.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Win.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Win.Controls.dll" pdbFile="C:\CAF\AcceleratedDeliveryPlatform\Bin\Output\Adf.Win.Controls.pdb" instrumentInPlace="true" />
+    </Regular>
+  </CodeCoverage>
+  <Timeouts runTimeout="1800000" testTimeout="300000" />
+  <Deployment>
+    <DeploymentItem filename="TestProjects\ADF.Logging.Log4Net.Tests\log4net.config" />
+    <DeploymentItem filename="TestProjects\ADF.Database.OleDB.Tests\Database\OleDBDatabase.mdf" />
+    <DeploymentItem filename="TestProjects\ADF.Database.ODBC.Tests\Database\OdbcDatabase.mdf" />
+    <DeploymentItem filename="TestProjects\ADF.Data.Tests\Classes\Database.mdf" />
+    <DeploymentItem filename="TestProjects\ADF.Core.Tests\Classes\Resource1.resx" />
+  </Deployment>
+  <NamingScheme baseName="ADF" useDefault="false" />
+  <TestTypeSpecific />
+</TestRunConfiguration>

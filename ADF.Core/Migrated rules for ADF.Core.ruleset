@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Migrated rules for ADF.Core.ruleset" Description="This rule set was created from the CodeAnalysisRules property for the &quot;Debug (Any CPU)&quot; configuration in project &quot;D:\rboeije\Documents\Projects\TFSADC\CAF\AcceleratedDeliveryPlatform\ADF\ADF.Core\ADF.Core.csproj&quot;." ToolsVersion="10.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1002" Action="None" />
+    <Rule Id="CA1004" Action="None" />
+    <Rule Id="CA1006" Action="None" />
+    <Rule Id="CA1011" Action="None" />
+    <Rule Id="CA1020" Action="None" />
+    <Rule Id="CA1021" Action="None" />
+    <Rule Id="CA1024" Action="None" />
+    <Rule Id="CA1026" Action="None" />
+    <Rule Id="CA1032" Action="None" />
+    <Rule Id="CA1051" Action="None" />
+    <Rule Id="CA1056" Action="None" />
+    <Rule Id="CA1062" Action="None" />
+    <Rule Id="CA1065" Action="None" />
+    <Rule Id="CA1303" Action="None" />
+    <Rule Id="CA1304" Action="None" />
+    <Rule Id="CA1305" Action="None" />
+    <Rule Id="CA1307" Action="None" />
+    <Rule Id="CA1702" Action="None" />
+    <Rule Id="CA1703" Action="None" />
+    <Rule Id="CA1704" Action="None" />
+    <Rule Id="CA1709" Action="None" />
+    <Rule Id="CA1710" Action="None" />
+    <Rule Id="CA1711" Action="None" />
+    <Rule Id="CA1715" Action="None" />
+    <Rule Id="CA1716" Action="None" />
+    <Rule Id="CA1719" Action="None" />
+    <Rule Id="CA1720" Action="None" />
+    <Rule Id="CA1721" Action="None" />
+    <Rule Id="CA1726" Action="None" />
+    <Rule Id="CA1800" Action="None" />
+    <Rule Id="CA1812" Action="None" />
+    <Rule Id="CA1822" Action="None" />
+    <Rule Id="CA2000" Action="None" />
+    <Rule Id="CA2100" Action="None" />
+    <Rule Id="CA2104" Action="None" />
+    <Rule Id="CA2204" Action="None" />
+    <Rule Id="CA2227" Action="None" />
+  </Rules>
+</RuleSet>

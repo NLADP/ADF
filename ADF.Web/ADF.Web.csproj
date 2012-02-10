@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A7D55288-375A-4EF9-803B-25916D8176DF}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Adf.Web</AssemblyName>
+    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Adf.Web</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>true</SignAssembly>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\Bin\Output\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>..\..\Bin\Output\Adf.Web.XML</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>3</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <CodeAnalysisRuleSet>Migrated rules for ADF.Web.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Bin\Output\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\ADF.Core\Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
+    <OutputPath>bin\Documentation\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>..\..\Bin\Output\Adf.Web.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <FileAlignment>4096</FileAlignment>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\Reference\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
+      <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
+      <Name>ADF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Business\ADF.Business.csproj">
+      <Name>ADF.Business</Name>
+      <Project>{DAF88DC8-041E-4424-85F7-6ED3D24816F5}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+      <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
+      <Name>ADF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Data\ADF.Data.csproj">
+      <Project>{5B241780-88E6-4C01-9FFE-A88154B28124}</Project>
+      <Name>ADF.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\BindOnPostbackAttribute.cs" />
+    <Compile Include="Binding\LinkButtonBinder.cs" />
+    <Compile Include="Binding\ImageBinder.cs" />
+    <Compile Include="Binding\ListBoxBinder.cs" />
+    <Compile Include="Binding\ListBoxPersister.cs" />
+    <Compile Include="Binding\ObjectResolver.cs" />
+    <Compile Include="Binding\RadioButtonListBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Panels\BaseRenderer.cs" />
+    <Compile Include="Panels\CalendarRenderer.cs" />
+    <Compile Include="Panels\CheckBoxRenderer.cs" />
+    <Compile Include="Panels\DropDownRenderer.cs" />
+    <Compile Include="Panels\FileUploadRenderer.cs" />
+    <Compile Include="Panels\ImageRenderer.cs" />
+    <Compile Include="Panels\TextRenderer.cs" />
+    <Compile Include="Panels\PanelRenderer.cs" />
+    <Compile Include="Process\WebViewAuthorizationExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\CheckBoxBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\CheckBoxPersister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\DatagridBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\DateTimeBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\DateTimePersister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\DropDownListBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\DropDownListPersister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\GridViewBinder.cs" />
+    <Compile Include="Binding\HyperLinkBinder.cs" />
+    <Compile Include="Binding\LabelBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\RadioButtonListPersister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\TextBoxBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\TextBoxPersister.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Binding\WebBinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helper\ControlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BusinessGridViewPager.cs" />
+    <Compile Include="Services\BusinessGridViewSorter.cs" />
+    <Compile Include="Services\GridAction.cs" />
+    <Compile Include="Services\IGridService.cs" />
+    <Compile Include="State\WebStateProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\BusinessCalendar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Buttons\SmartButton.cs" />
+    <Compile Include="UI\ControlExtensions.cs" />
+    <Compile Include="UI\MessageImageButton.cs" />
+    <Compile Include="UI\GenericComparer.cs" />
+    <Compile Include="UI\PanelControl.cs" />
+    <Compile Include="UI\RowSelectorColumn.cs" />
+    <Compile Include="UI\SmartPanel\BasePanelItem.cs" />
+    <Compile Include="UI\SmartPanel\BlankItem.cs" />
+    <Compile Include="UI\SmartPanel\CheckBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\ButtonItem.cs" />
+    <Compile Include="UI\SmartPanel\ExpressionExtensions.cs" />
+    <Compile Include="UI\SmartPanel\ImageItem.cs" />
+    <Compile Include="UI\SmartPanel\ListBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\SelectItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedListBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\GridPanel.cs" />
+    <Compile Include="UI\SmartPanel\DateLabelItem.cs" />
+    <Compile Include="UI\SmartPanel\DateTextBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\DescriptionTextBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\DropDownListItem.cs" />
+    <Compile Include="UI\SmartPanel\IPanelItem.cs" />
+    <Compile Include="UI\SmartPanel\LabelItem.cs" />
+    <Compile Include="UI\SmartPanel\LineItem.cs" />
+    <Compile Include="UI\SmartPanel\RadioButtonListItem.cs" />
+    <Compile Include="UI\SmartPanel\SmartDateLabel.cs" />
+    <Compile Include="UI\SmartPanel\SmartDateTextBox.cs" />
+    <Compile Include="UI\SmartPanel\SmartPanel.cs" />
+    <Compile Include="UI\SmartPanel\SmartValidator.cs" />
+    <Compile Include="UI\SmartPanel\TextBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\TitleItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedCheckBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedDateTextBoxItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedDropDownListItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedPanelItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedRadioButtonListItem.cs" />
+    <Compile Include="UI\SmartPanel\ValidatedTextBoxItem.cs" />
+    <Compile Include="UI\SmartView\AccountColumn.cs" />
+    <Compile Include="UI\SmartView\BaseField.cs" />
+    <Compile Include="UI\SmartView\BoolColumn.cs" />
+    <Compile Include="UI\SmartView\BaseColumn.cs" />
+    <Compile Include="UI\SmartView\BaseButton.cs" />
+    <Compile Include="UI\SmartView\TooltipColumn.cs" />
+    <Compile Include="UI\SmartView\EditButton.cs" />
+    <Compile Include="UI\SmartView\IconColumn.cs" />
+    <Compile Include="UI\SmartView\SelectButton.cs" />
+    <Compile Include="UI\SmartView\DeleteButton.cs" />
+    <Compile Include="UI\SmartView\SmartView.cs" />
+    <Compile Include="UI\SmartView\DateButton.cs" />
+    <Compile Include="UI\SmartView\DateColumn.cs" />
+    <Compile Include="UI\SmartView\IconButton.cs" />
+    <Compile Include="UI\SmartView\MoneyColumn.cs" />
+    <Compile Include="UI\SmartView\NumberButton.cs" />
+    <Compile Include="UI\SmartView\NumberColumn.cs" />
+    <Compile Include="UI\SmartView\SmartViewExtensions.cs" />
+    <Compile Include="UI\SmartView\TestButton.cs" />
+    <Compile Include="UI\SmartView\TextButton.cs" />
+    <Compile Include="UI\SmartView\TextColumn.cs" />
+    <Compile Include="UI\SpecializedTextboxes\DateTextBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\MessageButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SpecializedTextboxes\CharacterFilteringTextBox.cs" />
+    <Compile Include="UI\SpecializedTextboxes\NumericTextBox.cs" />
+    <Compile Include="UI\SpecializedTextboxes\SignedIntegerTextBox.cs" />
+    <Compile Include="UI\SpecializedTextboxes\UnsignedIntegerTextBox.cs" />
+    <Compile Include="UI\Styling\BusinessCalendarStyler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Styling\BusinessGridViewStyler.cs" />
+    <Compile Include="UI\Styling\IStyler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Styling\NullStyler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Styling\SmartPanelDefaultStyler.cs" />
+    <Compile Include="UI\Styling\SmartPanelErrorStyler.cs" />
+    <Compile Include="UI\Styling\StyleHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\WebStyler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Validation\SmartWebValidationHandler.cs" />
+    <Compile Include="Validation\WebValidationHandler.cs" />
+    <Compile Include="Process\WebView.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Process\WebViewProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ADF.snk" />
+    <None Include="Migrated rules for ADF.Web.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\date.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\rowselectorcolumn.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\InfoButtonScript.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Helper\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

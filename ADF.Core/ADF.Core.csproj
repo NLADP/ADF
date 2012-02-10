@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CE90750E-9F30-4008-B113-321D2D3135CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adf.Core</RootNamespace>
+    <AssemblyName>Adf.Core</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Output\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <DocumentationFile>..\..\Bin\Output\Adf.Core.XML</DocumentationFile>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Output\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <DebugSymbols>true</DebugSymbols>
+    <CodeAnalysisRuleSet>Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
+    <OutputPath>bin\Documentation\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <DocumentationFile>..\..\Bin\Output\Adf.Core.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <CodeAnalysisRuleSet>Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authorization\AuthorizationManager.cs" />
+    <Compile Include="Authorization\IAction.cs" />
+    <Compile Include="Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Authorization\IRole.cs" />
+    <Compile Include="Authorization\IUser.cs" />
+    <Compile Include="Binding\BindManager.cs" />
+    <Compile Include="Binding\IControlBinder.cs" />
+    <Compile Include="Binding\IControlPersister.cs" />
+    <Compile Include="Binding\IPlatformBinder.cs" />
+    <Compile Include="Data\BusinessDescriber.cs" />
+    <Compile Include="Data\ColumnDescriber.cs" />
+    <Compile Include="Data\DataException.cs" />
+    <Compile Include="Data\DataSources.cs" />
+    <Compile Include="Data\DataSourceType.cs" />
+    <Compile Include="Data\IColumn.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\IInternalState.cs" />
+    <Compile Include="Data\InternalStateExtensions.cs" />
+    <Compile Include="Data\ITable.cs" />
+    <Compile Include="Data\NullInternalState.cs" />
+    <Compile Include="Data\TableDescriber.cs" />
+    <Compile Include="Data\TableGateway.cs" />
+    <Compile Include="Domain\IDomainCollection.cs" />
+    <Compile Include="Domain\IDomainObject.cs" />
+    <Compile Include="Domain\InternalStatus.cs" />
+    <Compile Include="Domain\IPropertyParser.cs" />
+    <Compile Include="Domain\ISmartReference.cs" />
+    <Compile Include="Domain\IValueObject.cs" />
+    <Compile Include="Domain\PropertyHelper.cs" />
+    <Compile Include="Domain\References.cs" />
+    <Compile Include="Domain\SortOrder.cs" />
+    <Compile Include="Domain\ValueItem.cs" />
+    <Compile Include="Encryption\EncryptionManager.cs" />
+    <Compile Include="Encryption\EncryptionType.cs" />
+    <Compile Include="Encryption\IEncryptionProvider.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\DescriptorExtensions.cs" />
+    <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Identity\ID.cs" />
+    <Compile Include="Identity\IdManager.cs" />
+    <Compile Include="Identity\IIdProvider.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\ILogProvider.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Mail\IMailProvider.cs" />
+    <Compile Include="Mail\MailManager.cs" />
+    <Compile Include="Messaging\FieldDefinition.cs" />
+    <Compile Include="Messaging\FieldDefinitionType.cs" />
+    <Compile Include="Messaging\IMessageDefinitionProvider.cs" />
+    <Compile Include="Messaging\IMessageHandler.cs" />
+    <Compile Include="Messaging\MessageDefinition.cs" />
+    <Compile Include="Messaging\MessageDefinitionType.cs" />
+    <Compile Include="Messaging\MessageDefinitonNotFoundException.cs" />
+    <Compile Include="Messaging\MessageType.cs" />
+    <Compile Include="Messaging\MessagingManager.cs" />
+    <Compile Include="Messaging\Record.cs" />
+    <Compile Include="Messaging\RecordDefinition.cs" />
+    <Compile Include="Objects\IObjectProvider.cs" />
+    <Compile Include="Objects\ObjectFactory.cs" />
+    <Compile Include="Objects\ObjectFactorySection.cs" />
+    <Compile Include="Objects\ObjectManager.cs" />
+    <Compile Include="Objects\SystemFactoryException.cs" />
+    <Compile Include="Panels\AdfPanel.cs" />
+    <Compile Include="Panels\IPanelItemRenderer.cs" />
+    <Compile Include="Panels\IPanelRenderer.cs" />
+    <Compile Include="Panels\PanelItem.cs" />
+    <Compile Include="Panels\PanelItemType.cs" />
+    <Compile Include="Panels\PanelManager.cs" />
+    <Compile Include="Panels\PanelRow.cs" />
+    <Compile Include="Query\ExpressionType.cs" />
+    <Compile Include="Query\IExpression.cs" />
+    <Compile Include="Query\IOrderBy.cs" />
+    <Compile Include="Query\JoinType.cs" />
+    <Compile Include="Query\IAdfQueryHandler.cs" />
+    <Compile Include="Query\IJoin.cs" />
+    <Compile Include="Query\OperatorType.cs" />
+    <Compile Include="Query\IQueryParser.cs" />
+    <Compile Include="Query\PredicateType.cs" />
+    <Compile Include="Query\IAdfQuery.cs" />
+    <Compile Include="Query\IWhere.cs" />
+    <Compile Include="Query\Parameter.cs" />
+    <Compile Include="Query\ParameterType.cs" />
+    <Compile Include="Query\QueryManager.cs" />
+    <Compile Include="Query\QueryType.cs" />
+    <Compile Include="Resources\IResourceProvider.cs" />
+    <Compile Include="Resources\ResourceManager.cs" />
+    <Compile Include="State\IStateProvider.cs" />
+    <Compile Include="State\StateManager.cs" />
+    <Compile Include="State\StateProviderExtensions.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\ITaskProvider.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\TaskResult.cs" />
+    <Compile Include="Tasks\ApplicationTask.cs" />
+    <Compile Include="Test\ITestProvider.cs" />
+    <Compile Include="Test\TestAction.cs" />
+    <Compile Include="Test\TestManager.cs" />
+    <Compile Include="Test\TestItem.cs" />
+    <Compile Include="Test\TestItemType.cs" />
+    <Compile Include="Types\Converter.cs" />
+    <Compile Include="Types\ITypeConverter.cs" />
+    <Compile Include="Validation\BusinessRuleAttribute.cs" />
+    <Compile Include="Validation\IncludeInvalidationAttribute.cs" />
+    <Compile Include="Validation\InvalidMethodSignatureException.cs" />
+    <Compile Include="Validation\IPropertyValidator.cs" />
+    <Compile Include="Descriptor.cs" />
+    <Compile Include="ExcludeAttribute.cs" />
+    <Compile Include="FrameworkVersion.cs" />
+    <Compile Include="Validation\IValidationContext.cs" />
+    <Compile Include="Validation\IValidationHandler.cs" />
+    <Compile Include="Validation\IValidationPolicy.cs" />
+    <Compile Include="Validation\ValidationManager.cs" />
+    <Compile Include="Validation\ValidationResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\ValidationResultCollection.cs" />
+    <Compile Include="Validation\ValidationResultSeverity.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\IViewProvider.cs" />
+    <Compile Include="Views\ViewManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ADF.snk" />
+    <None Include="Migrated rules for ADF.Core.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
