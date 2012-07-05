@@ -12,6 +12,10 @@
     <AssemblyName>Adf.Core</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -114,7 +118,9 @@
     <Compile Include="Data\TableDescriber.cs" />
     <Compile Include="Data\TableGateway.cs" />
     <Compile Include="Domain\IDomainCollection.cs" />
+    <Compile Include="Domain\IDomainHierarchy.cs" />
     <Compile Include="Domain\IDomainObject.cs" />
+    <Compile Include="Domain\IImageProvider.cs" />
     <Compile Include="Domain\InternalStatus.cs" />
     <Compile Include="Domain\IPropertyParser.cs" />
     <Compile Include="Domain\ISmartReference.cs" />
@@ -126,6 +132,7 @@
     <Compile Include="Encryption\EncryptionManager.cs" />
     <Compile Include="Encryption\EncryptionType.cs" />
     <Compile Include="Encryption\IEncryptionProvider.cs" />
+    <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DescriptorExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
@@ -134,6 +141,7 @@
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Identity\ID.cs" />
@@ -159,11 +167,12 @@
     <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\ObjectFactorySection.cs" />
     <Compile Include="Objects\ObjectManager.cs" />
-    <Compile Include="Objects\SystemFactoryException.cs" />
+    <Compile Include="Objects\ObjectFactoryConfigurationException.cs" />
     <Compile Include="Panels\AdfPanel.cs" />
     <Compile Include="Panels\IPanelItemRenderer.cs" />
     <Compile Include="Panels\IPanelRenderer.cs" />
     <Compile Include="Panels\PanelItem.cs" />
+    <Compile Include="Panels\PanelItemExtensions.cs" />
     <Compile Include="Panels\PanelItemType.cs" />
     <Compile Include="Panels\PanelManager.cs" />
     <Compile Include="Panels\PanelRow.cs" />
@@ -187,6 +196,8 @@
     <Compile Include="State\IStateProvider.cs" />
     <Compile Include="State\StateManager.cs" />
     <Compile Include="State\StateProviderExtensions.cs" />
+    <Compile Include="Styling\IStyler.cs" />
+    <Compile Include="Styling\StyleManager.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\ITaskProvider.cs" />
     <Compile Include="Tasks\TaskManager.cs" />
@@ -197,8 +208,11 @@
     <Compile Include="Test\TestManager.cs" />
     <Compile Include="Test\TestItem.cs" />
     <Compile Include="Test\TestItemType.cs" />
+    <Compile Include="Transactions\ITransactionScope.cs" />
+    <Compile Include="Transactions\TransactionManager.cs" />
     <Compile Include="Types\Converter.cs" />
     <Compile Include="Types\ITypeConverter.cs" />
+    <Compile Include="Types\ObjectActivator.cs" />
     <Compile Include="Validation\BusinessRuleAttribute.cs" />
     <Compile Include="Validation\IncludeInvalidationAttribute.cs" />
     <Compile Include="Validation\InvalidMethodSignatureException.cs" />
@@ -213,6 +227,7 @@
     <Compile Include="Validation\ValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\ValidationResultCollection.cs" />
+    <Compile Include="Validation\ValidationResultExtensions.cs" />
     <Compile Include="Validation\ValidationResultSeverity.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\IViewProvider.cs" />

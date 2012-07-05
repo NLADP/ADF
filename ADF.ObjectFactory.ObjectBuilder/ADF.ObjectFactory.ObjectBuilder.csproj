@@ -12,6 +12,10 @@
     <AssemblyName>Adf.ObjectFactory.ObjectBuilder</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ADF.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
@@ -69,24 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuilderPolicies\CreationPolicy.cs" />
-    <Compile Include="Configuration\AssemblyNameConverter.cs" />
-    <Compile Include="Configuration\SystemFactoryConfigurationSection.cs" />
-    <Compile Include="Exceptions\SystemFactoryConfigurationException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ObjectBuilderProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ADF.snk">
@@ -111,10 +101,20 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
+      <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
+      <Name>ADF.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
       <Name>ADF.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

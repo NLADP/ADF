@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Adf.Core.Styling;
 
 namespace Adf.Web.UI
 {
@@ -51,23 +52,21 @@ namespace Adf.Web.UI
         /// </summary>
         protected override void CreateChildControls()
         {
-            Table htmlTable = new Table();
-
-            int columnCount = 0;
+            var htmlTable = new Table();
+            var columnCount = 0;
 
             foreach (var gridPanelItem in gridPanelItems.Where(gridPanelItem => gridPanelItem.Length > columnCount))
             {
                 columnCount = gridPanelItem.Length;
             }
 
-            foreach (IPanelItem[] items in gridPanelItems)
+            foreach (var items in gridPanelItems)
             {
                 var row = new TableRow();
 
-                foreach (IPanelItem panelItem in items.Where(panelItem => panelItem.Visible))
+                foreach (var panelItem in items.Where(panelItem => panelItem.Visible))
                 {
-                    if (!DesignMode)
-                        panelItem.Styler.SetStyles(this);
+                    if (!DesignMode) StyleManager.Style(StyleType.Panel, this);
                     
                     row.CssClass = RowStyle;
                     
@@ -118,7 +117,6 @@ namespace Adf.Web.UI
             }
 
             htmlTable.CssClass = PanelStyle;
-
 
             Controls.Add(htmlTable);
         }

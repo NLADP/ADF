@@ -45,7 +45,7 @@ namespace Adf.Base.Validation
             double newValue;
             try
             {
-                newValue = (double)value;
+                newValue = Convert.ToDouble(value);
             }
             catch
             {

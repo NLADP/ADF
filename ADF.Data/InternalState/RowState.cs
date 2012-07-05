@@ -5,7 +5,10 @@ using System.Data;
 using System.Linq;
 using Adf.Core.Data;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 using Adf.Core.Identity;
+using Adf.Base.Types;
+using Adf.Core.Types;
 
 namespace Adf.Data.InternalState
 {
@@ -113,16 +116,14 @@ namespace Adf.Data.InternalState
             return datatable == null ? null : (from DataRow row in datatable.Rows select new RowState(row)).ToList();
         }
 
-        /// <summary>
-        /// Convert a <see cref="System.Data.DataRow"/> to <see cref="System.Data.DataSet"/>.
-        /// </summary>
-        /// <returns>The <see cref="System.Data.DataSet"/> if <see cref="RowState"/> is not empty; otherwise, null.</returns>
-        public DataSet BuildUpDataSet()
+        /// <summary> 
+        /// Returns a <see cref="System.Data.DataRow"/>. 
+        /// </summary> 
+        /// <returns>The <see cref="System.Data.DataRow"/> if <see cref="RowState"/> is not empty; otherwise, null.</returns> 
+        public DataRow BuildUpDataRow()
         {
-            if (IsEmpty) return null;
-
-            return row.Table.DataSet;
-        }
+            return IsEmpty ? null : row;
+        }  
 
         #endregion
 
@@ -327,7 +328,11 @@ namespace Adf.Data.InternalState
         /// <returns>An instance of specified type.</returns>
         public T GetValue<T>(IColumn property) where T : IValueObject
         {
-            return (T)Activator.CreateInstance(typeof(T), GetCell(property).ToString());
+            var value = GetCell(property);
+
+            if (value is DBNull) return default(T);
+
+            return typeof(T).New<T>(value);
         }
 
         /// <summary>

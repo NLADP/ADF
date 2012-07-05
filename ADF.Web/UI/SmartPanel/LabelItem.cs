@@ -49,7 +49,7 @@ namespace Adf.Web.UI
 
         public static LabelItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled);
+            return Create(property.GetMemberInfo().Name, property, width, enabled);
         }
 
         public static LabelItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true)

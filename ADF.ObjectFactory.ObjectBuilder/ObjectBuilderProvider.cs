@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using Adf.Base.Configuration;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
 using Adf.ObjectFactory.ObjectBuilder.BuilderPolicies;
-using Adf.ObjectFactory.ObjectBuilder.Configuration;
-using Adf.ObjectFactory.ObjectBuilder.Exceptions;
 using Adf.ObjectFactory.ObjectBuilder.Properties;
 using Microsoft.Practices.ObjectBuilder;
 
@@ -14,7 +13,7 @@ namespace Adf.ObjectFactory.ObjectBuilder
     public class ObjectBuilderProvider : IObjectProvider
     {
         private List<DependencyResolutionLocatorKey> threadStaticTypes = new List<DependencyResolutionLocatorKey>();
-        private SystemFactoryConfigurationSection systemFactoryConfiguration;
+        private ObjectFactoryConfigurationSection _objectFactoryConfiguration;
         private IBuilder<BuilderStage> builder;
 
         public ObjectBuilderProvider()
@@ -25,11 +24,11 @@ namespace Adf.ObjectFactory.ObjectBuilder
             builder.Strategies.AddNew<CreationStrategy>(BuilderStage.Creation);
             builder.Policies.SetDefault<ICreationPolicy>(new CreationPolicy());
 
-            systemFactoryConfiguration = ConfigurationManager.GetSection(SystemFactoryConfigurationSection.SystemFactoryConfigurationSectionName) as SystemFactoryConfigurationSection;
-            if (systemFactoryConfiguration == null) systemFactoryConfiguration = new SystemFactoryConfigurationSection();
+            _objectFactoryConfiguration = ConfigurationManager.GetSection(ObjectFactoryConfigurationSection.ObjectFactoryConfigurationSectionName) as ObjectFactoryConfigurationSection;
+            if (_objectFactoryConfiguration == null) _objectFactoryConfiguration = new ObjectFactoryConfigurationSection();
 
             //PolicyList policyList = new PolicyList();
-            foreach (SystemFactoryConfigurationElement serviceElement in systemFactoryConfiguration.Services)
+            foreach (ObjectFactoryConfigurationElement serviceElement in _objectFactoryConfiguration.Services)
             {
                 if (serviceElement.LifeCycle != LifeCycle.InstancePerBuildUp)
                 {
@@ -96,11 +95,11 @@ namespace Adf.ObjectFactory.ObjectBuilder
         {
             try
             {
-                return builder.BuildUp(new SystemFactoryLocator(threadStaticTypes), serviceType, string.IsNullOrEmpty(instanceName) ? string.Empty : instanceName, null);
+                return builder.BuildUp(new ObjectFactoryLocator(threadStaticTypes), serviceType, string.IsNullOrEmpty(instanceName) ? string.Empty : instanceName, null);
             }
             catch (ArgumentException ae)
             {
-                var exception = new SystemFactoryException(string.Format(Resources.CannotBuildUpInstanceOfType, serviceType, instanceName), ae);
+                var exception = new ObjectFactoryConfigurationException(string.Format(Resources.CannotBuildUpInstanceOfType, serviceType, instanceName), ae);
 
                 LogManager.Log(exception);
 
@@ -128,7 +127,7 @@ namespace Adf.ObjectFactory.ObjectBuilder
 
         public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
-            foreach (SystemFactoryConfigurationElement serviceElement in systemFactoryConfiguration.Services)
+            foreach (ObjectFactoryConfigurationElement serviceElement in _objectFactoryConfiguration.Services)
             {
                 if (serviceElement.ServiceInterfaceType == serviceType || inherited && serviceType.IsAssignableFrom(serviceElement.ServiceInterfaceType))
                 {
@@ -137,7 +136,7 @@ namespace Adf.ObjectFactory.ObjectBuilder
             }
         }
 
-        private class SystemFactoryLocator : Locator
+        private class ObjectFactoryLocator : Locator
         {
             static ILifetimeContainer container = new LifetimeContainer();
 
@@ -148,7 +147,7 @@ namespace Adf.ObjectFactory.ObjectBuilder
 
             private List<DependencyResolutionLocatorKey> threadStaticTypes;
 
-            public SystemFactoryLocator(List<DependencyResolutionLocatorKey> threadStaticTypes)
+            public ObjectFactoryLocator(List<DependencyResolutionLocatorKey> threadStaticTypes)
             {
                 this.threadStaticTypes = threadStaticTypes;
 

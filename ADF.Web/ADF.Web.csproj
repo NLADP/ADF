@@ -26,6 +26,10 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -158,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\BindOnPostbackAttribute.cs" />
+    <Compile Include="Binding\TreeViewPersister.cs" />
+    <Compile Include="Binding\TreeViewBinder.cs" />
     <Compile Include="Binding\LinkButtonBinder.cs" />
     <Compile Include="Binding\ImageBinder.cs" />
     <Compile Include="Binding\ListBoxBinder.cs" />
@@ -172,8 +178,10 @@
     <Compile Include="Panels\DropDownRenderer.cs" />
     <Compile Include="Panels\FileUploadRenderer.cs" />
     <Compile Include="Panels\ImageRenderer.cs" />
+    <Compile Include="Panels\PanelValidator.cs" />
     <Compile Include="Panels\TextRenderer.cs" />
     <Compile Include="Panels\PanelRenderer.cs" />
+    <Compile Include="Panels\TreeViewRenderer.cs" />
     <Compile Include="Process\WebViewAuthorizationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -225,18 +233,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\BusinessGridViewPager.cs" />
-    <Compile Include="Services\BusinessGridViewSorter.cs" />
-    <Compile Include="Services\GridAction.cs" />
-    <Compile Include="Services\IGridService.cs" />
     <Compile Include="State\WebStateProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\BusinessCalendar.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Styling\BusinessGridViewStyler.cs" />
+    <Compile Include="Styling\NullStyler.cs" />
+    <Compile Include="Styling\SmartPanelDefaultStyler.cs" />
+    <Compile Include="Styling\SmartPanelErrorStyler.cs" />
     <Compile Include="UI\Buttons\SmartButton.cs" />
     <Compile Include="UI\ControlExtensions.cs" />
+    <Compile Include="UI\DropDownTreeView.cs" />
     <Compile Include="UI\MessageImageButton.cs" />
     <Compile Include="UI\GenericComparer.cs" />
     <Compile Include="UI\PanelControl.cs" />
@@ -271,27 +277,30 @@
     <Compile Include="UI\SmartPanel\ValidatedPanelItem.cs" />
     <Compile Include="UI\SmartPanel\ValidatedRadioButtonListItem.cs" />
     <Compile Include="UI\SmartPanel\ValidatedTextBoxItem.cs" />
-    <Compile Include="UI\SmartView\AccountColumn.cs" />
-    <Compile Include="UI\SmartView\BaseField.cs" />
-    <Compile Include="UI\SmartView\BoolColumn.cs" />
-    <Compile Include="UI\SmartView\BaseColumn.cs" />
-    <Compile Include="UI\SmartView\BaseButton.cs" />
-    <Compile Include="UI\SmartView\TooltipColumn.cs" />
+    <Compile Include="UI\SmartView\AccountField.cs" />
+    <Compile Include="UI\SmartView\BoolField.cs" />
+    <Compile Include="UI\SmartView\CheckBoxField.cs" />
+    <Compile Include="UI\SmartView\SmartViewFooter.cs" />
+    <Compile Include="UI\SmartView\TextButton.cs" />
+    <Compile Include="UI\SmartView\DateField.cs" />
+    <Compile Include="UI\SmartView\IconButton.cs" />
+    <Compile Include="UI\SmartView\IconField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SmartView\MoneyField.cs" />
+    <Compile Include="UI\SmartView\SmartButton.cs" />
+    <Compile Include="UI\SmartView\SmartField.cs" />
+    <Compile Include="UI\SmartView\SmartFieldExtensions.cs" />
+    <Compile Include="UI\SmartView\TextField.cs" />
+    <Compile Include="UI\SmartView\TooltipField.cs" />
     <Compile Include="UI\SmartView\EditButton.cs" />
-    <Compile Include="UI\SmartView\IconColumn.cs" />
     <Compile Include="UI\SmartView\SelectButton.cs" />
     <Compile Include="UI\SmartView\DeleteButton.cs" />
     <Compile Include="UI\SmartView\SmartView.cs" />
     <Compile Include="UI\SmartView\DateButton.cs" />
-    <Compile Include="UI\SmartView\DateColumn.cs" />
-    <Compile Include="UI\SmartView\IconButton.cs" />
-    <Compile Include="UI\SmartView\MoneyColumn.cs" />
     <Compile Include="UI\SmartView\NumberButton.cs" />
-    <Compile Include="UI\SmartView\NumberColumn.cs" />
+    <Compile Include="UI\SmartView\NumberField.cs" />
     <Compile Include="UI\SmartView\SmartViewExtensions.cs" />
-    <Compile Include="UI\SmartView\TestButton.cs" />
-    <Compile Include="UI\SmartView\TextButton.cs" />
-    <Compile Include="UI\SmartView\TextColumn.cs" />
     <Compile Include="UI\SpecializedTextboxes\DateTextBox.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -302,21 +311,6 @@
     <Compile Include="UI\SpecializedTextboxes\NumericTextBox.cs" />
     <Compile Include="UI\SpecializedTextboxes\SignedIntegerTextBox.cs" />
     <Compile Include="UI\SpecializedTextboxes\UnsignedIntegerTextBox.cs" />
-    <Compile Include="UI\Styling\BusinessCalendarStyler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Styling\BusinessGridViewStyler.cs" />
-    <Compile Include="UI\Styling\IStyler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Styling\NullStyler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Styling\SmartPanelDefaultStyler.cs" />
-    <Compile Include="UI\Styling\SmartPanelErrorStyler.cs" />
-    <Compile Include="UI\Styling\StyleHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="UI\WebStyler.cs">
       <SubType>Code</SubType>
     </Compile>

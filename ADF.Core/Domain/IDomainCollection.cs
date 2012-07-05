@@ -24,7 +24,7 @@ namespace Adf.Core.Domain
         /// <returns>
         /// true if the collection of DomainObjects has been removed; otherwise, false.
         /// </returns>
-        bool HasBeenRemoved { get; }
+        bool HasRemovedItems { get; }
 
         /// <summary>
         /// Saves the collection of DomainObjects and returns a value indicating whether the 
@@ -39,7 +39,7 @@ namespace Adf.Core.Domain
         /// Deletes all items in the collection.
         /// </summary>
         /// <returns></returns>
-        bool RemoveAll();
+        IDomainCollection RemoveAll();
 
         /// <summary>
         /// Sorts the collection of DomainObjects on the specified property according to the 
@@ -47,6 +47,12 @@ namespace Adf.Core.Domain
         /// </summary>
         /// <param name="sortProperty">The property on which the sorting will be done.</param>
         /// <param name="order">The <see cref="SortOrder"/> according to which the sorting will be done.</param>
-        void Sort(string sortProperty, SortOrder order);
+        IDomainCollection Sort(string sortProperty, SortOrder order);
+    }
+
+
+    public interface IDomainCollection<out T> : IDomainCollection where T : IDomainObject
+    {
+
     }
 }

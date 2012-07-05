@@ -34,6 +34,7 @@ namespace Adf.Web.Panels
                 for (int i = 0; i < panelrow.Items.Count(); i++)
                 {
                     var item = panelrow.Items[i];
+
                     var labels = RenderLabel(item);
                     var items = RenderItem(item);
 
@@ -77,9 +78,18 @@ namespace Adf.Web.Panels
 
             if (!panelItem.Label.IsNullOrEmpty())
             {
-                controls.Add(new Label {Text = ResourceManager.GetString(panelItem.Label), CssClass = LabelStyle});
+                var label = new Label { ID = panelItem.GetLabelId(), Text = ResourceManager.GetString(panelItem.Label), CssClass = LabelStyle, Visible = panelItem.Visible };
                 
-                if (!panelItem.Optional) controls.Add(new Label { Text = @" *", CssClass = "Mandatory"});
+                controls.Add(label);
+                panelItem.IDs.Add(label.ID);
+
+                if (!panelItem.Optional)
+                {
+                    var asterix = new Label { ID = panelItem.GetLabelId() + "Asterix", Text = @" *", CssClass = "Mandatory", Visible = panelItem.Visible };
+
+                    controls.Add(asterix);
+                    panelItem.IDs.Add(asterix.ID);
+                }
             }
 
             return controls;

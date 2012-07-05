@@ -1,9 +1,7 @@
 using System;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Adf.Core.Objects;
+using Adf.Core.Styling;
 using Adf.Web.Helper;
-using Adf.Web.UI.Styling;
 
 namespace Adf.Web.UI
 {
@@ -15,25 +13,17 @@ namespace Adf.Web.UI
         /// <summary>
         /// A variable to hold the name of panel item.
         /// </summary>
-        protected string name;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Adf.Web.UI.SmartValidator"/> class with the specified panel item name.
-        /// </summary>
-        /// <param name="name">Panel item name used for validation.</param>
-        protected SmartValidator(string name)
-        {
-            this.name = name;
-        }
+        public string Name { get; set; }
+        public string Label { get; set; }
 
         /// <summary>
         /// Create a <see cref="Adf.Web.UI.SmartValidator"/> control and set its identifier by the specified panel item name.
         /// </summary>
         /// <param name="name">Set the identifier of <see cref="Adf.Web.UI.SmartValidator"/> control.</param>
         /// <returns>The <see cref="Adf.Web.UI.SmartValidator"/> control with ID value.</returns>
-        public static CustomValidator Create(string name)
+        public static SmartValidator Create(string name, string label)
         {
-            return new SmartValidator(name) {ID = "val" + name};
+            return new SmartValidator { Name = name, ID = "val" + name, Label = label };
         }
 
         /// <summary>
@@ -48,9 +38,6 @@ namespace Adf.Web.UI
             IsValid = true;
         }
 
-        private static readonly IStyler DefaultStyler = ObjectFactory.BuildUp<IStyler>("SmartPanelDefaultStyler");
-        private static readonly IStyler ErrorStyler = ObjectFactory.BuildUp<IStyler>("SmartPanelErrorStyler");
-
         /// <summary>
         /// Raises the <see cref="System.Web.UI.Control.OnPreRender"/> event.
         /// Also set the default style to smart panel item if the associated input control passes validation; otherwise error style.
@@ -60,31 +47,11 @@ namespace Adf.Web.UI
         {
             base.OnPreRender(e);
 
-            //TODO beter systeem bedenken, Validator hoort niks met Parents te maken te hebben.
-            Control findInContainerControl = Page;
-            if (Parent.Parent != null)
-            {
-                findInContainerControl = Parent.Parent;
-            }
-            WebControl c = ControlHelper.Find(findInContainerControl, "panelLabelItem_" + name) as WebControl;
+            var container = Parent.Parent ?? Page;
 
-            if (c != null)
-            {
-                IStyler s = IsValid ? DefaultStyler : ErrorStyler;
-
-                s.SetStyles(c);
-            }
-            
-            c = ControlHelper.Find(findInContainerControl, "panelControlItem_" + name) as WebControl;
-
-            if (c != null)
-            {
-                IStyler s = IsValid ? DefaultStyler : ErrorStyler;
-
-                s.SetStyles(c);
-            }
+            StyleManager.Style(IsValid ? StyleType.Panel : StyleType.PanelError, ControlHelper.Find(container, "panelLabelItem_" + Name));
+            StyleManager.Style(IsValid ? StyleType.Panel : StyleType.PanelError, ControlHelper.Find(container, "panelControlItem_" + Name));
         }
-
     }
 }
 

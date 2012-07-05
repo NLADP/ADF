@@ -22,27 +22,23 @@ namespace Adf.Core.Extensions
         /// </exception>
         public static bool IsExcluded(this MemberInfo mi)
         {
-            return (mi != null) ? (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0) : false;
+            return (mi != null) && (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0);
         }
 
-        public static MemberInfo GetExpressionMember<T>(this Expression<Func<T, object>> propertyExpression)
+        public static PropertyInfo GetPropertyInfo<T>(this Expression<Func<T, object>> expression)
         {
-            MemberExpression body = null;
-            if (propertyExpression.Body is UnaryExpression)
-            {
-                var unary = propertyExpression.Body as UnaryExpression;
-                if (unary.Operand is MemberExpression)
-                    body = unary.Operand as MemberExpression;
-            }
-            else if (propertyExpression.Body is MemberExpression)
-            {
-                body = propertyExpression.Body as MemberExpression;
-            }
-            if (body == null)
-                throw new ArgumentException("'propertyExpression' should be a member expression");
+            return (PropertyInfo) GetMemberInfo(expression);
+        }
 
-            // Extract the right part (after "=>")
-            //            var vmExpression = body.Expression as ConstantExpression;
+        public static MemberInfo GetMemberInfo<T>(this Expression<Func<T, object>> expression)
+        {
+            var body = ((expression.Body is MemberExpression)
+                           ? expression.Body
+                           : (expression.Body is UnaryExpression)
+                                 ? ((UnaryExpression) expression.Body).Operand
+                                 : null) as MemberExpression;
+
+            if (body == null) throw new ArgumentException("Expression is not a valid member expression");
 
             return body.Member;
         }
@@ -51,9 +47,7 @@ namespace Adf.Core.Extensions
         {
             var unaryExpression = propertyExpression.Body as UnaryExpression;    // ValueTypes are passed as UnaryExpressions
 
-            var memberExpression = unaryExpression == null
-                                       ? propertyExpression.Body as MemberExpression
-                                       : unaryExpression.Operand as MemberExpression;
+            var memberExpression = (unaryExpression == null ? propertyExpression.Body : unaryExpression.Operand) as MemberExpression;
 
             var path = new List<string>();
 

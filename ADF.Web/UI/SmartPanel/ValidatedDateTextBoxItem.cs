@@ -44,7 +44,7 @@ namespace Adf.Web.UI
 
         public static ValidatedDateTextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, string format = null, string description = null)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, mandatory, format, description);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory, format, description);
         }
 
         public static ValidatedDateTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, string format = null, string description = null)

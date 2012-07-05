@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core;
 using Adf.Core.Logging;
+using Adf.Core.Query;
 using Adf.Core.Tasks;
 
 namespace Adf.Base.Tasks
@@ -117,7 +118,15 @@ namespace Adf.Base.Tasks
                 Type[] types = p.Select(param => param == null ? typeof(object) : param.GetType()).ToArray();
                 MethodInfo method = GetType().GetMethod("Init", types);
 
-                if (method == null) { Start(p); } else { method.Invoke(this, p); }
+                if (method == null && GetType().GetMethods().Any(m => m.Name == "Init"))
+                    throw new InvalidOperationException(string.Format("Could not find any matching Init method on {0} with parameter types {1}",
+                                                                      GetType().Name,
+                                                                      string.Join(",", types.Select(t => t.Name))));
+
+                using (new TracingScope("Start " + GetType().Name))
+                {
+                    if (method == null) { Start(p); } else { method.Invoke(this, p); }
+                }
             }
         }
 

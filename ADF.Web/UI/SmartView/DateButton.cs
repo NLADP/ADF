@@ -2,19 +2,19 @@ using System.Globalization;
 
 namespace Adf.Web.UI.SmartView
 {
-    public class DateButton : BaseButton
+    public class DateButton : TextButton
     {
         public DateButton()
         {
-            ColumnStyle = "DateTimeColumn";
-            HeaderStyle.CssClass = "DateTimeColumnHeader";
+            FieldStyle = "DateTimeColumn";
+            HeadStyle = "DateTimeColumnHeader";
         }
 
-        public override bool Initialize(bool sortingEnabled, System.Web.UI.Control control)
-        {
-            DataTextFormatString = "{0:" + CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern + "}";
+        //public override bool Initialize(bool sortingEnabled, System.Web.UI.Control control)
+        //{
+        //    DataTextFormatString = "{0:" + CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern + "}";
 
-            return base.Initialize(sortingEnabled, control);
-        }
+        //    return base.Initialize(sortingEnabled, control);
+        //}
     }
 }

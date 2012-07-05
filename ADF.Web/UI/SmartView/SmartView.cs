@@ -1,149 +1,160 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
 using Adf.Core.Identity;
-using Adf.Core.Objects;
+using Adf.Core.Resources;
 using Adf.Core.State;
-using Adf.Web.UI.Styling;
+using Adf.Core.Styling;
 
 namespace Adf.Web.UI.SmartView
 {
-    /// <summary>
-    /// Represents a customized <see cref="GridView"/> control.
-    /// </summary>
-    public class SmartView : GridView
+    // Class is sealed so that we can safely initialize virtual fields in the constructor
+    public sealed class SmartView : GridView
     {
-        #region private fields
+        public string PageSizes { get; set; }
 
-        private static IStyler _styler = ObjectFactory.BuildUp<IStyler>("BusinessGridViewStyler");
-        private bool _autostyle = true;
-        private static IEnumerable<IGridService> _services;
-        /// <summary>
-        /// Gets the collection after addition of element.
-        /// </summary>
-        private static IEnumerable<IGridService> Services
+        private string _lastexpression
         {
-            get { return _services ?? (_services = ObjectFactory.BuildAll<IGridService>().ToList()); }
+            get { return ViewState[ClientID + "LastExpression"].ToString(); }
+            set { ViewState[ClientID + "LastExpression"] = value; }
         }
 
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Initialize the properties of business GridView
-        /// </summary>
-        public SmartView()
+        private bool _ascending
         {
-            if (DesignMode) return;
-
-            base.EnableViewState = true;
-            base.AutoGenerateColumns = false;
-            base.CellPadding = 0;
-            base.AllowSorting = true;
-            base.AllowPaging = true;
-
-            foreach (IGridService service in Services) service.InitService(this);
+            get { return Convert.ToBoolean(ViewState[ClientID + "Ascending"]); }
+            set { ViewState[ClientID + "Ascending"] = value; }
         }
 
-        /// <summary>
-        /// Set style on page load.
-        /// </summary>
-        /// <param name="e">Event data.</param>
-        protected override void OnLoad(EventArgs e)
+        public string Source { get; set; }
+        
+        private ID _currentId = IdManager.Empty();
+        public ID Current
         {
-            if (!DesignMode && AutoStyle)
-                Styler.SetStyles(this);
+            get { return _currentId; }
+            set { SetIndex(value); _currentId = value; }
         }
 
-        #endregion
+        public bool ShowEmptyTable
+        {
+            get { var o = ViewState["ShowEmptyTable"]; return (o == null || (bool) o); }
+            set { ViewState["ShowEmptyTable"] = value; }
+        }
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets client identification of datasource
-        /// </summary>
         public override object DataSource
         {
             get
             {
-                if (DesignMode) return base.DataSource;
-
-                return StateManager.Personal[ClientID + ".DataSource"];
+                return (Source.IsNullOrEmpty()) 
+                    ? StateManager.Personal[ClientID + ".DataSource"]
+                    : (base.DataSource = PropertyHelper.GetValue(Page, Source));
             }
             set
             {
-                if (DesignMode)
+                PageIndex = 0;
+                
+                if (Source.IsNullOrEmpty())
+                {
+                    StateManager.Personal[ClientID + ".DataSource"] = value;
+                }
+                else
                 {
                     base.DataSource = value;
-                    return;
                 }
 
-                var source = value as IDomainObject[];
-                if (source != null)
-                {
-                    PagerSettings.Visible = (source.Length > PageSize);
-                    PageIndex = 0;
-                }
-
-                StateManager.Personal[ClientID + ".DataSource"] = value;
+                OnDataPropertyChanged();
             }
         }
 
-        /// <summary>
-        /// Gets or sets a style of BusinessGrid
-        /// </summary>
-        [Bindable(true), Category("BusinessGrid"), DefaultValue(true)]
-        public bool AutoStyle
+        public SmartView()
         {
-            get { return _autostyle; }
-            set { _autostyle = value; }
+            PageSizes = StateManager.Settings.GetOrDefault("SmartView.PageSizes", "10,20,50");
+            PageSize = StateManager.Settings.GetOrDefault("SmartView.DefaultPageSize", 20);
+            
+            AllowSorting = true;
+            AllowPaging = true;
+            EmptyDataText = "No items found.";
+            EnableViewState = true;
+            AutoGenerateColumns = false;
+            CellPadding = 0;
+
+            // Assign empty eventhandler so that we can safely call base.OnPageIndexChanging in the overridden method
+            PageIndexChanging += SmartView_PageIndexChanging;
+            // Assign empty eventhandler so that we can safely call base.OnSorting in the overridden method
+            Sorting += SmartView_Sorting;
         }
 
-        /// <summary>
-        /// Gets or sets a style of type <see cref="IStyler"/>
-        /// </summary>
-        /// <returns>Returns a style of type <see cref="IStyler"/>.</returns>
-        public static IStyler Styler
+        // Empty eventhandler so that we can safely call base.OnPageIndexChanging in the overridden method
+        private static void SmartView_Sorting(object sender, GridViewSortEventArgs e) { }
+
+        // Assign empty eventhandler so that we can safely call base.OnSorting in the overridden method
+        private static void SmartView_PageIndexChanging(object sender, GridViewPageEventArgs e) { }
+
+        protected override void OnInit(EventArgs e)
         {
-            get { return _styler; }
-            set { _styler = value; }
+            base.OnInit(e);
+
+            PagerSettings.Mode = PagerButtons.NumericFirstLast;
+            PagerSettings.PageButtonCount = 10;
+            PagerSettings.Position = PagerPosition.Bottom;
+
+            _lastexpression = string.Empty;
+            _ascending = true;
         }
 
-        /// <summary>
-        /// Gets the value of selected index of GridView
-        /// </summary>
-        public ID Current
+        protected override void OnLoad(EventArgs e)
         {
-            get
-            {
-                IDomainObject[] source = DataSource as IDomainObject[];
-                int index = (PageSize * (PageIndex) + SelectedIndex);
-                if (source != null)
-                {
-                    return source[index].Id;
-                }
+            base.OnLoad(e);
 
-                //doing it the old way
-                return IdManager.New(DataKeys[SelectedIndex].Value.ToString());
-            }
-            set
-            {
-                int index = (DataSource as IEnumerable<IDomainObject>).IndexOf(value);
+            if (Source.IsNullOrEmpty()) return;
 
-                PageIndex = index / PageSize;
-                SelectedIndex = index % PageSize;
-
-                DataBind();  // rebind otherwise the page is not correctly set
-            }
+            DataSource = PropertyHelper.GetValue(Page, Source);
+            DataKeyNames = new[] { "ID" };
         }
 
-        #endregion
+
+        protected override void OnRowCommand(GridViewCommandEventArgs e)
+        {
+            ID id;
+
+            if (this.TryGetId(e, out id)) _currentId = id;
+
+            base.OnRowCommand(e);
+        }
+
+        protected override void OnPageIndexChanging(GridViewPageEventArgs e)
+        {
+            base.OnPageIndexChanging(e);
+
+            if (e.Cancel) return;
+
+            PageIndex = e.NewPageIndex;
+            SelectedIndex = -1;
+
+            DataBind();
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            PagerSettings.Visible = DataSource != null && (DataSource as IEnumerable).Count() > PageSize;
+
+            if (!Source.IsNullOrEmpty()) DataBind();
+        }
+
+        private void SetIndex(ID value)
+        {
+            var index = (DataSource as IEnumerable<IDomainObject>).IndexOf(value);
+
+            PageIndex = index/PageSize;
+            SelectedIndex = index%PageSize;
+
+            DataBind(); // rebind otherwise the page is not correctly set
+        }
 
         #region Services
 
@@ -153,74 +164,90 @@ namespace Adf.Web.UI.SmartView
         /// <param name="e"><see cref="GridViewSortEventArgs"/></param>
         protected override void OnSorting(GridViewSortEventArgs e)
         {
-            //delegate sorting to the gridservice(s)
-            foreach (IGridService service in Services)
-                service.HandleService(GridAction.Sorting, this, e);
-        }
+            base.OnSorting(e);
 
-        /// <summary>
-        /// Provides an override of GridView paging.
-        /// </summary>
-        /// <param name="e"><see cref="GridViewPageEventArgs"/></param>
-        protected override void OnPageIndexChanging(GridViewPageEventArgs e)
-        {
-            //delegate paging to the gridservice(s)
-            foreach (IGridService service in Services)
-                service.HandleService(GridAction.Paging, this, e);
+            if (e.Cancel) return;
+
+            if (e.SortExpression == _lastexpression)
+            {
+                _ascending = !_ascending;
+            }
+            else
+            {
+                _ascending = true;
+                _lastexpression = e.SortExpression;
+            }
+
+            if (DataSource is IDomainCollection)
+            {
+                var source = (IDomainCollection) DataSource;
+
+                source.Sort(e.SortExpression, (_ascending) ? SortOrder.Ascending : SortOrder.Descending);
+
+                DataSource = source;
+            }
+
+            DataBind();
         }
 
         #endregion
 
-        #region EmptyTable
-
-        /// <summary>
-        /// Get or sets an empty table
-        /// </summary>
-        [Description("Enable or disable generating an empty table with headers if no data rows in source"), Category("Misc"), DefaultValue("true")]
-        public bool ShowEmptyTable
-        {
-            get
-            {
-                object o = ViewState["ShowEmptyTable"];
-                return (o == null || (bool)o);
-            }
-            set
-            {
-                ViewState["ShowEmptyTable"] = value;
-            }
-        }
-
-
-        /// <summary>
-        /// Provides the creation of child control of table. It is an CreateChildControls override of <see cref="System.Web.UI.WebControls.GridView"/>
-        /// </summary>
-        /// <param name="dataSource"><see cref="System.Web.UI.WebControls.GridView"/></param>
-        /// <param name="dataBinding"><see cref="System.Web.UI.WebControls.GridView"/></param>
-        /// <returns></returns>
         protected override int CreateChildControls(IEnumerable dataSource, bool dataBinding)
         {
-            int numRows = base.CreateChildControls(dataSource, dataBinding);
+            int numberofrows = base.CreateChildControls(dataSource, dataBinding);
 
-            //no data rows created, create empty table if enabled
-            if (numRows == 0 && ShowEmptyTable)
-            {
-                //create table
-                Table table = new Table {ID = ID};
+            if (numberofrows == 0 && ShowEmptyTable) { CreateEmptyRow(); }
 
-                //create a new header row
-                GridViewRow row = base.CreateRow(-1, -1, DataControlRowType.Header, DataControlRowState.Normal);
+            CreateFooter();
 
-                //convert the exisiting columns into an array and initialize
-                DataControlField[] fields = new DataControlField[Columns.Count];
-                Columns.CopyTo(fields, 0);
-                InitializeRow(row, fields);
-                table.Rows.Add(row);
+            StyleManager.Style(StyleType.Grid, this);
 
-                Controls.Add(table);
-            }
-            return numRows;
+            return numberofrows;
         }
 
-        #endregion EmptyTable
+        private void CreateEmptyRow()
+        {
+            //create table
+            var table = new Table { ID = ID };
+
+            //create a new header row
+            var row = base.CreateRow(-1, -1, DataControlRowType.Header, DataControlRowState.Normal);
+
+            //convert the exisiting columns into an array and initialize
+            var fields = new DataControlField[Columns.Count];
+
+            Columns.CopyTo(fields, 0);
+            InitializeRow(row, fields);
+            table.Rows.Add(row);
+
+            if (EmptyDataTemplate != null || !string.IsNullOrEmpty(EmptyDataText))
+            {
+                var emptyRow = new GridViewRow(-1, -1, DataControlRowType.EmptyDataRow, DataControlRowState.Normal) { CssClass = "SmartViewRow"}; 
+                var cell = new TableCell { ColumnSpan = fields.Length };
+
+                if (EmptyDataTemplate != null)
+                {
+                    EmptyDataTemplate.InstantiateIn(cell);
+                }
+                else
+                {
+                    cell.Controls.Add(new LiteralControl(ResourceManager.GetString(EmptyDataText)));
+                }
+
+                emptyRow.Cells.Add(cell);
+                table.Rows.Add(emptyRow);
+            }
+
+            Controls.Clear(); // Remove the current empty row and stuff
+            Controls.Add(table);
+        }
+
+
+        private void CreateFooter()
+        {
+            var footer = new SmartViewFooter {Owner = this, Visible = true, PageSizes = PageSizes };
+
+            Controls.Add(footer);
+        }
     }
 }

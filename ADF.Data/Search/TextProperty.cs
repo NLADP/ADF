@@ -41,6 +41,17 @@ namespace Adf.Data.Search
             Operators = new[] { OperatorType.IsEqual, OperatorType.IsLarger, OperatorType.IsLargerOrEqual, OperatorType.IsSmaller, OperatorType.IsSmallerOrEqual };
         }
     }
+    public class DateProperty : FilterProperty
+    {
+        public DateProperty(string displayname, IColumn column)
+        {
+            Type = FilterType.DateTime;
+//            DisplayPrefix = "txt";
+            DisplayName = ResourceManager.GetString(displayname);
+            Column = column;
+            Operators = new[] { OperatorType.IsLarger, OperatorType.IsLargerOrEqual, OperatorType.IsSmaller, OperatorType.IsSmallerOrEqual };
+        }
+    }
 
     public class NumericProperty : FilterProperty
     {

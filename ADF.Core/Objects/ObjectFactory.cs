@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using Adf.Core.Extensions;
 
 namespace Adf.Core.Objects
 {
@@ -22,7 +23,7 @@ namespace Adf.Core.Objects
                 {
                     ObjectFactorySection section = (ObjectFactorySection)ConfigurationManager.GetSection(ObjectFactorySection.SectionName) ??
                                                          new ObjectFactorySection();
-                    _objectProvider = (IObjectProvider)Activator.CreateInstance(section.FactoryType);
+                    _objectProvider = section.FactoryType.New<IObjectProvider>();
                 }
                 return _objectProvider;
             }

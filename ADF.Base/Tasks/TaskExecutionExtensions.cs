@@ -1,5 +1,4 @@
 ﻿using System;
-using Adf.Core.Logging;
 using Adf.Core.Tasks;
 using Adf.Core.Validation;
 
@@ -13,11 +12,10 @@ namespace Adf.Base.Tasks
             {
                 action.Invoke();
 
-                if (!ValidationManager.IsSucceeded)
-                {
-                    ValidationManager.Handle();
-                    return false;
-                }
+                if (ValidationManager.IsSucceeded) continue;
+                
+                ValidationManager.Handle();
+                return false;
             }
 
             return true;

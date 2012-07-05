@@ -52,7 +52,10 @@ namespace Adf.Base.Validation
             var currentScope = CurrentScope;
             currentScope.ValidationResult.Add(result);
 
-            LogManager.Log(LogLevel.Informational, result.ToString()); // log validation messages with informational level only for debugging purposes
+            if (result.Severity > ValidationResultSeverity.Informational)
+            {
+                LogManager.Log(LogLevel.Informational, result.ToString()); // log validation messages with informational level only for debugging purposes
+            }
         }
 
         /// <summary>

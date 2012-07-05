@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Panels;
+using Adf.Web.UI;
 
 namespace Adf.Web.Panels
 {
@@ -17,11 +18,13 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var upload = new FileUpload { Enabled = true, CssClass = ItemStyle};
+            var upload = new FileUpload { Enabled = true, CssClass = ItemStyle, Visible = panelItem.Visible };
+
+            upload.AttachToolTip(panelItem);
 
             panelItem.Target = upload;
 
-            return new List<Control> { upload };
+            return new List<Control> { upload, PanelValidator.Create(panelItem) };
         }
     }
 }
