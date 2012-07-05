@@ -25,7 +25,7 @@ namespace Adf.Base.Domain
         /// <param name="culture"></param>
         public void SetValue(object instance, PropertyInfo pi, object newvalue, CultureInfo culture = null)
         {
-            NullableConverter nullableConverter = new NullableConverter(pi.PropertyType);
+            var nullableConverter = new NullableConverter(pi.PropertyType);
             object obj;
             try
             {

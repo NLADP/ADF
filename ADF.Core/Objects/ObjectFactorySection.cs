@@ -8,7 +8,7 @@ namespace Adf.Core.Objects
         /// <summary>
         /// Specifies the name of the Section.
         /// </summary>
-        public const string SectionName = "systemFactorySection";
+        public const string SectionName = "objectFactorySection";
 
         /// <summary>
         /// Returns the Type specified in the configuration file, which is the full typename of the Dependency Injector.

@@ -102,9 +102,7 @@ namespace Adf.Web.Binding
         /// <returns>The value of the property of the business object.</returns>
         private static object GetValue(object bindableObject, PropertyInfo pi)
         {
-            if (pi == null) return null;
-
-            return pi.GetValue(bindableObject, null);
+            return pi == null ? null : pi.GetValue(bindableObject, null);
         }
 
         #endregion Get Values

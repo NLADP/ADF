@@ -45,7 +45,7 @@ namespace Adf.Base.Domain
 
             if (items != null)
             {
-                list.AddRange(from object item in items select ValueItem.New(item));
+                list.AddRange(from object item in items select ValueItem.New(item.ToString(), item, target.Equals(item)));
             }
 
             return list;

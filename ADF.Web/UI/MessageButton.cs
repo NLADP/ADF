@@ -7,7 +7,6 @@ namespace Adf.Web.UI
 	/// <summary>
 	/// Represents control that shows a link with a javascript confirmation box.
 	/// </summary>
-	[Obsolete]
 	public class MessageButton: Control, IPostBackEventHandler
 	{
         /// <summary>

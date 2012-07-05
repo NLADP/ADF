@@ -42,7 +42,7 @@ namespace Adf.Web.UI
 
         public static ValidatedCheckBoxItem Create<T>(Expression<Func<T, object>> property, bool enabled = true, bool mandatory = true)
         {
-            return Create(property.GetExpressionMember().Name, property, enabled, mandatory);
+            return Create(property.GetMemberInfo().Name, property, enabled, mandatory);
         }
 
         public static ValidatedCheckBoxItem Create<T>(string label, Expression<Func<T, object>> property, bool enabled = true, bool mandatory = true)

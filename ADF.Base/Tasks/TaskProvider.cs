@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Adf.Base.State;
 using Adf.Core.Authorization;
+using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
 using Adf.Core.State;
@@ -63,6 +63,8 @@ namespace Adf.Base.Tasks
                 return;
             }
 
+            if (origin == null) tasks.Clear();
+
             var mainType = Main.GetType();
 
             var typeName =
@@ -75,7 +77,7 @@ namespace Adf.Base.Tasks
 
             object[] parms = { name, origin ?? Main };
 
-            var task = Activator.CreateInstance(type, parms) as ITask;
+            var task = type.New<ITask>(parms);
 
             if (task == null) return;
 

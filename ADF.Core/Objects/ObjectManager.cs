@@ -22,6 +22,7 @@ namespace Adf.Core.Objects
 
         public static ICollection<T> Get<T>()
         {
+            // Set ICollection in state instead of IEnumerable to prevent putting queries in state instead of the actual items
             return StateManager.Personal[key + typeof (T)] as ICollection<T>;
         }
 
@@ -35,6 +36,8 @@ namespace Adf.Core.Objects
 
             if (item == null)
             {
+                if (defaultValue == null) return null;
+
                 item = defaultValue.Invoke();
 
                 if (list != null && !item.IsEmpty)
@@ -43,6 +46,13 @@ namespace Adf.Core.Objects
                 }
             }
             return item;
+        }
+
+        public static ICollection<T> GetListOrDefault<T>(Func<T, bool> predicate, Func<ICollection<T>> defaultList) where T : class, IDomainObject
+        {
+            var list = Get<T>();
+
+            return list != null ? list.Where(predicate).ToList() : defaultList != null ? defaultList.Invoke() : null;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Adf.Web.Binding
             Calendar calendar = control as Calendar;
             if (calendar != null)
             {
-                if (calendar.Enabled)
+                if (calendar.Enabled && calendar.Visible)
                 {
                     PropertyHelper.SetValue(bindableObject, pi, calendar.SelectedDate, CultureInfo.CurrentUICulture);
                 }
@@ -61,7 +61,7 @@ namespace Adf.Web.Binding
             DateTextBox datetext = control as DateTextBox;
             if (datetext != null)
             {
-                if (datetext.Enabled)
+                if (datetext.Enabled && datetext.Visible)
                 {
                     PropertyHelper.SetValue(bindableObject, pi, datetext.Date, CultureInfo.CurrentUICulture);
                 }
@@ -71,7 +71,7 @@ namespace Adf.Web.Binding
             var smartdatetext = control as SmartDateTextBox;
             if (smartdatetext != null)
             {
-                if (smartdatetext.Enabled)
+                if (smartdatetext.Enabled && smartdatetext.Visible && !smartdatetext.ReadOnly)
                 {
                     if (smartdatetext.IsValid)
                     {
@@ -82,7 +82,6 @@ namespace Adf.Web.Binding
                         ValidationManager.AddError(pi, "Adf.Business.NotInstantiable", smartdatetext.Text, pi.Name);
                     }
                 }
-                return;
             }
         }
     }

@@ -57,7 +57,7 @@ namespace Adf.Web.UI
 
         public static ValidatedRadioButtonListItem Create<T>(Expression<Func<T, object>> property, bool enabled = true, bool mandatory = true, RepeatDirection direction = RepeatDirection.Horizontal)
         {
-            return Create(property.GetExpressionMember().Name, property, enabled, mandatory, direction);
+            return Create(property.GetMemberInfo().Name, property, enabled, mandatory, direction);
         }
 
         public static ValidatedRadioButtonListItem Create<T>(string label, Expression<Func<T, object>> property, bool enabled = true, bool mandatory = true, RepeatDirection direction = RepeatDirection.Horizontal)

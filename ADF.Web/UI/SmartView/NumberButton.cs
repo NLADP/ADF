@@ -1,10 +1,10 @@
 namespace Adf.Web.UI.SmartView
 {
-    public class NumberButton : BaseButton
+    public class NumberButton : TextButton
     {
         public NumberButton()
         {
-            ColumnStyle = "NumberColumn";
+            FieldStyle = "NumberColumn";
         }
     }
 }

@@ -41,10 +41,10 @@ namespace Adf.Web.Binding
         /// <param name="p">The parameters used for binding. Currently not being used.</param>
         public virtual void Bind(object control, object value, PropertyInfo pi, params object[] p)
         {
-            GridView grid = control as GridView;
+            var grid = control as GridView;
             if (grid == null) return;
 
-            DataSet set = value as DataSet;
+            var set = value as DataSet;
             if (set == null) return;
 
             grid.DataSource = set;
@@ -68,7 +68,7 @@ namespace Adf.Web.Binding
         {
             if (values == null) return;
 
-            GridView grid = control as GridView;
+            var grid = control as GridView;
             if (grid == null) return;
 
             grid.DataSource = values;
@@ -90,7 +90,7 @@ namespace Adf.Web.Binding
         /// <param name="p">The parameters used for binding. Currently not being used.</param>
         public virtual void Bind(object control, IEnumerable values, params object[] p)
         {
-            GridView grid = control as GridView;
+            var grid = control as GridView;
             if (grid == null) return;
 
             grid.DataSource = values;

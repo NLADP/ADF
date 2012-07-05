@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Resources;
+using Adf.Core.Styling;
 
 namespace Adf.Web.UI
 {
@@ -11,6 +12,12 @@ namespace Adf.Web.UI
     /// </summary>
     public class SmartPanel : WebControl, INamingContainer
     {
+        public string PanelStyle = string.Empty;
+        public string RowStyle = string.Empty;
+        public string LabelCellStyle = string.Empty;
+        public string ControlCellStyle = string.Empty;
+        public string LabelStyle = string.Empty;
+
         public override ControlCollection Controls
         {
             get
@@ -67,31 +74,6 @@ namespace Adf.Web.UI
         }
 
         /// <summary>
-        /// Represent the style of a table.
-        /// </summary>
-        public string PanelStyle = string.Empty;
-
-        /// <summary>
-        /// Represent the style of a table row.
-        /// </summary>
-        public string RowStyle = string.Empty;
-
-        /// <summary>
-        /// Represent the column style of a table where the display text will resides.
-        /// </summary>
-        public string LabelCellStyle = string.Empty;
-
-        /// <summary>
-        /// Represent the column style of a table where the control of <see cref="Adf.Web.UI.SmartPanel"/> will resides.
-        /// </summary>
-        public string ControlCellStyle = string.Empty;
-
-        /// <summary>
-        /// Represent the style of a label control.
-        /// </summary>
-        public string LabelStyle = string.Empty;
-
-        /// <summary>
         /// Adds the specified <see cref="Adf.Web.UI.IPanelItem"/> object to the end of the list.
         /// </summary>
         /// <param name="panelItem">The <see cref="Adf.Web.UI.IPanelItem"/> to add to the end of the list. The value can be null for reference types.</param>
@@ -105,16 +87,15 @@ namespace Adf.Web.UI
         /// </summary>
         protected override void CreateChildControls()
         {
-            Table htmlTable = new Table();
+            var htmlTable = new Table();
 
             foreach (IPanelItem panelItem in panelItems)
             {
                 if (panelItem.Visible)
                 {
-                    if (!DesignMode)
-                        panelItem.Styler.SetStyles(this);
+                    if (!DesignMode) StyleManager.Style(StyleType.Panel, this);
 
-                    TableRow row = new TableRow {CssClass = RowStyle};
+                    var row = new TableRow {CssClass = RowStyle};
 
                     TableCell cell;
 
@@ -123,7 +104,6 @@ namespace Adf.Web.UI
                         cell = new TableCell { CssClass = LabelCellStyle };
                         if (panelItem.Id != null) cell.ID = "panelLabelItem_" + panelItem.Id;
                         
-                        //                        panelItem.LabelControls.CssClass = LabelStyle;
                         foreach (WebControl labelControl in panelItem.LabelControls)
                         {
                             cell.Controls.Add(labelControl);

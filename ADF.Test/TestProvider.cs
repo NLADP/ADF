@@ -162,6 +162,13 @@ namespace Adf.Test
                .Where(item => item.Action == action);
         }
 
+        public virtual IEnumerable<TestItem> FindItems(TestItemType type, TestAction action)
+        {
+            return _items
+               .Where(item => item.Type == type)
+               .Where(item => item.Action == action);
+        }
+
         #endregion
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Adf.Core.Data;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 using Adf.Core.Identity;
 
 namespace Adf.Base.Data
@@ -186,9 +187,7 @@ namespace Adf.Base.Data
 
             TryGetValue(property, out value);
 
-            if (value == null) return default(T);
-
-            return (T)Activator.CreateInstance(typeof(T), value);
+            return value == null ? default(T) : typeof(T).New<T>(value);
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Base.Panels;
+using Adf.Core.Extensions;
 using Adf.Core.Panels;
 using Adf.Web.UI;
 
@@ -12,19 +13,18 @@ namespace Adf.Web.Panels
     {
         public bool CanRender(PanelItemType type)
         {
-            var types = new[] { PanelItemType.CheckBox };
-
-            return types.Contains(type);
+            return type.IsIn(PanelItemType.CheckBox);
         }
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var validator = SmartValidator.Create(panelItem.GetId());
-            var checkBox = new CheckBox { ID = panelItem.GetId(), Enabled = panelItem.Editable, CssClass = ItemStyle };
+            var checkBox = new CheckBox { ID = panelItem.GetId(), Enabled = panelItem.Editable, CssClass = ItemStyle, Visible = panelItem.Visible};
+
+            checkBox.AttachToolTip(panelItem);
 
             panelItem.Target = checkBox;
 
-            return new List<Control> { checkBox, validator };
+            return new List<Control> { checkBox, PanelValidator.Create(panelItem) };
         }
     }
 }

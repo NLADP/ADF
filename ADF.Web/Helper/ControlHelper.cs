@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Adf.Web.UI;
 
 namespace Adf.Web.Helper
 {
@@ -62,49 +58,17 @@ namespace Adf.Web.Helper
         }
 
         /// <summary>
-        /// Gets the string value of the specified <see cref="System.Web.UI.Control"/>.
-        /// </summary>
-        /// <param name="control">The <see cref="System.Web.UI.Control"/> to get the value of.</param>
-        /// <returns>The string value of the <see cref="System.Web.UI.Control"/>.</returns>
-        public static string GetValue(Control control)
-        {
-            Label l = control as Label;
-            if (l != null) return l.Text;
-
-            TextBox t = control as TextBox;
-            if (t != null) return t.Text;
-
-            CheckBox cb = control as CheckBox;
-            if (cb != null) return cb.Text;
-
-            DateTextBox dt = control as DateTextBox;
-            if (dt != null) return dt.Date.ToString();
-
-            RadioButtonList rbl = control as RadioButtonList;
-            if (rbl != null) return rbl.SelectedValue;
-
-            DropDownList ddl = control as DropDownList;
-            if (ddl != null) return ddl.SelectedValue;
-
-            Calendar c = control as Calendar;
-            if (c != null) return c.SelectedDate.ToString();
-
-            return string.Empty;
-        }
-
-        /// <summary>
         /// Searches the specified container <see cref="System.Web.UI.Control"/> for Controls 
         /// of the specified <see cref="System.Type"/> or any of its subtypes.
         /// </summary>
         /// <param name="container">The container <see cref="System.Web.UI.Control"/> to search.</param>
-        /// <param name="controlType">The <see cref="System.Type"/> to check against.</param>
         /// <returns>The list of <see cref="System.Web.UI.Control"/>s of the specified 
         /// <see cref="System.Type"/> or any of its subtypes.</returns>
-        public static List<Control> List(Control container, Type controlType)
+        public static List<T> List<T>(this Control container) where T : Control
         {
-            var list = new List<Control>();
+            var list = new List<T>();
 
-            return List(list, container, controlType);
+            return List(list, container);
         }
 
         /// <summary>
@@ -114,17 +78,15 @@ namespace Adf.Web.Helper
         /// </summary>
         /// <param name="l">The list of <see cref="System.Web.UI.Control"/>s to add to.</param>
         /// <param name="container">The container <see cref="System.Web.UI.Control"/> to search.</param>
-        /// <param name="controlType">The <see cref="System.Type"/> to check against.</param>
         /// <returns>The list of <see cref="System.Web.UI.Control"/>s of the specified 
         /// <see cref="System.Type"/> or any of its subtypes.</returns>
-        private static List<Control> List(List<Control> l, Control container, Type controlType)
+        private static List<T> List<T>(List<T> l, Control container) where T : Control
         {
             foreach (Control c in container.Controls)
             {
-                if (c.GetType() == controlType || c.GetType().IsSubclassOf(controlType))
-                    l.Add(c);
+                if (c.GetType() == typeof(T) || c.GetType().IsSubclassOf(typeof(T))) l.Add((T)c);
 
-                List(l, c, controlType);
+                List(l, c);
             }
 
             return l;

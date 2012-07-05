@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
 using Adf.Core.Validation;
@@ -11,33 +10,30 @@ namespace Adf.Base.Domain
 {
     public static class DomainCollectionExtensions
     {
-        public static DomainCollection<T> SortAscending<T>(this DomainCollection<T> collection, string sortProperty) where T : IDomainObject
+        public static DomainCollection<T> SortAscending<T>(this DomainCollection<T> collection, string sortProperty) where T : class, IDomainObject
         {
-            collection.Items.Sort(new ListSorter<T>(sortProperty, SortOrder.Ascending));
-
-            return collection;
+            return (DomainCollection<T>) collection.Sort(sortProperty, SortOrder.Ascending);
         }
 
-        public static DomainCollection<T> SortDescending<T>(this DomainCollection<T> collection, string sortProperty) where T : IDomainObject
+        public static DomainCollection<T> SortDescending<T>(this DomainCollection<T> collection, string sortProperty) where T : class, IDomainObject
         {
-            collection.Items.Sort(new ListSorter<T>(sortProperty, SortOrder.Descending));
-
-            return collection;
+            return (DomainCollection<T>) collection.Sort(sortProperty, SortOrder.Descending);
         }
 
-        public static DomainCollection<T> SortAscending<T>(this DomainCollection<T> collection, Expression<Func<T, object>> sortProperty) where T : IDomainObject
+        public static DomainCollection<T> SortAscending<T>(this DomainCollection<T> collection, Expression<Func<T, object>> sortProperty) where T : class, IDomainObject
         {
-            return collection.SortAscending(sortProperty.GetPropertyPath());
+            return collection.Sort(sortProperty, SortOrder.Ascending);
         }
 
-        public static DomainCollection<T> SortDescending<T>(this DomainCollection<T> collection, Expression<Func<T, object>> sortProperty) where T : IDomainObject
+        public static DomainCollection<T> SortDescending<T>(this DomainCollection<T> collection, Expression<Func<T, object>> sortProperty) where T : class, IDomainObject
         {
-            return collection.SortDescending(sortProperty.GetPropertyPath());
+            return collection.Sort(sortProperty, SortOrder.Descending);
         }
 
-        public static DomainCollection<T> Set<T>(this DomainCollection<T> collection, Expression<Func<T, object>> property, IDomainObject value) where T : IDomainObject
+        public static DomainCollection<T> Set<T>(this DomainCollection<T> collection, Expression<Func<T, object>> expression, IDomainObject value) where T : class, IDomainObject
         {
-            var info = property.GetExpressionMember() as PropertyInfo;
+            var info = expression.GetPropertyInfo();
+
             foreach (var c in collection)
             {
                 info.SetValue(c, value, new object[0]);
@@ -46,9 +42,9 @@ namespace Adf.Base.Domain
             return collection;
         }
 
-        public static DomainCollection<T> InitializeProperty<T>(this DomainCollection<T> collection, Expression<Func<T, object>> property) where T : IDomainObject
+        public static DomainCollection<T> InitializeProperty<T>(this DomainCollection<T> collection, Expression<Func<T, object>> expression) where T : class, IDomainObject
         {
-            var info = property.GetExpressionMember() as PropertyInfo;
+            var info = expression.GetPropertyInfo();
 
             foreach (var item in collection)
             {
@@ -58,17 +54,17 @@ namespace Adf.Base.Domain
             return collection;
         }
 
-        public static bool IsNullOrEmpty<T>(this DomainCollection<T> collection) where T : IDomainObject
+        public static bool IsNullOrEmpty<T>(this DomainCollection<T> collection) where T : class, IDomainObject
         {
-            return collection == null || collection.IsInitialised;
+            return collection == null || collection.Count == 0;
         }
 
-        public static DomainCollection<T> Where<T>(this DomainCollection<T> source, Func<T, bool> predicate) where T : IDomainObject
+        public static DomainCollection<T> Where<T>(this DomainCollection<T> source, Func<T, bool> predicate) where T : class, IDomainObject
         {
             return new DomainCollection<T>((source as IEnumerable<T>).Where(predicate));
         }
 
-        public static bool Validate<T>(this DomainCollection<T> collection) where T : IDomainObject
+        public static bool Validate<T>(this DomainCollection<T> collection) where T : class, IDomainObject
         {
             if (collection.IsNullOrEmpty()) return true;
 
@@ -79,5 +75,11 @@ namespace Adf.Base.Domain
 
             return ValidationManager.IsSucceeded;
         }
+
+        public static bool IsNotInitialized<T>(this DomainCollection<T> collection) where T : class, IDomainObject
+        {
+            return collection == null || !collection.IsInitialised;
+        }
+
     }
 }

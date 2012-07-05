@@ -1,4 +1,5 @@
 using System;
+using Adf.Core.Extensions;
 
 namespace Adf.Core.State
 {
@@ -14,31 +15,37 @@ namespace Adf.Core.State
         /// <returns>Instance of T.</returns>
         public static T GetOrCreate<T>(this IStateProvider provider, string key)
         {
-            if (!provider.Has(key)) { provider[key] = Activator.CreateInstance<T>(); }
+            object value = provider[key];
 
-            return (T) provider[key];
+            if (value == null) { provider[key] = value = typeof(T).New<T>(); }
+
+            return (T)Convert.ChangeType(value, typeof(T));
         }
         
-        public static T GetOrSetValue<T>(this IStateProvider provider, string key, Func<T> value)
+        public static T GetOrSetValue<T>(this IStateProvider provider, string key, Func<T> defaultvalue)
         {
-            if (!provider.Has(key)) { provider[key] = value.Invoke(); }
+            object value = provider[key];
 
-            return (T)provider[key];
+            if (value == null)
+            {
+                value = defaultvalue.Invoke();
+
+                provider[key] = value;
+            }
+
+            return (T)Convert.ChangeType(value, typeof(T));
         }
 
         public static T GetOrSetValue<T>(this IStateProvider provider, string key, T value)
         {
-            if (!provider.Has(key)) { provider[key] = value; }
-
-            return (T)provider[key];
+            return provider.GetOrSetValue(key, () => value);
         }
         
-        public static T GetOrDefault<T>(this IStateProvider provider, string key, T value)
+        public static T GetOrDefault<T>(this IStateProvider provider, string key, T defaultValue = default(T))
         {
-            if (provider.Has(key)) { return provider[key] == null ? value : (T) provider[key]; }
+            object value = provider[key];
 
-            return value;
+            return value == null ? defaultValue : (T) Convert.ChangeType(value, typeof (T));
         }
-
     }
 }

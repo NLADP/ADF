@@ -27,7 +27,7 @@ namespace Adf.Base.Query
         /// 7 = Group By
         /// </summary>
         private const string _select = "SELECT {4} {3} {2} FROM {0} {5} {1} {6} {7}";
-        private const string _delete = "DELETE FROM {0} {1}";
+        private const string _delete = "DELETE {0} FROM {0} {5} {1}";
         private const string _count = "SELECT COUNT(*) FROM {0} {5} {1}";
         
         public DataSourceType Type { get { return DataSourceType.SqlServer;  } }
@@ -227,9 +227,9 @@ namespace Adf.Base.Query
             var parameters = string.Join(", ", wheres.Select(w => w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name));
 
             var result = string.Format("INSERT INTO {0} ({1}) VALUES({2})", from, columns, parameters);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-
+#endif
             return result;
         }
 
@@ -247,9 +247,9 @@ namespace Adf.Base.Query
                                                          w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name)));
 
             var result = string.Format("UPDATE {0} SET {1} {2}", from, sets, where);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-
+#endif
             return result;
         }
 
@@ -272,9 +272,9 @@ namespace Adf.Base.Query
             var groupby = ParseGroupBy(query.GroupBys);
 
             var result = string.Format(CultureInfo.InvariantCulture, statement, from, where, select, top, distinct, joins, orderby, groupby);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-            
+#endif            
             return result;
         }
 

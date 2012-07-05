@@ -17,7 +17,7 @@ namespace Adf.Base.Domain
         {
             ValidationManager.Validate(domainObject);
 
-            foreach (var pi in GetCompositions(domainObject))
+            foreach (var pi in domainObject.GetCompositions())
             {
                 var value = pi.GetValue(domainObject, null);
                 if (value == null)
@@ -108,7 +108,7 @@ namespace Adf.Base.Domain
                 {
                     var children = value as IDomainCollection;
 
-                    if (!children.IsAltered && !children.HasBeenRemoved)
+                    if (!children.IsAltered && !children.HasRemovedItems)
                         continue;
 
                     if (!children.Save())
@@ -140,23 +140,33 @@ namespace Adf.Base.Domain
                 var domainCollection = value as IDomainCollection;
                 if (domainCollection != null)
                 {
-                    return domainCollection.RemoveAll();
+                    if (!domainCollection.RemoveAll().Save()) return false;
                 }
 
                 var domainObject = value as IDomainObject;
                 if (domainObject != null)
                 {
-                    return domainObject.Remove();
+                    if (!domainObject.Remove()) return false;
                 }
             }
             return true;
         }
 
-        private static IEnumerable<PropertyInfo> GetCompositions(IDomainObject domainObject)
+        private static IEnumerable<PropertyInfo> GetCompositions(this IDomainObject domainObject)
         {
             return domainObject.GetType()
                 .GetProperties()
                 .Where(pi => CompositionAttribute.IsComposite(pi));
+        }
+
+        public static T CopyProperties<T>(this T copy, T origin) where T : IDomainObject
+        {
+            foreach (var pi in copy.GetType().GetProperties().Where(pi => pi.CanWrite))
+            {
+                pi.SetValue(copy, pi.GetValue(origin, null), null);
+            }
+
+            return copy;
         }
     }
 }

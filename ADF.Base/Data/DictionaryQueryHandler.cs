@@ -342,6 +342,7 @@ namespace Adf.Base.Data
             {
                 if (col.Key.IsAutoIncrement || col.Key.IsTimestamp) continue;                  // auto increment fields are not saved
                 if (col.Key.IsIdentity && !state.IsNew) continue;       // primary key is not saved when object is not new
+                if (state.IsNew && col.Value == null) continue;         // dont specify null values when new to allow default values
 
                 q.Selects.Add(new Expression { Column = col.Key, Type = ExpressionType.Column });
                 q.Wheres.Add(new Where { Column = col.Key, Parameter = new Parameter(col.Value, ParameterType.QueryParameter) });
