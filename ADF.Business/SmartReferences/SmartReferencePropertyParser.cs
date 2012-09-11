@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
+using Adf.Core.Extensions;
 
 namespace Adf.Business.SmartReferences
 {
@@ -64,7 +65,7 @@ namespace Adf.Business.SmartReferences
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a collection of instances of the type of the target having an empty ValueItem</returns>
-        public IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target);
 
@@ -74,6 +75,11 @@ namespace Adf.Business.SmartReferences
             }
 
             return collection;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection(targetType.New<ISmartReference>(), includeEmpty, items);
         }
 
         /// <summary>

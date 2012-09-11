@@ -26,18 +26,6 @@ namespace Adf.Web.UI.SmartView
             return item.DataItem;
         }
 
-        public static string Compose(this SmartField smartfield, object entity, string field, string format)
-        {
-            if (smartfield == null) throw new ArgumentNullException("smartfield");
-
-            var result = String.Empty;
-
-            if (entity != null && !field.IsNullOrEmpty()) result = FormatHelper.ToString(PropertyHelper.GetValue(entity, field));
-            if (!format.IsNullOrEmpty()) result = String.Format(format, result);
-
-            return result;
-        }
-
         public static bool IsEnabled(this SmartField smartfield, object entity, string isEmpty)
         {
             if (smartfield == null) throw new ArgumentNullException("smartfield");
@@ -51,11 +39,11 @@ namespace Adf.Web.UI.SmartView
             return signed ^ Convert.ToBoolean(PropertyHelper.GetValue(entity, visibleField));
         }
 
-        public static string Compose(this SmartField smartfield, object entity, string value, string field, string format)
+        public static string Compose(this SmartField smartfield, object entity, string field, string format, string value = null)
         {
             if (smartfield == null) throw new ArgumentNullException("smartfield");
 
-            var result = (entity != null && !field.IsNullOrEmpty()) ? FormatHelper.ToString(PropertyHelper.GetValue(entity, field)) : value;
+            var result = (entity != null && !field.IsNullOrEmpty()) ? FormatHelper.ToString(PropertyHelper.GetValue(entity, field), breakLongWords:true) : (value ?? string.Empty);
             if (!format.IsNullOrEmpty()) result = String.Format(format, result);
 
             return result;

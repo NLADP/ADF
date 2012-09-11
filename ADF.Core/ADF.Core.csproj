@@ -101,6 +101,7 @@
     <Compile Include="Authorization\IRole.cs" />
     <Compile Include="Authorization\IUser.cs" />
     <Compile Include="Binding\BindManager.cs" />
+    <Compile Include="Binding\BindScope.cs" />
     <Compile Include="Binding\IControlBinder.cs" />
     <Compile Include="Binding\IControlPersister.cs" />
     <Compile Include="Binding\IPlatformBinder.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Mail\IMailProvider.cs" />
     <Compile Include="Mail\MailManager.cs" />
+    <Compile Include="Menu\MenuObject.cs" />
+    <Compile Include="Menu\MenuObjectExtensions.cs" />
     <Compile Include="Messaging\FieldDefinition.cs" />
     <Compile Include="Messaging\FieldDefinitionType.cs" />
     <Compile Include="Messaging\IMessageDefinitionProvider.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="Objects\ObjectFactorySection.cs" />
     <Compile Include="Objects\ObjectManager.cs" />
     <Compile Include="Objects\ObjectFactoryConfigurationException.cs" />
+    <Compile Include="Objects\ObjectScope.cs" />
     <Compile Include="Panels\AdfPanel.cs" />
     <Compile Include="Panels\IPanelItemRenderer.cs" />
     <Compile Include="Panels\IPanelRenderer.cs" />

@@ -44,7 +44,7 @@ namespace Adf.Web.UI.SmartView
             button.CommandArgument = this.Compose(entity, IdField, null);
             button.Visible = this.IsEnabled(entity, icon);
 
-            var message = this.Compose(entity, MessageSubject, MessageField, MessageFormat);
+            var message = this.Compose(entity, MessageField, MessageFormat, MessageSubject);
             
             if (!message.IsNullOrEmpty()) { button.OnClientClick = @"return confirm('" + message + "');"; }
         }

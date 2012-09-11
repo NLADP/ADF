@@ -34,7 +34,7 @@ namespace Adf.Web.UI.SmartView
 
             var results = new Literal { Text = string.Format(ResourceManager.GetString("Total results: {0}"), ItemCount) };
 
-            var dropdown = new DropDownList { AutoPostBack = true };
+            var dropdown = new DropDownList { AutoPostBack = true, ID = "ddlPageSize" };
 
             foreach (var pageSize in PageSizes.Trim().Split(','))
             {

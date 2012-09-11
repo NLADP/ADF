@@ -30,7 +30,10 @@ namespace Adf.Web.Panels
         public string ItemCellStyle = string.Empty;
         public string ItemStyle = string.Empty;
 
-        protected string DateFormat = string.Format("{0}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
+        protected string DateFormat
+        {
+            get { return string.Format("{0}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern); }
+        }
 
         protected BaseRenderer()
         {

@@ -7,7 +7,6 @@ using Adf.Base.Query;
 using Adf.Core.Data;
 using Adf.Core.Objects;
 using Adf.Core.Query;
-using Adf.Core.Validation;
 
 namespace Adf.Base.Data
 {
@@ -66,13 +65,25 @@ namespace Adf.Base.Data
                 var command = (SqlCommand) Provider.GetCommand(DataSource, connection, query);
                 da.SelectCommand = command;
 
-                var reader = command.ExecuteReader(CommandBehavior.KeyInfo);
+                // try get cached schema
+                var describers = GetSchema(query);
+
+                SqlDataReader reader;
+                if (describers == null)
+                {
+                    reader = command.ExecuteReader(CommandBehavior.KeyInfo);
+                    describers = GetSchema(query, reader);
+                }
+                else
+                {
+                    reader = command.ExecuteReader();
+                }
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        result.Add(CreateState(query, reader));
+                        result.Add(CreateState(describers, reader));
                     }
                 }
             }
@@ -101,43 +112,91 @@ namespace Adf.Base.Data
             return RunQuery(query).SingleOrDefault() ?? NullInternalState.Null;
         }
 
-        private IInternalState CreateState(IAdfQuery query, SqlDataReader reader = null)
+        private readonly Dictionary<DataSources, Dictionary<ITable, Dictionary<string, ColumnDescriber>>> _cachedDescribers = new Dictionary<DataSources, Dictionary<ITable, Dictionary<string, ColumnDescriber>>>();
+        private readonly object _lock = new object();
+
+        private Dictionary<string, ColumnDescriber> GetSchema(IAdfQuery query, SqlDataReader reader = null)
         {
-            var state = new DictionaryState { IsNew = true };
+            Dictionary<string, ColumnDescriber> describers;
 
-            if (reader != null)
+            var table = query.Tables[0];
+
+            if (query.Selects.Count == 0 && query.Tables.Count == 1)
             {
-                var schema = reader.GetSchemaTable();
-
-                if (schema == null) throw new InvalidOperationException("could not load schema");
-
-                var table = new TableDescriber(query.Tables[0].Name, DataSource);
-
-                for (int i = 0; i < reader.VisibleFieldCount; i++)
+                Dictionary<ITable, Dictionary<string, ColumnDescriber>> datasource;
+                if (_cachedDescribers.TryGetValue(table.DataSource, out datasource))
                 {
-                    var column = new ColumnDescriber(reader.GetName(i), table,
-                                                     isIdentity: (bool) schema.Rows[i]["IsKey"],
-                                                     isAutoIncrement: (bool) schema.Rows[i]["IsAutoIncrement"],
-                                                     isTimestamp: (bool) schema.Rows[i]["IsRowVersion"]);
-
-                    if (reader.HasRows)
+                    if (datasource.TryGetValue(table, out describers))
                     {
-                        var value = reader[i];
-                        if (value == DBNull.Value) value = null;
-                        
-                        state[column] = value;
-
-                        state.IsNew = false;
+                        return describers;
                     }
-                    else
-                    {
-                        state[column] = null;   // just add column info
-                    }
+                }
+                else
+                {
+                    lock(_lock) _cachedDescribers.Add(table.DataSource, new Dictionary<ITable, Dictionary<string, ColumnDescriber>>());
                 }
             }
 
-//            if (reader != null && reader.HasRows && state.Timestamp == null) throw new InvalidOperationException("Row has no Timestamp field");
+            if (reader == null) return null;
 
+            describers = new Dictionary<string, ColumnDescriber>();
+
+            var schema = reader.GetSchemaTable();
+
+            if (schema == null) throw new InvalidOperationException("could not load schema");
+
+            for (int i = 0; i < reader.VisibleFieldCount; i++)
+            {
+                var columnName = reader.GetName(i);
+                var column = new ColumnDescriber(columnName, table,
+                                                 isIdentity: (bool) schema.Rows[i]["IsKey"],
+                                                 isAutoIncrement: (bool) schema.Rows[i]["IsAutoIncrement"],
+                                                 isTimestamp: (bool) schema.Rows[i]["IsRowVersion"]);
+
+                describers.Add(columnName, column);
+            }
+
+            if (query.Selects.Count == 0 && query.Tables.Count == 1)
+            {
+                lock (_lock) _cachedDescribers[table.DataSource][table] = describers;
+            }
+            return describers;
+        }
+
+        private IInternalState CreateState(Dictionary<string, ColumnDescriber> describers, SqlDataReader reader = null)
+        {
+            var state = new DictionaryState { IsNew = true };
+
+            if (reader == null)     // New
+            {
+                foreach (var describer in describers)
+                {
+                    state.Add(describer.Value, null);
+                }
+
+                return state;
+            }
+            
+            for (int i = 0; i < reader.VisibleFieldCount; i++)
+            {
+                ColumnDescriber column;
+
+                if (!describers.TryGetValue(reader.GetName(i), out column)) throw new InvalidOperationException("column not found: " + reader.GetName(i));
+
+                if (reader.HasRows)
+                {
+                    var value = reader.GetValue(i);
+                    if (value == DBNull.Value) value = null;
+
+                    state[column] = value;
+
+                    state.IsNew = false;
+                }
+                else
+                {
+                    state[column] = null;   // just add column info
+                }
+            }
             return state;
         }
 
@@ -259,6 +318,10 @@ namespace Adf.Base.Data
         {
             if (query == null) throw new ArgumentNullException("query");
 
+            var describers = GetSchema(query);
+
+            if (describers != null) return CreateState(describers);
+
             IDbConnection connection = Provider.GetConnection(DataSource);
 
             IInternalState result = null;
@@ -271,7 +334,7 @@ namespace Adf.Base.Data
 
                 var reader = command.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly);
                 
-                result = CreateState(query, reader);
+                result = CreateState(GetSchema(query, reader), reader);
             }
             catch (Exception exception)
             {

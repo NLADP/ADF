@@ -42,6 +42,14 @@ namespace Adf.Base.Domain
             return collection;
         }
 
+        /// <summary>
+        /// Initializes a property by getting the value. This could be a heavy operation depending on the size of the collection.
+        /// Note: Make sure the expression is optimized!
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static DomainCollection<T> InitializeProperty<T>(this DomainCollection<T> collection, Expression<Func<T, object>> expression) where T : class, IDomainObject
         {
             var info = expression.GetPropertyInfo();
@@ -81,5 +89,9 @@ namespace Adf.Base.Domain
             return collection == null || !collection.IsInitialised;
         }
 
+        public static DomainCollection<T> ToDomainCollection<T>(this IEnumerable<T> enumerable) where T : class, IDomainObject
+        {
+            return new DomainCollection<T>(enumerable);
+        }
     }
 }

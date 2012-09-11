@@ -74,6 +74,13 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static AdfPanel ShowCheckBoxList<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(PanelItemType.CheckBoxList, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
         public static AdfPanel ShowInfoIcon<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 16, bool? mandatory = false, bool? editable = false)
         {
             panel.CreateItem(PanelItemType.InfoIcon, property, label, width, mandatory, editable);

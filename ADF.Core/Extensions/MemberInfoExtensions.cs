@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Linq;
 
 namespace Adf.Core.Extensions
 {
@@ -30,7 +31,7 @@ namespace Adf.Core.Extensions
             return (PropertyInfo) GetMemberInfo(expression);
         }
 
-        public static MemberInfo GetMemberInfo<T>(this Expression<Func<T, object>> expression)
+        public static MemberInfo GetMemberInfo<T, V>(this Expression<Func<T, V>> expression)
         {
             var body = ((expression.Body is MemberExpression)
                            ? expression.Body
@@ -40,7 +41,10 @@ namespace Adf.Core.Extensions
 
             if (body == null) throw new ArgumentException("Expression is not a valid member expression");
 
-            return body.Member;
+            // body.Member doesn't return always the correct DeclaringType (for example when a property is overridden in a sub class)
+            return body.Expression.Type.GetMember(body.Member.Name).Single();
+//
+//            return body.Member;
         }
 
         public static string GetPropertyPath<T>(this Expression<Func<T, object>> propertyExpression)

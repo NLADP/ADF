@@ -211,7 +211,7 @@ namespace Adf.Web.UI.SmartView
             var table = new Table { ID = ID };
 
             //create a new header row
-            var row = base.CreateRow(-1, -1, DataControlRowType.Header, DataControlRowState.Normal);
+            var row = CreateRow(-1, -1, DataControlRowType.Header, DataControlRowState.Normal);
 
             //convert the exisiting columns into an array and initialize
             var fields = new DataControlField[Columns.Count];

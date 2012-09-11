@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Reflection;
 using Adf.Core.Objects;
+using Adf.Core.State;
 
 namespace Adf.Core.Binding
 {
@@ -9,6 +12,37 @@ namespace Adf.Core.Binding
     public static class BindManager
 	{
 	    private static IPlatformBinder _platformbinder;
+
+        private const string key = "BindManager.Scope";
+
+        private static string GetKey(PropertyInfo pi)
+        {
+            return string.Format("{0}:{1}.{2}", key, pi.DeclaringType, pi.Name);
+        }
+
+        public static void RegisterScope(PropertyInfo property, Func<IEnumerable> collection)
+        {
+            if (property == null) throw new ArgumentNullException("property");
+
+            StateManager.Personal[GetKey(property)] = collection;
+        }
+
+	    public static void UnregisterScope(PropertyInfo property)
+	    {
+	        if (property == null) throw new ArgumentNullException("property");
+
+	        StateManager.Personal.Remove(GetKey(property));
+	    }
+
+	    public static IEnumerable GetListFor(PropertyInfo property)
+        {
+            if (property == null) return null;
+
+	        var func = StateManager.Personal[GetKey(property)] as Func<IEnumerable>;
+            if (func == null) return null;
+
+            return func.Invoke();
+        }
 
 	    private static readonly object _lock = new object();
 

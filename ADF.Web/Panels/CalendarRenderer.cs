@@ -19,9 +19,11 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var box = new SmartDateTextBox { ID = panelItem.GetId(), TextMode = TextBoxMode.SingleLine, Wrap = true, Enabled = panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), FormatDisplay = DateFormat, CssClass = ItemStyle, Visible = panelItem.Visible };
-            var calendar = new CalendarExtender { TargetControlID = box.UniqueID, Format = DateFormat, EnabledOnClient = panelItem.Editable };
-            var description = new Label { Width = new Unit(panelItem.Width, UnitType.Ex), Text = DateFormat, CssClass = ItemStyle, Visible = panelItem.Visible };
+            var formatDisplay = DateFormat;
+
+            var box = new SmartDateTextBox { ID = panelItem.GetId(), TextMode = TextBoxMode.SingleLine, Wrap = true, Enabled = panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), FormatDisplay = formatDisplay, CssClass = ItemStyle, Visible = panelItem.Visible };
+            var calendar = new CalendarExtender { TargetControlID = box.UniqueID, Format = formatDisplay, EnabledOnClient = panelItem.Editable };
+            var description = new Label { Text = string.Format("({0})", formatDisplay), CssClass = ItemStyle, Visible = panelItem.Visible };
 
             box.AttachToolTip(panelItem);
 

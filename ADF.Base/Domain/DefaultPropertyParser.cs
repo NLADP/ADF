@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
+using Adf.Core.Resources;
 
 namespace Adf.Base.Domain
 {
@@ -39,16 +40,21 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">Not used.</param>
         /// <param name="items"></param>
         /// <returns>Returns a new instance of ValueCollection with no ValueItems.</returns>
-        public IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var list = new List<ValueItem>();
 
             if (items != null)
             {
-                list.AddRange(from object item in items select ValueItem.New(item.ToString(), item, target.Equals(item)));
+                list.AddRange(from object item in items select ValueItem.New(ResourceManager.GetString(item.ToString()), item, item.Equals(target)));
             }
 
             return list;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection((object) null, includeEmpty, items);
         }
 
         /// <summary>

@@ -28,6 +28,11 @@ namespace Adf.Base.Types
             return (T)new NullableConverter(typeof(T)).ConvertFrom(value);
         }
 
+        public object To(Type type, object value)
+        {
+            return new NullableConverter(type).ConvertFrom(value);
+        }
+
         /// <summary>
         /// Extracts the primitive value of a rich type.
         /// </summary>

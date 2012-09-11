@@ -13,6 +13,7 @@ namespace Adf.Web.UI.SmartView
         public string FootStyle { get; set; }
         public string Width { get; set; }
         public bool HideOnEmpty { get; set; }
+
         private bool _controlsDisposed;
 
         private int _maxcharacters = 50;

@@ -23,5 +23,6 @@
         public static readonly PanelItemType TreeView = new PanelItemType("tv", "TreeView");
         public static readonly PanelItemType FileUpload = new PanelItemType("upl", "FileUpload");
         public static readonly PanelItemType RadioButtonList = new PanelItemType("rbl", "RadioButtonList");
+        public static readonly PanelItemType CheckBoxList = new PanelItemType("cbl", "CheckBoxList");
     }
 }

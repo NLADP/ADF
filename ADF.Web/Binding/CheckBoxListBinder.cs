@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Web.UI.WebControls;
 using Adf.Base.Validation;
-using Adf.Business;
 using Adf.Core.Binding;
 using Adf.Core.Domain;
 
@@ -15,9 +14,9 @@ namespace Adf.Web.Binding
     /// Provides methods to bind the properties of a <see cref="System.Web.UI.WebControls.RadioButtonList"/> 
     /// with values.
     /// </summary>
-    public class RadioButtonListBinder : IControlBinder
+    public class CheckBoxListBinder : IControlBinder
     {
-        private readonly string[] types = { "rbl" };
+        private readonly string[] types = { "cbl" };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.RadioButtonList"/> id prefixes that 
@@ -47,43 +46,30 @@ namespace Adf.Web.Binding
         /// <param name="p">The parameters used for binding. Currently not being used.</param>
         public virtual void Bind(object control, object value, PropertyInfo pi, params object[] p)
         {
-            if (value == null) return;
+            var checkBoxList = control as CheckBoxList;
 
-            RadioButtonList rbl = control as RadioButtonList;
+            if (checkBoxList == null) return;
 
-            if (rbl == null) return;
+            checkBoxList.Items.Clear();
 
-            rbl.Items.Clear();
+            IEnumerable<ValueItem> list;
 
             var items = BindManager.GetListFor(pi);
 
-            if (p != null && p.Length > 0)
+            if (value == null)
             {
-                var typeResolver = p[0] as ObjectResolver;
-
-                if (typeResolver != null)
-                {
-                    Func<IEnumerable> func;
-                    if (typeResolver.TryGetValue(rbl.ID, out func))
-                    {
-                        items = func.Invoke();
-                    }
-                    else if (typeResolver.TryGetValue(value.GetType(), out func))
-                    {
-                        items = func.Invoke();
-                    }
-                }
+                list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, false, items);
             }
-
-            var includeEmpty = !pi.IsNonEmpty();
-
-            IEnumerable<ValueItem> list = PropertyHelper.GetCollectionWithDefault(value, includeEmpty, items);
+            else
+            {
+                list = PropertyHelper.GetCollectionWithDefault(value, false, items);
+            }
 
             foreach (ValueItem item in list)
             {
-                ListItem listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
+                var listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
 
-                rbl.Items.Add(listitem);
+                checkBoxList.Items.Add(listitem);
             }
         }
 

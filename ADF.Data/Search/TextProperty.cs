@@ -77,4 +77,16 @@ namespace Adf.Data.Search
             ValueList = valueList;
         }
     }
+
+    public class FilterListProperty : FilterProperty
+    {
+        public FilterListProperty(string displayname, IColumn column, Func<Dictionary<string, string>> valueList)
+        {
+            Type = FilterType.List;
+            DisplayName = ResourceManager.GetString(displayname);
+            Column = column;
+            Operators = new[] { OperatorType.In, OperatorType.NotIn };
+            ValueList = valueList;
+        }
+    }
 }

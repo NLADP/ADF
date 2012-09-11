@@ -89,10 +89,6 @@
       <Project>{5B241780-88E6-4C01-9FFE-A88154B28124}</Project>
       <Name>ADF.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ADF.ObjectFactory.ObjectBuilder\ADF.ObjectFactory.ObjectBuilder.csproj">
-      <Project>{5F29F9A2-90BD-4BC5-B592-ED7BB6A1AF84}</Project>
-      <Name>ADF.ObjectFactory.ObjectBuilder</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ADF.snk" />

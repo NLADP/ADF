@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Adf.Base.Panels;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
-using Adf.Web.UI;
 
 namespace Adf.Web.Panels
 {

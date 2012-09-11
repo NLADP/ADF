@@ -74,8 +74,8 @@ namespace Adf.Web.UI.SmartView
                 button.ToolTip = this.Compose(entity, ToolTipField, ToolTipFormat);
                 button.CommandArgument = tooltipbutton.CommandArgument = this.Compose(entity, IdField, null);
                 button.Visible = tooltipbutton.Visible = true;
-                
-                var message = this.Compose(entity, MessageSubject, MessageField, MessageFormat);
+
+                var message = this.Compose(entity, MessageField, MessageFormat, MessageSubject);
             
                 if (!string.IsNullOrEmpty(message)) { button.OnClientClick = tooltipbutton.OnClientClick = @"return confirm('" + message + "');"; }
             }

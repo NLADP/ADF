@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Adf.Core.Extensions;
 
 namespace Adf.Core.Objects
@@ -147,6 +148,19 @@ namespace Adf.Core.Objects
         public static IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
             return ObjectProvider.BuildAll(serviceType, inherited);
+        }
+    }
+
+    public class NullObjectProvider : IObjectProvider
+    {
+        public object BuildUp(Type serviceType, string instanceName)
+        {
+            return null;
+        }
+
+        public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
+        {
+            return Enumerable.Empty<object>();
         }
     }
 }

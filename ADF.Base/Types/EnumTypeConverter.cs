@@ -28,6 +28,11 @@ namespace Adf.Base.Types
             return (T)Enum.Parse(typeof(T), value.ToString());
         }
 
+        public object To(Type type, object value)
+        {
+            return Enum.Parse(type, value.ToString());
+        }
+
         /// <summary>
         /// Extracts the primitive value of a rich type.
         /// </summary>

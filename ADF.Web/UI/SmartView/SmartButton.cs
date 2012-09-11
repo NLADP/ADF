@@ -4,7 +4,7 @@ namespace Adf.Web.UI.SmartView
 {
     public abstract class SmartButton : SmartField
     {
-        public string CommandName;
+        public string CommandName { get; set; }
 
         private string _messageSubject;
 

@@ -88,6 +88,16 @@ namespace Adf.Core.Data
             return new TableDescriber(tableName, datasource);
         }
 
+        public bool Equals(ITable other)
+        {
+            if (other == null) return false;
+
+            // If both are null, or both are same instance, return true.
+            if (ReferenceEquals(this, other)) return true;
+
+            return (Name == other.Name);
+        }
+
         /// <summary>
         /// Returns a table name.
         /// </summary>

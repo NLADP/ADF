@@ -45,7 +45,7 @@ namespace Adf.Core.State
         {
             object value = provider[key];
 
-            return value == null ? defaultValue : (T) Convert.ChangeType(value, typeof (T));
+            return value == null || key == value as string ? defaultValue : (T)Convert.ChangeType(value, typeof(T));
         }
     }
 }

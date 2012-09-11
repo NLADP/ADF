@@ -29,6 +29,11 @@ namespace Adf.Base.Types
             return (T)Activator.CreateInstance(typeof(T), value);
         }
 
+        public object To(Type type, object value)
+        {
+            return Activator.CreateInstance(type, value);
+        }
+
         /// <summary>
         /// Extracts the primitive value of a rich type.
         /// </summary>

@@ -162,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\BindOnPostbackAttribute.cs" />
+    <Compile Include="Binding\CheckBoxListBinder.cs" />
+    <Compile Include="Binding\CheckBoxListPersister.cs" />
     <Compile Include="Binding\TreeViewPersister.cs" />
     <Compile Include="Binding\TreeViewBinder.cs" />
     <Compile Include="Binding\LinkButtonBinder.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="Panels\BaseRenderer.cs" />
     <Compile Include="Panels\CalendarRenderer.cs" />
     <Compile Include="Panels\CheckBoxRenderer.cs" />
+    <Compile Include="Panels\CheckBoxListRenderer.cs" />
+    <Compile Include="Panels\RadioButtonListRenderer.cs" />
     <Compile Include="Panels\DropDownRenderer.cs" />
     <Compile Include="Panels\FileUploadRenderer.cs" />
     <Compile Include="Panels\ImageRenderer.cs" />

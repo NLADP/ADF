@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using Adf.Base.Domain;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
+using Adf.Core.Objects;
 using Adf.Core.Resources;
 using Adf.Core.State;
 

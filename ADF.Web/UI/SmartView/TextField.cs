@@ -6,8 +6,8 @@ namespace Adf.Web.UI.SmartView
 {
     public class TextField : SmartField
     {
-        private Label label;
-        private Label tooltiplabel;
+        protected Label label;
+        protected Label tooltiplabel;
 
         public TextField()
         {

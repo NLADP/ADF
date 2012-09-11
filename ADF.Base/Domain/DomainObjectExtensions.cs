@@ -47,9 +47,12 @@ namespace Adf.Base.Domain
 
         public static Type GetFactoryType(this IDomainObject domainObject)
         {
-            var type = domainObject.GetType();
+            return GetFactoryType(domainObject.GetType());
+        }
 
-            var typeName = type.AssemblyQualifiedName.Replace(type.FullName, type.FullName + "Factory");
+        public static Type GetFactoryType(Type domainObjectType)
+        {
+            var typeName = domainObjectType.AssemblyQualifiedName.Replace(domainObjectType.FullName, domainObjectType.FullName + "Factory");
 
             return Type.GetType(typeName);
         }
@@ -83,6 +86,13 @@ namespace Adf.Base.Domain
             var type = domainObject.GetFactoryType();
 
             return type.GetProperty("Empty").GetValue(domainObject, null) as IDomainObject;
+        }
+
+        public static IDomainObject Empty(Type domainObjectType)
+        {
+            var type = GetFactoryType(domainObjectType);
+
+            return type.GetProperty("Empty").GetValue(null, null) as IDomainObject;
         }
 
         public static bool IsNullOrEmpty(this IDomainObject domainObject)

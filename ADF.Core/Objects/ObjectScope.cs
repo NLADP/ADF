@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Adf.Core.Objects;
 
-namespace Adf.Base.Domain
+namespace Adf.Core.Objects
 {
     public sealed class ObjectScope<T> : IDisposable
     {

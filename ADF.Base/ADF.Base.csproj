@@ -67,6 +67,7 @@
     <Compile Include="Data\QueryExtensions.cs" />
     <Compile Include="Data\SqlProvider.cs" />
     <Compile Include="Domain\CompositionAttribute.cs" />
+    <Compile Include="Domain\ListPropertyParser.cs" />
     <Compile Include="Domain\DefaultPropertyParser.cs" />
     <Compile Include="Domain\DescriptorPropertyParser.cs" />
     <Compile Include="Domain\DomainCollection.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Domain\ListSorter.cs" />
     <Compile Include="Domain\Money.cs" />
     <Compile Include="Domain\NullablePropertyParser.cs" />
-    <Compile Include="Domain\ObjectScope.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
     <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
