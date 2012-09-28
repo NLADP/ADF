@@ -62,7 +62,7 @@ namespace Adf.Web.UI
 
         public static SelectItem Create(string label, string name, int width, bool enabled, bool mandatory)
         {
-            var l = new Label {Text = ResourceManager.GetString(label)};
+            var l = new Label { Text = ResourceManager.GetString(label), ID = "itemLabel_" + name };
 
             var textControl = new LinkButton { ID = Prefix + name, Width = new Unit(width, UnitType.Ex), CssClass = "SmartPanelSelectItem" };
 
@@ -76,12 +76,15 @@ namespace Adf.Web.UI
                 clearButton.Visible = false;
             }
 
-            return new SelectItem(l, textControl, textDisabledControl, selectButton, clearButton, mandatory);
+            var item = new SelectItem(l, textControl, textDisabledControl, selectButton, clearButton, mandatory);
+
+            item._itemControls.Add(SmartValidator.Create(name, label));
+            return item;
         }
 
         public static SelectItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, mandatory);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory);
         }
 
         public static SelectItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true)

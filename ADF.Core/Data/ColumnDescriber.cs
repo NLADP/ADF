@@ -27,6 +27,7 @@ namespace Adf.Core.Data
             _isIdentity = isIdentity;
             _isAutoIncrement = isAutoIncrement;
             _isTimestamp = isTimestamp;
+            _hashCode = _columnName.ToLower().GetHashCode();    // memory optimization
         }
 
         /// <summary>
@@ -36,35 +37,6 @@ namespace Adf.Core.Data
         /// <param name="table">The table name.</param>
         /// <param name="column">Column name of a table.</param>
         public ColumnDescriber(string attribute, string table, string column = null) : this(attribute, TableDescriber.New(table, DataSources.NoSource), column ?? attribute) { }
-
-        #endregion
-
-        #region Empty
-
-        /// <summary>
-        /// Creates an instance of the <see cref="ColumnDescriber"/> class with the specified empty column attribute and empty table name.
-        /// </summary>
-        private static readonly ColumnDescriber empty = new ColumnDescriber(string.Empty, string.Empty);
-
-
-        /// <summary>
-        /// Gets the empty <see cref="ColumnDescriber"/> object.
-        /// </summary>
-        /// <returns>The empty <see cref="ColumnDescriber"/> object.</returns>
-        public static ColumnDescriber Empty
-        {
-            get { return empty; }
-        }
-
-        /// <summary>
-        /// Gets the status of column's attribute and table's name is empty or null.
-        /// </summary>
-        /// <returns>True if the column's attribute and table's name are null or an empty string (""); 
-        /// otherwise, false.</returns>
-        public bool IsEmpty
-        {
-            get { return (string.IsNullOrEmpty(Attribute) && string.IsNullOrEmpty(Table.Name)); }
-        }
 
         #endregion
 
@@ -121,6 +93,8 @@ namespace Adf.Core.Data
         {
             get { return _isTimestamp; }
         }
+
+        private readonly int _hashCode;
 
         #region FullName
 
@@ -191,7 +165,7 @@ namespace Adf.Core.Data
 
         public override int GetHashCode()
         {
-            return ColumnName.ToLower().GetHashCode();
+            return _hashCode;
         }
     }
 }

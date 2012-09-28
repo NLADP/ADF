@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
 using Adf.Core;
-using Adf.Core.Data;
 using Adf.Core.Query;
 
 namespace Adf.Base.Query
 {
-    public static partial class LikeExtensions
+    public static class LikeExtensions
     {
         public static readonly OperatorType Operation = OperatorType.Like;
 
@@ -25,24 +23,14 @@ namespace Adf.Base.Query
             return query.CompleteLast(Operation, value.Name);
         }
 
-        public static Q Left<Q>(this Q query) where Q : IAdfQuery
+        public static Q LikeLeft<Q>(this Q query, string value) where Q : IAdfQuery
         {
-            var last = query.Wheres.Last();
-
-            if (last.Operator == OperatorType.Like) last.Operator = OperatorType.LikeLeft;
-            else throw new InvalidOperationException("Applying a Left Like on a " + last.Operator);
-
-            return query;
+            return query.CompleteLast(OperatorType.LikeLeft, value);
         }
 
-        public static Q Right<Q>(this Q query) where Q : IAdfQuery
+        public static Q LikeRight<Q>(this Q query, string value) where Q : IAdfQuery
         {
-            var last = query.Wheres.Last();
-
-            if (last.Operator == OperatorType.Like) last.Operator = OperatorType.LikeRight;
-            else throw new InvalidOperationException("Applying a Left Like on a " + last.Operator);
-
-            return query;
+            return query.CompleteLast(OperatorType.LikeRight, value);
         }
     }
 }

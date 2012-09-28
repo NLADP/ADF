@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
@@ -19,13 +20,13 @@ namespace Adf.Core.Extensions
             throw new ArgumentOutOfRangeException("index");
         }
 
-        public static int IndexOf(this IEnumerable<IDomainObject> objects, ID id )
+        public static int IndexOf(this IEnumerable<IDomainObject> objects, ID id)
         {
             if (objects == null) return -1;
 
-            int i = 0;
+            var i = 0;
 
-            foreach (IDomainObject o in objects)
+            foreach (var o in objects)
             {
                 if (o.Id == id) return i;
 
@@ -34,8 +35,6 @@ namespace Adf.Core.Extensions
 
             return -1;
         }
-
-
 
         /// <summary>
         /// Converts a specified list to a string using the specified separator.
@@ -102,6 +101,11 @@ namespace Adf.Core.Extensions
             while (enumerator.MoveNext()) result++;
             
             return result;
+        }
+
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
+        {
+            return (enumerable != null) && (enumerable.Any());
         }
     }
 }

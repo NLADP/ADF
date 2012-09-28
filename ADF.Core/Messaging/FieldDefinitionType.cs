@@ -22,5 +22,6 @@
         public static readonly FieldDefinitionType Int16 = new FieldDefinitionType("Int16");
         public static readonly FieldDefinitionType UInt16 = new FieldDefinitionType("UInt16");
         public static readonly FieldDefinitionType AmountSign = new FieldDefinitionType("AmountSign");
+        public static readonly FieldDefinitionType InvertedAmount = new FieldDefinitionType("InvertedAmount");
     }
 }

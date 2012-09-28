@@ -4,7 +4,7 @@ using Adf.Core.Query;
 
 namespace Adf.Base.Query
 {
-    public static partial class PredicateExtensions
+    public static class PredicateExtensions
     {
         public static Q And<Q>(this Q query, IColumn column) where Q : IAdfQuery
         {

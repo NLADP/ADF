@@ -34,5 +34,12 @@ namespace Adf.Web.UI.Buttons
             if (CssClass.IsNullOrEmpty()) CssClass = "tbutton";
             if (!Message.IsNullOrEmpty()) OnClientClick = @"return confirm('" + Message + "');";
         }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            if (!Enabled) OnClientClick = string.Empty;  // disable client click as well
+        }
     }
 }

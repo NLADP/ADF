@@ -17,7 +17,7 @@ namespace Adf.Base.Domain
         {
             ValidationManager.Validate(domainObject);
 
-            foreach (var pi in GetCompositions(domainObject))
+            foreach (var pi in domainObject.GetCompositions())
             {
                 var value = pi.GetValue(domainObject, null);
                 if (value == null)
@@ -47,9 +47,12 @@ namespace Adf.Base.Domain
 
         public static Type GetFactoryType(this IDomainObject domainObject)
         {
-            var type = domainObject.GetType();
+            return GetFactoryType(domainObject.GetType());
+        }
 
-            var typeName = type.AssemblyQualifiedName.Replace(type.FullName, type.FullName + "Factory");
+        public static Type GetFactoryType(Type domainObjectType)
+        {
+            var typeName = domainObjectType.AssemblyQualifiedName.Replace(domainObjectType.FullName, domainObjectType.FullName + "Factory");
 
             return Type.GetType(typeName);
         }
@@ -85,6 +88,13 @@ namespace Adf.Base.Domain
             return type.GetProperty("Empty").GetValue(domainObject, null) as IDomainObject;
         }
 
+        public static IDomainObject Empty(Type domainObjectType)
+        {
+            var type = GetFactoryType(domainObjectType);
+
+            return type.GetProperty("Empty").GetValue(null, null) as IDomainObject;
+        }
+
         public static bool IsNullOrEmpty(this IDomainObject domainObject)
         {
             return domainObject == null || domainObject.IsEmpty;
@@ -108,7 +118,7 @@ namespace Adf.Base.Domain
                 {
                     var children = value as IDomainCollection;
 
-                    if (!children.IsAltered && !children.HasBeenRemoved)
+                    if (!children.IsAltered && !children.HasRemovedItems)
                         continue;
 
                     if (!children.Save())
@@ -140,23 +150,33 @@ namespace Adf.Base.Domain
                 var domainCollection = value as IDomainCollection;
                 if (domainCollection != null)
                 {
-                    return domainCollection.RemoveAll();
+                    if (!domainCollection.RemoveAll().Save()) return false;
                 }
 
                 var domainObject = value as IDomainObject;
                 if (domainObject != null)
                 {
-                    return domainObject.Remove();
+                    if (!domainObject.Remove()) return false;
                 }
             }
             return true;
         }
 
-        private static IEnumerable<PropertyInfo> GetCompositions(IDomainObject domainObject)
+        private static IEnumerable<PropertyInfo> GetCompositions(this IDomainObject domainObject)
         {
             return domainObject.GetType()
                 .GetProperties()
                 .Where(pi => CompositionAttribute.IsComposite(pi));
+        }
+
+        public static T CopyProperties<T>(this T copy, T origin) where T : IDomainObject
+        {
+            foreach (var pi in copy.GetType().GetProperties().Where(pi => pi.CanWrite))
+            {
+                pi.SetValue(copy, pi.GetValue(origin, null), null);
+            }
+
+            return copy;
         }
     }
 }

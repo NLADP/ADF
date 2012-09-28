@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using System.Web.UI;
+using Adf.Core.Query;
 using Adf.Core.Tasks;
 using Adf.Core.Views;
 
@@ -11,7 +12,7 @@ namespace Adf.Web.Process
     /// Used to redefine the events like 'OnPreInit', 'OnInit', 'Page_Load' etc of the 
     /// <see cref="System.Web.UI.Page"/> class.
     /// </summary>
-    public abstract class WebView<T> : Page, IView where T : ITask
+    public abstract class WebView<T> : Page, IView
     {
         /// <summary>
         /// Gets or sets the Id of the task corresponding to this web page.
@@ -66,7 +67,7 @@ namespace Adf.Web.Process
             Response.Cache.SetNoServerCaching();
 
             if (!IsPostBack)
-                Bind();
+                using (new TracingScope("Bind " + typeof(T).Name)) Bind();
         }
 
         /// <summary>

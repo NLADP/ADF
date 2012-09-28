@@ -50,7 +50,7 @@ namespace Adf.Web.Binding
 
             ddl.Items.Clear();
 
-            IEnumerable items = null;
+            var items = BindManager.GetListFor(pi);
             
             if (p != null && p.Length > 0)
             {

@@ -16,11 +16,20 @@ namespace Adf.Core.Panels
         public bool Optional { get; set; }
         public string Label { get; set; }
         public string Text { get; set; }
+        public string Alias { get; set; }
         public MemberInfo Member { get; set; }
-        public object Target { get; set; }
         public bool RequiresValidation { get; set; }
         public bool AttachToPrevious { get; set; }
         public List<PanelItem> AttachedItems { get { return attacheditems; } }
+        public string ToolTip { get; set; }
+        public List<string> IDs;
+
+        private object _target;
+        public object Target
+        {
+            get { return _target; }
+            set { _target = value; IDs.Add(this.GetId()); }
+        }
 
         public PanelItem(PanelRow row)
         {
@@ -35,6 +44,8 @@ namespace Adf.Core.Panels
             Text = string.Empty;
             RequiresValidation = true;
             AttachToPrevious = false;
+            ToolTip = string.Empty;
+            IDs = new List<string>();
         }
     }
 }

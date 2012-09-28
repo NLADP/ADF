@@ -5,6 +5,7 @@ using Adf.Base.Data;
 using Adf.Base.Query;
 using Adf.Core;
 using Adf.Core.Data;
+using Adf.Core.Extensions;
 using Adf.Core.Query;
 
 namespace Adf.Data.Search
@@ -15,17 +16,15 @@ namespace Adf.Data.Search
         {
             foreach (var parameter in searchParameters)
             {
-                var columnDescriber = BusinessDescriber.GetColumn(businessdescriber, parameter.Column);
-                if (columnDescriber == null || columnDescriber.IsEmpty)
-                {
-                    throw new InvalidColumnException(businessdescriber.ToString(), parameter.Column);
-                }
+                var column = BusinessDescriber.GetColumn(businessdescriber, parameter.Column);
+
+                if (column == null) throw new InvalidColumnException(businessdescriber.ToString(), parameter.Column);
 
                 if (parameter.Value == null) continue;
 
                 var where = new Where
                 {
-                    Column = columnDescriber,
+                    Column = column,
                     Operator = parameter.OperatorType,
                     Parameter = new Parameter(parameter.Value, parameter.ParameterType)
                 };
@@ -36,21 +35,30 @@ namespace Adf.Data.Search
             return query;
         }
 
-        public static Q BuildQuery<Q>(this Q query, IEnumerable<IFilterParameter> filterParameters, IEnumerable<JoinProperty> joins, bool encapsulateInBrackets) where Q : AdfQuery
+        public static Q BuildQuery<Q>(this Q query, IEnumerable<IFilterParameter> filterParameters, IEnumerable<JoinProperty> joins, bool encapsulateInBrackets, Dictionary<string, IAdfQuery> subQueries = null) where Q : AdfQuery
         {
             bool isFirstWhereClause = true;
+            var filterParamsList = filterParameters.ToList();
+            var joinsList = joins.ToList();
 
-            foreach (var filterParameter in filterParameters)
+            foreach (var filterParameter in filterParamsList)
             {
-                var joinsForParameter = joins.GetJoinsFor(filterParameter, query.LeadTable());
+                var joinsForParameter = joinsList.GetJoinsFor(filterParameter, query.LeadTable());
 
-                query.Wheres.Add(new Where
-                {
-                    Column = filterParameter.Property.Column,
-                    Operator = filterParameter.Operator,
-                    Parameter = new Parameter(filterParameter.Value),
-                    Predicate = Descriptor.Parse<PredicateType>(filterParameter.Predicate.ToString())
-                });
+                var where = new Where
+                                {
+                                    Column = filterParameter.Property.Column,
+                                    Operator = filterParameter.Operator,
+                                    Predicate = Descriptor.Parse<PredicateType>(filterParameter.Predicate.ToString())
+                                };
+
+                // Handle sub queries
+                if (filterParameter.Operator.IsIn(OperatorType.In, OperatorType.NotIn) && subQueries != null && subQueries.ContainsKey(filterParameter.ToString()))
+                    where.Parameter = new Parameter(subQueries[filterParameter.ToString()], ParameterType.Query);
+                else
+                    where.Parameter = new Parameter(filterParameter.Value);
+
+                query.Wheres.Add(where);
 
                 if (encapsulateInBrackets && isFirstWhereClause)
                 {
@@ -72,13 +80,13 @@ namespace Adf.Data.Search
                 }
             }
 
-            if (filterParameters.Count() > 0 && encapsulateInBrackets)
+            if (filterParamsList.Count > 0 && encapsulateInBrackets)
                 query.CloseBracket();
 
             return query;
         }
 
-        private static IEnumerable<Join> GetJoinsFor(this IEnumerable<JoinProperty> joins, IFilterParameter filterParameter, string leadTable)
+        private static IEnumerable<Join> GetJoinsFor(this IList<JoinProperty> joins, IFilterParameter filterParameter, string leadTable)
         {
             var list = new List<Join>();
 
@@ -91,10 +99,11 @@ namespace Adf.Data.Search
                 table = join.Source.Table.FullName;
 
                 list.Insert(0, new Join { SourceColumn = join.Source, JoinColumn = join.Join, Type = JoinType.Left });
+
+                if (list.Count > joins.Count) throw new InvalidOperationException("Can't find your join, review your query"); // prevent deadlock in while loop
             }
 
             return list;
         }
-
     }
 }

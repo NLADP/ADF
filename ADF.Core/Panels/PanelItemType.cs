@@ -20,7 +20,9 @@
         public static readonly PanelItemType Image = new PanelItemType("img", "Image");
         public static readonly PanelItemType Link = new PanelItemType("lnk", "Link");
         public static readonly PanelItemType InfoIcon = new PanelItemType("icn", "InfoIcon");
+        public static readonly PanelItemType TreeView = new PanelItemType("tv", "TreeView");
         public static readonly PanelItemType FileUpload = new PanelItemType("upl", "FileUpload");
         public static readonly PanelItemType RadioButtonList = new PanelItemType("rbl", "RadioButtonList");
+        public static readonly PanelItemType CheckBoxList = new PanelItemType("cbl", "CheckBoxList");
     }
 }

@@ -24,15 +24,9 @@ namespace Adf.Base.Validation
 
             if (!(value is DateTime)) throw new ArgumentException("value for NotInPastAttribute is not a DateTime");
 
-            if (value == null)
-//                return ValidationResult.CreateError(property, "Adf.Business.AttributeNotInPastNull", property.Name);
-                // this is not a NonEmpty attribute!
-                return ValidationResult.Success;
-
-            if (!(Convert.ToDateTime(value.ToString()) >= DateTime.Now))
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeNotInPastInvalid", propertyToValidate.Name);
-            
-            return ValidationResult.Success;
+            return !(Convert.ToDateTime(value.ToString()) >= DateTime.Now) 
+                ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeNotInPastInvalid", propertyToValidate.Name) 
+                : ValidationResult.Success;
 		}
 	}
 }

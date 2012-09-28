@@ -202,6 +202,21 @@ namespace Adf.Base.Data
             }
         }
 
+        /// <summary>
+        /// Updates the selected rows from the dataset.
+        /// </summary>
+        /// <param name="adapter">The dataadapter to use.</param>
+        /// <param name="dataRows">The rows to update.</param>
+        /// <returns></returns>
+        public int Update(IDbDataAdapter adapter, params DataRow[] dataRows)
+        {
+            var sqlAdapter = adapter as SqlDataAdapter;
+            
+            if (sqlAdapter == null) throw new InvalidOperationException("Not a SqlDataAdapter");
+
+            return sqlAdapter.Update(dataRows);
+        }
+
         #region Transactions
 
         /// <summary>

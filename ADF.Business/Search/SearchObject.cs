@@ -27,10 +27,10 @@ namespace Adf.Business.Search
                 {
                     search.Value = property.GetValue(this, null);
 
-                    if (PropertyHelper.IsEmpty(search.Value))
-                        continue;
-
-                    parameters.Add(search);
+                    if (search.Value != null && (search.IncludeWhenEmpty || !PropertyHelper.IsEmpty(search.Value)))
+                    {
+                        parameters.Add(search);
+                    }
                 }
             }
 

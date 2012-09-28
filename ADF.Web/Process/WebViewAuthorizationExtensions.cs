@@ -5,6 +5,7 @@ using Adf.Base.Authorization;
 using Adf.Core.Authorization;
 using Adf.Core.Domain;
 using Adf.Web.UI;
+using AjaxControlToolkit;
 
 namespace Adf.Web.Process
 {
@@ -71,21 +72,14 @@ namespace Adf.Web.Process
 
         public static void SetPermission<T>(this GridView control, IAction action)
         {
-            if (control == null) return;
-#if DEBUG
-            control.Style.Add("border", "1px solid Red!important");
-#endif
-            if (!AuthorizationManager.IsAllowed(typeof(T).Name, action))
-            {
-                control.SelectedIndexChanging += (sender, args) => args.Cancel = true;
-            }
+            SetPermission(control, typeof(T), action);
         }
 
         public static void SetPermission(this GridView control, Type subject, IAction action) 
         {
             if (control == null) return;
 #if DEBUG
-            control.Style.Add("border", "1px solid Red");
+            control.Style.Add("border", "1px solid Red!important");
 #endif
             if (!AuthorizationManager.IsAllowed(subject.Name, action))
             {
@@ -127,7 +121,10 @@ namespace Adf.Web.Process
 
             if (!AuthorizationManager.IsAllowed(typeof(T).Name, action))
             {
-                control.Visible = false;
+                if (!(control is ModalPopupExtender))    // throws an exception
+                {
+                    control.Visible = false;
+                }
             }
         }
 

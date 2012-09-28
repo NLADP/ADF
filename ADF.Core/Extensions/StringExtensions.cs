@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Adf.Core.Extensions
@@ -17,8 +19,8 @@ namespace Adf.Core.Extensions
         /// </returns>
         public static string BreakLongWords(this string longWord)
         {
-            if (string.IsNullOrEmpty(longWord))
-                return string.Empty;
+            if (String.IsNullOrEmpty(longWord))
+                return String.Empty;
 
             const int maxWordWidh = 50;
 
@@ -104,9 +106,96 @@ namespace Adf.Core.Extensions
             return string.IsNullOrEmpty(value);
         }
 
+        public static bool IsNotEmpty(this string value)
+        {
+            return !string.IsNullOrEmpty(value);
+        }
+
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
-    }
+
+        public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
+        {
+            var sb = new StringBuilder();
+
+            int previousIndex = 0;
+            int index = str.IndexOf(oldValue, comparison);
+            while (index != -1)
+            {
+                sb.Append(str.Substring(previousIndex, index - previousIndex));
+                sb.Append(newValue);
+                index += oldValue.Length;
+
+                previousIndex = index;
+                index = str.IndexOf(oldValue, index, comparison);
+            }
+            sb.Append(str.Substring(previousIndex));
+
+            return sb.ToString();
+        }
+
+        public static string Capitalize(this string value)
+        {
+            if (value.IsNullOrEmpty()) return value;
+
+            var values = value.Split(' ');
+            
+            return values.Aggregate(string.Empty, (current, word) => current + (word.Substring(0, 1).ToUpper() + word.Substring(1) + " ")).TrimEnd();
+        }    
+	
+		public static string Left(this string origin, int length)
+        {
+            return (origin.Length <= length) ? origin : origin.Substring(0, length);
+        }
+
+        public static string TrimSurroundingChars(this string origin, char surroundingChar)
+        {
+            if (origin.IsNullOrEmpty()) return origin;
+
+            if (origin.Length > 1 &&
+               origin.StartsWith(surroundingChar.ToString()) &&
+               origin.EndsWith(surroundingChar.ToString()))
+                return origin.Substring(1, origin.Length - 2);
+
+            return origin;
+        }
+
+        public static string[] SplitCsvLine(this string line, string separator)
+        {
+            if (line.IsNullOrEmpty()) return new string[0];
+
+            var returnCols = new List<string>();
+            var columns = line.Split(new [] { separator }, StringSplitOptions.None);
+
+            string currentColumn = string.Empty;
+
+            foreach (string col in columns)
+            {
+                if (currentColumn.IsNullOrEmpty())
+                {
+                    if (col.StartsWith("\"") && !col.EndsWith("\""))
+                        currentColumn = col;
+                    else
+                        returnCols.Add(col.TrimSurroundingChars('"'));
+                }
+                else
+                {
+                    currentColumn += separator + col;
+
+                    if (currentColumn.EndsWith("\""))
+                    {
+                        returnCols.Add(currentColumn.TrimSurroundingChars('"'));
+                        currentColumn = string.Empty;
+                    }
+                }
+            }
+
+            if (!currentColumn.IsNullOrEmpty())
+                returnCols.Add(currentColumn.TrimSurroundingChars('"'));
+
+            return returnCols.ToArray();
+        }
+	}
 }

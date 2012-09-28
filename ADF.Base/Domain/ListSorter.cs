@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 
 namespace Adf.Base.Domain
 {
@@ -26,6 +28,12 @@ namespace Adf.Base.Domain
 			this.order = order;
 		}
 
+        public ListSorter(Expression<Func<T, object>> property, SortOrder order)
+        {
+            this.property = property.GetPropertyPath();
+            this.order = order;
+        }
+        
         /// <summary>
         /// Compares two specified objects of the same type.
         /// </summary>

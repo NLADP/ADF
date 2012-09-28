@@ -102,9 +102,7 @@ namespace Adf.Web.Binding
         /// <returns>The value of the property of the business object.</returns>
         private static object GetValue(object bindableObject, PropertyInfo pi)
         {
-            if (pi == null) return null;
-
-            return pi.GetValue(bindableObject, null);
+            return pi == null ? null : pi.GetValue(bindableObject, null);
         }
 
         #endregion Get Values
@@ -133,6 +131,8 @@ namespace Adf.Web.Binding
 
             foreach (PropertyInfo pi in properties)
             {
+//                string domainObject = pi.DeclaringType.Name;
+
                 foreach (string key in controlBinders.Keys)
                 {
                     string name = key + domainobject + pi.Name;
@@ -303,6 +303,8 @@ namespace Adf.Web.Binding
 
             foreach (PropertyInfo pi in properties)
             {
+//                string domainObject = pi.DeclaringType.Name;
+
                 foreach (string key in _persisters.Keys)
                 {
                     string name = key + domainobject + pi.Name;

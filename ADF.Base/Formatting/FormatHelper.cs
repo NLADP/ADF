@@ -19,9 +19,7 @@ namespace Adf.Base.Formatting
         /// <returns>The formated datetime value if specified datetime object is not null; otherwise, empty string.</returns>
         public static string Format(DateTime? value, string format)
         {
-            if (value == null) return string.Empty;
-
-            return value.Value.ToString(string.IsNullOrEmpty(format) ? DefaultDateFormat : format, CultureInfo.CurrentUICulture) ;
+            return value == null ? string.Empty : value.Value.ToString(string.IsNullOrEmpty(format) ? DefaultDateFormat : format, CultureInfo.CurrentUICulture);
         }
 
         public static string DefaultDateFormat
@@ -147,7 +145,7 @@ namespace Adf.Base.Formatting
             return text;
         }
 
-        public static string ToString(object value)
+        public static string ToString(object value, string format = null, bool breakLongWords = false)
         {
             if (value == null)
             {
@@ -161,7 +159,7 @@ namespace Adf.Base.Formatting
             {
                 var dateTime = value as DateTime?;
 
-                return dateTime.Value.ToString(DefaultDateFormat, CultureInfo.CurrentUICulture);
+                return dateTime.Value.ToString(format ?? DefaultDateFormat, CultureInfo.CurrentUICulture);
             }
             if (value is decimal)
             {
@@ -169,9 +167,9 @@ namespace Adf.Base.Formatting
             }
             if (value is IFormattable)
             {
-                return ((IFormattable)value).ToString(null, CultureInfo.CurrentUICulture);
+                return ((IFormattable)value).ToString(format, CultureInfo.CurrentUICulture);
             }
-            return value.ToString().BreakLongWords();
+            return breakLongWords ? value.ToString().BreakLongWords() : value.ToString();
         }
     }
 }

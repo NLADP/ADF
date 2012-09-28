@@ -43,7 +43,7 @@ namespace Adf.Base.Messaging
 
                 while (line != null)
                 {
-                    string[] fields = line.Split(new[] { recordDefinition.FieldSeparator }, StringSplitOptions.None);
+                    string[] fields = line.SplitCsvLine(recordDefinition.FieldSeparator);
 
                     var state = new DictionaryState { IsNew = true };
 
@@ -82,9 +82,9 @@ namespace Adf.Base.Messaging
 
             if (fieldDefinition.Type.IsIn(FieldDefinitionType.DateTime))
             {
-                state[describer] = DateTime.ParseExact(fields[fieldDefinition.StartPosition], fieldDefinition.Format, CultureInfo.InvariantCulture);
+                state[describer] = DateTime.ParseExact(fields[fieldDefinition.StartPosition].Trim('"'), fieldDefinition.Format, CultureInfo.InvariantCulture);
             }
-            else if (fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.Decimal))
+            else if (fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.InvertedAmount, FieldDefinitionType.Decimal))
             {
                 object oldvalue;
 
@@ -92,10 +92,12 @@ namespace Adf.Base.Messaging
                                         ? (decimal) oldvalue
                                         : 0;
 
-                decimal amount = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition])
-                            ? Decimal.Parse(fields[fieldDefinition.StartPosition],
+                decimal amount = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition].Trim('"'))
+                            ? Decimal.Parse(fields[fieldDefinition.StartPosition].Trim('"'),
                                 fieldDefinition.Format.IsNullOrEmpty() ? CultureInfo.InvariantCulture : new CultureInfo(fieldDefinition.Format))
                             : 0;
+
+                if (fieldDefinition.Type == FieldDefinitionType.InvertedAmount) amount *= -1;
 
                 state[describer] = oldAmount + amount;
             }
@@ -176,11 +178,14 @@ namespace Adf.Base.Messaging
                 return !format.IsNullOrEmpty() ? dateTime.Value.ToString(format, CultureInfo.InvariantCulture) : dateTime.Value.ToShortDateString();
             }
 
-            if(fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.Decimal))
+            if(fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.InvertedAmount, FieldDefinitionType.Decimal))
             {
                 Money money = state.GetValue<Money>(columnDescriber);
 
-                return money.IsEmpty ? fieldDefinition.Default : ToString(money, format);
+                if (money.IsEmpty) return fieldDefinition.Default;
+                if (fieldDefinition.Type == FieldDefinitionType.InvertedAmount) money *= -1;
+                
+                return ToString(money, format);
             }
 
             if(fieldDefinition.Type.IsIn(FieldDefinitionType.Int16, FieldDefinitionType.Int32, FieldDefinitionType.Int64))

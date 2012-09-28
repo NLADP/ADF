@@ -14,7 +14,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class DropDownListPersister : IControlPersister
     {
-        string[] types = { "ddl" };
+        readonly string[] types = { "ddl" };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.DropDownList"/> id prefixes 
@@ -37,15 +37,12 @@ namespace Adf.Web.Binding
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods")]
         public virtual void Persist(object bindableObject, PropertyInfo pi, object control)
         {
-            DropDownList d = control as DropDownList;
+            var d = control as DropDownList;
+            if (d == null) return;
 
-            if (d == null)
-                return;
+            if (!d.Enabled || !d.Visible) return;
 
-            if (!d.Enabled || !d.Visible)
-                return;
-
-            object value = pi.GetValue(bindableObject, null);
+            var value = pi.GetValue(bindableObject, null);
             if (value is IDomainObject)
             {
                 PropertyHelper.SetValue(bindableObject, pi, IdManager.New(d.SelectedValue));

@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Resources;
 using Adf.Core.State;
 
@@ -195,44 +197,56 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
-        /// <param name="property">The property of the <see cref="ValidationResult"/>.</param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>
         /// The newly created <see cref="ValidationResult"/>.
         /// </returns>
+        public static ValidationResult CreateError<T>(Expression<Func<T, object>> expression, string message, params object[] args)
+        {
+            return CreateError(expression.GetPropertyInfo(), message, args);
+        }
+
         public static ValidationResult CreateError(PropertyInfo property, string message, params object[] args)
         {
             return new ValidationResult(ValidationResultSeverity.Error, message, property, args);
         }
-        
+
         /// <summary>
         /// Creates a new <see cref="ValidationResult"/> with the 
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
-        /// <param name="property">The property of the <see cref="ValidationResult"/>.</param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>
         /// The newly created <see cref="ValidationResult"/>.
         /// </returns>
+        public static ValidationResult CreateInfo<T>(Expression<Func<T, object>> expression, string message, params object[] args)
+        {
+            return CreateInfo(expression.GetPropertyInfo(), message, args);
+        }
+
         public static ValidationResult CreateInfo(PropertyInfo property, string message, params object[] args)
         {
             return new ValidationResult(ValidationResultSeverity.Informational, message, property, args);
         }
-        
+
         /// <summary>
         /// Creates a new <see cref="ValidationResult"/> with the 
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
-        /// <param name="property">The property of the <see cref="ValidationResult"/>.</param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>
         /// The newly created <see cref="ValidationResult"/>.
         /// </returns>
+        public static ValidationResult CreateWarning<T>(Expression<Func<T, object>> expression, string message, params object[] args)
+        {
+            return CreateWarning(expression.GetPropertyInfo(), message, args);
+        }
+        
         public static ValidationResult CreateWarning(PropertyInfo property, string message, params object[] args)
         {
             return new ValidationResult(ValidationResultSeverity.Warning, message, property, args);

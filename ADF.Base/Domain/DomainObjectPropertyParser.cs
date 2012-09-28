@@ -76,7 +76,7 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a ValueCollection of instances of the type of the target having an empty ValueItem.</returns>
-        public virtual IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public virtual ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target, items);
 
@@ -91,6 +91,11 @@ namespace Adf.Base.Domain
             }
 
             return collection;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection(DomainObjectExtensions.Empty(targetType), includeEmpty, items);
         }
 
         /// <summary>
