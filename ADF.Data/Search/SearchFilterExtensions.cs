@@ -86,7 +86,7 @@ namespace Adf.Data.Search
             return query;
         }
 
-        private static IEnumerable<Join> GetJoinsFor(this IEnumerable<JoinProperty> joins, IFilterParameter filterParameter, string leadTable)
+        private static IEnumerable<Join> GetJoinsFor(this IList<JoinProperty> joins, IFilterParameter filterParameter, string leadTable)
         {
             var list = new List<Join>();
 
@@ -99,10 +99,11 @@ namespace Adf.Data.Search
                 table = join.Source.Table.FullName;
 
                 list.Insert(0, new Join { SourceColumn = join.Source, JoinColumn = join.Join, Type = JoinType.Left });
+
+                if (list.Count > joins.Count) throw new InvalidOperationException("Can't find your join, review your query"); // prevent deadlock in while loop
             }
 
             return list;
         }
-
     }
 }
