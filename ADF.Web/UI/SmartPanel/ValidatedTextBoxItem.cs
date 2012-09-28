@@ -46,7 +46,7 @@ namespace Adf.Web.UI
 
         public static ValidatedTextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int height = 0, string infoText = null)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, mandatory, height, infoText);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory, height, infoText);
         }
 
         public static ValidatedTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int height = 0, string infoText = null)

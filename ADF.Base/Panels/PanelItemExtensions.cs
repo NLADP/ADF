@@ -60,9 +60,38 @@ namespace Adf.Base.Panels
             return panel;
         }
 
-        public static AdfPanel ShowTextBox<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = null, bool? editable = true)
+        public static AdfPanel ShowTextBox<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
         {
             panel.CreateItem(PanelItemType.EditableText, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+        public static AdfPanel ShowCheckBox<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(PanelItemType.CheckBox, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+        public static AdfPanel ShowCheckBoxList<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(PanelItemType.CheckBoxList, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+        public static AdfPanel ShowInfoIcon<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 16, bool? mandatory = false, bool? editable = false)
+        {
+            panel.CreateItem(PanelItemType.InfoIcon, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+
+        public static AdfPanel ShowCalendar<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 10, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(PanelItemType.Calendar, property, label, width, mandatory, editable);
 
             return panel;
         }
@@ -147,6 +176,13 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static P AsTreeView<P>(this P panel) where P : AdfPanel
+        {
+            panel.LastItem().Type = PanelItemType.TreeView;
+
+            return panel;
+        }
+
         public static P AsInfoIcon<P>(this P panel, string text = null) where P : AdfPanel
         {
             panel.LastItem().Type = PanelItemType.InfoIcon;
@@ -174,6 +210,13 @@ namespace Adf.Base.Panels
         public static P WithLabel<P>(this P panel, string label) where P : AdfPanel
         {
             panel.LastItem().Label = label;
+
+            return panel;
+        }
+
+        public static P WithTooltip<P>(this P panel, string tooltip) where P : AdfPanel
+        {
+            panel.LastItem().ToolTip = tooltip;
 
             return panel;
         }
@@ -206,6 +249,14 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static P WithAlias<P>(this P panel, string alias) where P : AdfPanel
+        {
+            panel.LastItem().Alias = alias;
+
+            return panel;
+        }
+
+
         public static P RequiresNoValidation<P>(this P panel) where P : AdfPanel
         {
             panel.LastItem().RequiresValidation = false;
@@ -213,13 +264,13 @@ namespace Adf.Base.Panels
             return panel;
         }
 
-        public static AdfPanel Show<D>(this AdfPanel panel, Expression<Func<D, object>> property)
+        public static AdfPanel Show<D>(this AdfPanel panel, Expression<Func<D, object>> expression)
         {
             panel.AddPanelItem();
 
-            panel.LastItem().Member = property.GetExpressionMember();
+            panel.LastItem().Member = expression.GetMemberInfo();
             panel.LastItem().Optional = !panel.LastItem().Member.IsDefined(typeof(NonEmptyAttribute), false);
-            if (panel.AutoGenerateLabels) panel.LastItem().Label = property.GetExpressionMember().Name;
+            if (panel.AutoGenerateLabels) panel.LastItem().Label = expression.GetMemberInfo().Name;
 
             return panel;
         }
@@ -236,16 +287,6 @@ namespace Adf.Base.Panels
             target = panel.LastItem();
 
             return panel;
-        }
-        
-        public static string GetId(this PanelItem panelitem)
-        {
-            return string.Format("{0}{1}{2}", panelitem.Type.Prefix, panelitem.Member.DeclaringType.Name, panelitem.Member.Name);
-        }
-        
-        public static string GetPropertyName(this PanelItem panelitem)
-        {
-            return string.Format("{0}{1}", panelitem.Member.DeclaringType.Name, panelitem.Member.Name);
         }
     }
 }

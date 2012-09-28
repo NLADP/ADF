@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Adf.Core.Resources;
 
@@ -21,7 +22,7 @@ namespace Adf.Core.Extensions
 
             var attribute = (DescriptionAttribute) fi.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault();
 
-            return ResourceManager.GetString((attribute == null) ? value.ToString() : attribute.Description);
+            return ResourceManager.GetString(key: (attribute == null) ? value.ToString() : attribute.Description);
         }
 
         /// <summary>

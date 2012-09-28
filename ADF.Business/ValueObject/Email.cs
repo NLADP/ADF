@@ -1,6 +1,5 @@
 using System;
 using System.Text.RegularExpressions;
-using Adf.Core;
 using Adf.Core.Domain;
 
 namespace Adf.Business.ValueObject
@@ -34,6 +33,8 @@ namespace Adf.Business.ValueObject
 		    //initialize
 			value = string.Empty;
 
+		    _hashCode = 0;
+
             if (string.IsNullOrEmpty(newvalue)) return;
 		    
 		    if (!Expression.IsMatch(newvalue))
@@ -42,7 +43,7 @@ namespace Adf.Business.ValueObject
 		    }
 		    
 			value = newvalue;
-		    
+		    _hashCode = value.ToUpperInvariant().GetHashCode();
 		}
 	    
 
@@ -60,7 +61,9 @@ namespace Adf.Business.ValueObject
 		/// </returns>
 		public static bool operator ==(Email i, Email j) 
 		{
-			return (i.value == j.value);
+            if (i._hashCode != j._hashCode) return false;
+
+			return (i.value.ToUpperInvariant() == j.value.ToUpperInvariant());
 		}
 
 		/// <summary>
@@ -73,7 +76,7 @@ namespace Adf.Business.ValueObject
 		/// </returns>
 		public static bool operator !=(Email i, Email j) 
 		{
-			return (i.value != j.value);
+			return !(i == j);
 		}
 
 		/// <summary>
@@ -92,6 +95,8 @@ namespace Adf.Business.ValueObject
 			return (this == (Email)obj);
 		}
 
+	    private readonly int _hashCode;
+
 		/// <summary>
 		/// Serves as a hash function for a particular type, suitable for use in hashing algorithms and 
         /// data structures like a hash table.
@@ -99,9 +104,9 @@ namespace Adf.Business.ValueObject
 		/// <returns>
         /// The hash code for the current <see cref="Email"/> object.
 		/// </returns>
-		public override int GetHashCode() 
+		public override int GetHashCode()
 		{
-			return value.GetHashCode();
+		    return _hashCode;
 		}
 
         /// <summary>
@@ -114,7 +119,9 @@ namespace Adf.Business.ValueObject
         /// <see cref="Email"/>, false otherwise.</returns>
 	    public static bool operator >(Email i, Email j) 
 		{
-			return (i.value.CompareTo(j.value) > 0);
+            if (i.IsEmpty) return false;
+
+			return (i.CompareTo(j) > 0);
 		}
 
         /// <summary>
@@ -127,7 +134,7 @@ namespace Adf.Business.ValueObject
         /// <see cref="Email"/>, false otherwise.</returns>
         public static bool operator <(Email i, Email j) 
 		{
-			return (i.value.CompareTo(j.value) < 0);
+			return (i.CompareTo(j) < 0);
 		}
 
         /// <summary>
@@ -150,15 +157,11 @@ namespace Adf.Business.ValueObject
                 throw new ArgumentException("obj is not an Email");
             }
 
-            if (this < other)
-            {
-                return -1;
-            }
-            if (this > other)
-            {
-                return 1;
-            }
-            return 0;
+            if (IsEmpty && other.IsEmpty) return 0;
+
+            if (IsEmpty) return -1;
+
+            return string.CompareOrdinal(value, other.value);
         }
 	    #endregion CodeGuard(Operators)
 
@@ -259,7 +262,5 @@ namespace Adf.Business.ValueObject
         }
 
 	    #endregion
-
-
 	}
 }

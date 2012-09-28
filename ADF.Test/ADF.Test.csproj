@@ -12,6 +12,10 @@
     <AssemblyName>Adf.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,12 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertTaskExtensions.cs" />
-    <Compile Include="AssertTaskFuncExtensions.cs" />
     <Compile Include="BaseTest.cs" />
-    <Compile Include="Domain\AssertDomainObjectExtensions.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="Domain\AssertDomainExtensions.cs" />
+    <Compile Include="Extensions\AssertExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\AssertTaskExtensions.cs" />
+    <Compile Include="Tasks\TaskTest.cs" />
     <Compile Include="Tasks\TestTaskProvider.cs" />
     <Compile Include="TestProvider.cs" />
     <Compile Include="Validation\TestExceptionValidationHandler.cs" />
@@ -83,10 +88,6 @@
     <ProjectReference Include="..\ADF.Data\ADF.Data.csproj">
       <Project>{5B241780-88E6-4C01-9FFE-A88154B28124}</Project>
       <Name>ADF.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ADF.ObjectFactory.ObjectBuilder\ADF.ObjectFactory.ObjectBuilder.csproj">
-      <Project>{5F29F9A2-90BD-4BC5-B592-ED7BB6A1AF84}</Project>
-      <Name>ADF.ObjectFactory.ObjectBuilder</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

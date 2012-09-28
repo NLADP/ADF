@@ -73,8 +73,9 @@ namespace Adf.Web.UI
                     ImageUrl = @"../images/info.png",
                     ToolTip = ResourceManager.GetString(infoText),
                     Enabled = false,
-                    Width = new Unit(16, UnitType.Pixel)
+                    Width = new Unit(16, UnitType.Pixel),
                 };
+                infoIcon.Style.Add("margin-left", "5px");
             }
 
             return new TextBoxItem(l, textBox, infoIcon);
@@ -82,7 +83,7 @@ namespace Adf.Web.UI
 
         public static TextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, int height = 0, string infoText = null)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, height, infoText);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, height, infoText);
         }
 
         public static TextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, int height = 0, string infoText = null)

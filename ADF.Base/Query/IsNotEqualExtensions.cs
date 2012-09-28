@@ -41,6 +41,11 @@ namespace Adf.Base.Query
             return query.CompleteLast(Operation, column, ParameterType.Column);
         }
 
+        public static Q IsNotEqual<Q>(this Q q, IAdfQuery query) where Q : IAdfQuery
+        {
+            return q.CompleteLast(Operation, query, ParameterType.Query);
+        }
+
         public static Q IsFalse<Q>(this Q query) where Q : IAdfQuery
         {
             return query.CompleteLast(Operation, false);

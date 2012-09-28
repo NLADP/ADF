@@ -141,16 +141,21 @@ namespace Adf.Business.SmartReferences
         /// <summary>
         /// Gets or sets whether this instance is default or not.
         /// </summary>
-        [NonEmpty]
         public bool IsDefault
+        {
+            get { return _isDefault == true; }
+            set { _isDefault = value; }
+        }
+
+        private bool? _isDefault
         {
             get
             {
-                return state.Get<bool>(SmartReferenceDescriber.IsDefault);
+                return state.GetNullable<bool>(SmartReferenceDescriber.IsDefault);
             }
             set
             {
-                state.Set(SmartReferenceDescriber.IsDefault, value);
+                state.SetNullable(SmartReferenceDescriber.IsDefault, value);
             }
         }
 

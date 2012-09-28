@@ -9,6 +9,8 @@ namespace Adf.Core.Tasks
     [Serializable]
     public class ApplicationTask : Descriptor, IAction
     {
+        public Type Subject { get; protected set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationTask"/> class with the specified task name.
         /// </summary>

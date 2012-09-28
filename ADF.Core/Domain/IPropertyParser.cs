@@ -28,7 +28,9 @@ namespace Adf.Core.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The list of ValueItems.</returns>
-        IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null);
+        ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null);
+
+        ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null);
 
         /// <summary>
         /// Indicates whether the supplied object is empty or not.

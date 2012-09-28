@@ -34,7 +34,7 @@ namespace Adf.Base.Validation
                 return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeInRangeInvalid", propertyToValidate.Name);
             }
 
-            DateTime newValue = (DateTime) value;
+            var newValue = (DateTime) value;
 
             if (min > newValue || max < newValue)
             {

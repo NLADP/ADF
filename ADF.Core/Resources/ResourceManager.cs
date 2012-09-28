@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Adf.Core.Domain;
 using Adf.Core.Objects;
 using Adf.Core.State;
 

@@ -1,68 +1,57 @@
+﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Adf.Base.Formatting;
+using Adf.Core.Domain;
 using Adf.Core.Extensions;
-using Adf.Core.Resources;
 
 namespace Adf.Web.UI.SmartView
 {
-    public abstract class IconButton : TemplateField
+    public class IconButton : SmartButton
     {
+        private ImageButton button;
         public event ImageClickEventHandler Click;
 
-        private const string Source = @"../images/{0}";
-        public string Image { get; set; }
-        public string ColumnStyle { get; set; }
-        public string CommandName { get; set; }
-        
-        private string _message;
-        public string Message
+        public IconButton()
         {
-            get { return _message; }
-            set { _message = ResourceManager.GetString(value); }
+            FieldStyle = "IconColumn";
+            Width = "16px";
+            HideOnEmpty = false;
+            IdField = "Id";
+            CommandName = "Select";
         }
 
-        private string _tooltip;
-        public string ToolTip
+        protected override void InitializeControls(DataControlFieldCell cell, DataControlCellType cellType, DataControlRowState rowState, int rowIndex)
         {
-            get { return _tooltip; }
-            set { _tooltip = ResourceManager.GetString(value); }
+            button = new ImageButton { ImageUrl = "", CommandName = CommandName };
+            button.SetId(ChildId);
+
+            if (Click != null) button.Click += Click;
+
+            cell.Controls.Add(button);
         }
 
-        public string Header
+        protected override void ItemDataBinding(object sender, EventArgs e)
         {
-            get { return HeaderText; }
-            set { HeaderText = ResourceManager.GetString(value); }
-        }
+            var cell = sender as TableCell;
+            if (cell == null) return;
 
-        protected IconButton()
-        {
-            ColumnStyle = "IconButton";
+            var entity = cell.GetDataItem();
+            var icon = this.ComposeIcon(entity, Icon, DataField, IconFormat);
+
+            button.ImageUrl = icon;
+            button.ToolTip = this.Compose(entity, ToolTipField, ToolTipFormat);
+            button.CommandArgument = this.Compose(entity, IdField, null);
+            button.Visible = this.IsEnabled(entity, icon);
+
+            var message = this.Compose(entity, MessageField, MessageFormat, MessageSubject);
             
+            if (!message.IsNullOrEmpty()) { button.OnClientClick = @"return confirm('" + message + "');"; }
         }
 
-        public override void InitializeCell(DataControlFieldCell cell, DataControlCellType cellType, DataControlRowState rowState, int rowIndex)
+        protected override void DisposeControls()
         {
-            base.InitializeCell(cell, cellType, rowState, rowIndex);
-
-            if (ColumnStyle != null)
-            {
-                if (HeaderStyle.CssClass.IsNullOrEmpty())  HeaderStyle.CssClass = ColumnStyle;
-                if (ItemStyle.CssClass.IsNullOrEmpty())  ItemStyle.CssClass = ColumnStyle;
-                if (FooterStyle.CssClass.IsNullOrEmpty())  FooterStyle.CssClass = ColumnStyle;
-            }
-
-            if (cellType == DataControlCellType.DataCell)
-            {
-                string imagename = (Image.IndexOf(".") > 0) ? Image : Image + ".png";
-                
-                var button = new ImageButton { ImageUrl = string.Format(Source, imagename), CssClass = ColumnStyle, CommandName = CommandName, ToolTip = ToolTip };
-                
-                if(Click != null) button.Click += Click;
-
-                if (!string.IsNullOrEmpty(Message)) { button.OnClientClick = @"return confirm('" + Message + "');"; }
-
-                cell.Controls.Add(button);
-            }
+            if (button != null) button.Dispose();
         }
     }
 }

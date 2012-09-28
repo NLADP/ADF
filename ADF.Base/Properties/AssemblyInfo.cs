@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Adf.Core;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -21,3 +22,4 @@ using Adf.Core;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("517cd34e-e7c5-447f-ab68-d4f859867b1f")]
+[assembly: NeutralResourcesLanguageAttribute("en")]

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Adf.Core.Identity;
 
 namespace Adf.Web.UI
 {
@@ -20,15 +15,6 @@ namespace Adf.Web.UI
             }
 
             return collection;
-        }
-
-        public static ID CurrentId(this SmartView.SmartView view, GridViewCommandEventArgs args)
-        {
-            // Convert the row index stored in the CommandArgument
-            var index = Convert.ToInt32(args.CommandArgument);
-
-            // Retrieve the bookingrecord id behind the row that contains the button clicked
-            return (ID)view.DataKeys[index].Value;
         }
     }
 }

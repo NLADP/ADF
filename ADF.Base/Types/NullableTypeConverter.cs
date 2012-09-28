@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Adf.Core.Extensions;
 using Adf.Core.Types;
 
 namespace Adf.Base.Types
@@ -25,6 +26,11 @@ namespace Adf.Base.Types
         public T To<T>(object value)
         {
             return (T)new NullableConverter(typeof(T)).ConvertFrom(value);
+        }
+
+        public object To(Type type, object value)
+        {
+            return new NullableConverter(type).ConvertFrom(value);
         }
 
         /// <summary>

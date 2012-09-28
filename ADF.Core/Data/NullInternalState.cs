@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 using Adf.Core.Identity;
+using Adf.Core.Types;
 
 namespace Adf.Core.Data
 {
@@ -37,7 +39,7 @@ namespace Adf.Core.Data
         /// <returns>An instance of specified type.</returns>
         public T GetValue<T>(IColumn property) where T : IValueObject
         {
-            return (T)Activator.CreateInstance(typeof(T), string.Empty);
+            return typeof(T).New<T>(string.Empty);
         }
 
         /// <summary>

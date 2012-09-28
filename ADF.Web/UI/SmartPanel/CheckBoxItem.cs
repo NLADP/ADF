@@ -52,7 +52,7 @@ namespace Adf.Web.UI
 
         public static CheckBoxItem Create<T>(Expression<Func<T, object>> property, bool enabled = true)
         {
-            return Create(property.GetExpressionMember().Name, property, enabled);
+            return Create(property.GetMemberInfo().Name, property, enabled);
         }
 
         public static CheckBoxItem Create<T>(string label, Expression<Func<T, object>> property, bool enabled = true)

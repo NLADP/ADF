@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace Adf.Web.UI
@@ -22,25 +23,16 @@ namespace Adf.Web.UI
         protected ValidatedPanelItem(BasePanelItem panelItem, string name, bool mandatory)
         {
             _id = name;
-
             _labelControls.AddRange(panelItem.LabelControls);
 
-            // todo: 1ste is label?
-            _labelControls[0].ID = "itemLabel_" + name;
+            if (mandatory) _labelControls.Add(new Label {Text = "*", CssClass = "mandatory"});
 
-            if (mandatory)
-            {
-                Label asterix = new Label();
-                asterix.Text = "*";
-                asterix.CssClass = "mandatory";
-                _labelControls.Add(asterix);
-            }
+            var label = _labelControls.OfType<Label>().FirstOrDefault();
+
+            if (label != null) label.ID = "itemLabel_" + name;
 
             _itemControls.AddRange(panelItem.Controls);
-
-            validator = SmartValidator.Create(name);
-
-            _itemControls.Add(validator);
+            _itemControls.Add(SmartValidator.Create(name, (label != null) ? label.Text : string.Empty));
         }
 
         /// <summary>

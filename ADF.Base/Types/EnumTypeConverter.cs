@@ -1,4 +1,5 @@
 ﻿using System;
+using Adf.Core.Extensions;
 using Adf.Core.Types;
 
 namespace Adf.Base.Types
@@ -25,6 +26,11 @@ namespace Adf.Base.Types
         {
             // TODO: check 
             return (T)Enum.Parse(typeof(T), value.ToString());
+        }
+
+        public object To(Type type, object value)
+        {
+            return Enum.Parse(type, value.ToString());
         }
 
         /// <summary>

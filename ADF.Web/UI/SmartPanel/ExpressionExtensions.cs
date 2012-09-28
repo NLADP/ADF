@@ -8,7 +8,7 @@ namespace Adf.Web.UI
     {
         public static string GetControlName<T>(this Expression<Func<T, object>> property)
         {
-            return typeof(T).Name + property.GetExpressionMember().Name;
+            return typeof(T).Name + property.GetMemberInfo().Name;
         }
     }
 }

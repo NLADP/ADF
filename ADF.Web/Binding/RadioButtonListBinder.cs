@@ -55,9 +55,29 @@ namespace Adf.Web.Binding
 
             rbl.Items.Clear();
 
+            var items = BindManager.GetListFor(pi);
+
+            if (p != null && p.Length > 0)
+            {
+                var typeResolver = p[0] as ObjectResolver;
+
+                if (typeResolver != null)
+                {
+                    Func<IEnumerable> func;
+                    if (typeResolver.TryGetValue(rbl.ID, out func))
+                    {
+                        items = func.Invoke();
+                    }
+                    else if (typeResolver.TryGetValue(value.GetType(), out func))
+                    {
+                        items = func.Invoke();
+                    }
+                }
+            }
+
             var includeEmpty = !pi.IsNonEmpty();
 
-            IEnumerable<ValueItem> list = PropertyHelper.GetCollectionWithDefault(value, includeEmpty);
+            IEnumerable<ValueItem> list = PropertyHelper.GetCollectionWithDefault(value, includeEmpty, items);
 
             foreach (ValueItem item in list)
             {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Objects;
 using Adf.Core.State;
 
@@ -109,17 +111,6 @@ namespace Adf.Core.Validation
         }
 
         /// <summary>
-        /// Adds a <see cref="ValidationResult"/> with the specified error message and arguments to the 
-        /// ValidationContext.
-        /// </summary>
-        /// <param name="message">The error message of the <see cref="ValidationResult"/>.</param>
-        /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
-        public static void AddError(string message, params object[] args)
-        {
-            AddValidationResult(ValidationResult.CreateError(message, args));
-        }
-
-        /// <summary>
         /// Adds a <see cref="ValidationResult"/> with the warning message and arguments to the ValidationContext.
         /// </summary>
         /// <param name="message">The warning message of the <see cref="ValidationResult"/>.</param>
@@ -127,6 +118,16 @@ namespace Adf.Core.Validation
         public static void AddWarning(string message, params object[] args)
         {
             AddValidationResult(ValidationResult.CreateWarning(message, args));
+        }
+
+        public static void AddWarning(PropertyInfo property, string message, params object[] args)
+        {
+            AddValidationResult(ValidationResult.CreateWarning(property, message, args));
+        }
+
+        public static void AddWarning<T>(Expression<Func<T, object>> expression, string message, params object[] args)
+        {
+            AddWarning(expression.GetPropertyInfo(), message, args);
         }
 
         /// <summary>
@@ -139,15 +140,41 @@ namespace Adf.Core.Validation
             AddValidationResult(ValidationResult.CreateInfo(message, args));
         }
 
+        public static void AddInfo(PropertyInfo property, string message, params object[] args)
+        {
+            AddValidationResult(ValidationResult.CreateInfo(property, message, args));
+        }
+
+        public static void AddInfo<T>(Expression<Func<T, object>> expression, string message, params object[] args)
+        {
+            AddInfo(expression.GetPropertyInfo(), message, args);
+        }
+
+        /// <summary>
+        /// Adds a <see cref="ValidationResult"/> with the specified error message and arguments to the 
+        /// ValidationContext.
+        /// </summary>
+        /// <param name="message">The error message of the <see cref="ValidationResult"/>.</param>
+        /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
+        public static void AddError(string message, params object[] args)
+        {
+            AddValidationResult(ValidationResult.CreateError(message, args));
+        }
+
+        public static void AddError(PropertyInfo property, string message, params object[] args)
+        {
+            AddValidationResult(ValidationResult.CreateError(property, message, args));
+        }
+
         /// <summary>
         /// Adds a <see cref="ValidationResult"/> with the specified property, error message and arguments to the ValidationContext.
         /// </summary>
-        /// <param name="pi">The property of the <see cref="ValidationResult"/>.</param>
+        /// <param name="expression">The property of the <see cref="ValidationResult"/>.</param>
         /// <param name="message">The error message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
-        public static void AddError(PropertyInfo pi, string message, params object[] args)
+        public static void AddError<T>(Expression<Func<T, object>> expression, string message, params object[] args)
         {
-            AddValidationResult(ValidationResult.CreateError(pi, message, args));
+            AddError(expression.GetPropertyInfo(), message, args);
         }
 
         #endregion

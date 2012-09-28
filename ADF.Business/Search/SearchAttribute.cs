@@ -30,6 +30,8 @@ namespace Adf.Business.Search
         /// </summary>
         public object Value { get; set; }
 
+        public bool IncludeWhenEmpty { get; protected set; }
+
         /// <summary>
         /// Sets the method name and column name of this instance with the supplied method name and 
         /// column name.
@@ -87,8 +89,9 @@ namespace Adf.Business.Search
         /// Initializes an instance of <see cref="InQueryAttribute"/> with the supplied column name.
         /// </summary>
         /// <param name="column">The supplied column name.</param>
-        public InListAttribute(string column) : base("In", OperatorType.In, column, ParameterType.ValueList)
+        public InListAttribute(string column, bool includeWhenEmpty = true) : base("In", OperatorType.In, column, ParameterType.ValueList)
         {
+            IncludeWhenEmpty = includeWhenEmpty;
         }
     }
 

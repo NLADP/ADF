@@ -85,5 +85,7 @@ namespace Adf.Core.Test
         /// <returns>True if item is in registry, false if not.</returns>
         /// <returns>List of items matching criteria</returns>
         IEnumerable<TestItem> FindItems(TestItemType type, object subject, TestAction action);
+        
+        IEnumerable<TestItem> FindItems(TestItemType type, TestAction action);
     }
 }

@@ -20,7 +20,8 @@ namespace Adf.Base.Messaging
         {
             return (definition.Type == FieldDefinitionType.Amount || definition.Type == FieldDefinitionType.Decimal || definition.Type == FieldDefinitionType.Int16 ||
                     definition.Type == FieldDefinitionType.Int32 || definition.Type == FieldDefinitionType.Int64 || definition.Type == FieldDefinitionType.Number ||
-                    definition.Type == FieldDefinitionType.UInt16 ||definition.Type == FieldDefinitionType.UInt32 || definition.Type == FieldDefinitionType.UInt64);
+                    definition.Type == FieldDefinitionType.UInt16 ||definition.Type == FieldDefinitionType.UInt32 || definition.Type == FieldDefinitionType.UInt64 ||
+                    definition.Type == FieldDefinitionType.InvertedAmount);
         }
 
         public static RecordDefinition FindRecord(this MessageDefinition message, string name)

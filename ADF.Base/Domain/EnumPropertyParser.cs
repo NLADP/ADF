@@ -92,7 +92,7 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The collection.</returns>
-        public IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             List<ValueItem> collection = GetCollection(target, items).ToList();
 
@@ -110,6 +110,11 @@ namespace Adf.Base.Domain
             }
 
             return collection;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection(Enum.ToObject(targetType, 0), includeEmpty, items);
         }
 
         /// <summary>

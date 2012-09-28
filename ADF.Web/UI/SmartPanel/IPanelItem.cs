@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Adf.Web.UI.Styling;
 
 namespace Adf.Web.UI
 {
@@ -28,12 +27,6 @@ namespace Adf.Web.UI
         /// </summary>
         /// <returns>The array of item control which contains the child control names within the panel.</returns>
         IList<Control> Controls { get; }
-
-        /// <summary>
-        /// Gets the style of a control within the panel.
-        /// </summary>
-        /// <returns>The style of a control within the panel.</returns>
-        IStyler Styler { get; }
 
         /// <summary>
         /// Gets or sets the visibility of controls within the panel.

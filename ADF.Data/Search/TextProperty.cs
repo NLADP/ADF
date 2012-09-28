@@ -41,6 +41,17 @@ namespace Adf.Data.Search
             Operators = new[] { OperatorType.IsEqual, OperatorType.IsLarger, OperatorType.IsLargerOrEqual, OperatorType.IsSmaller, OperatorType.IsSmallerOrEqual };
         }
     }
+    public class DateProperty : FilterProperty
+    {
+        public DateProperty(string displayname, IColumn column)
+        {
+            Type = FilterType.DateTime;
+//            DisplayPrefix = "txt";
+            DisplayName = ResourceManager.GetString(displayname);
+            Column = column;
+            Operators = new[] { OperatorType.IsLarger, OperatorType.IsLargerOrEqual, OperatorType.IsSmaller, OperatorType.IsSmallerOrEqual };
+        }
+    }
 
     public class NumericProperty : FilterProperty
     {
@@ -63,6 +74,18 @@ namespace Adf.Data.Search
             DisplayName = ResourceManager.GetString(displayname);
             Column = column;
             Operators = new[] { OperatorType.IsEqual, OperatorType.IsNotEqualOrIsNull };
+            ValueList = valueList;
+        }
+    }
+
+    public class FilterListProperty : FilterProperty
+    {
+        public FilterListProperty(string displayname, IColumn column, Func<Dictionary<string, string>> valueList)
+        {
+            Type = FilterType.List;
+            DisplayName = ResourceManager.GetString(displayname);
+            Column = column;
+            Operators = new[] { OperatorType.In, OperatorType.NotIn };
             ValueList = valueList;
         }
     }
