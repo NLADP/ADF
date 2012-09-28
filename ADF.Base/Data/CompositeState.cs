@@ -1,31 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adf.Base.Domain;
 using Adf.Core.Data;
-using Adf.Core.Domain;
 using Adf.Core.Identity;
 
 namespace Adf.Base.Data
 {
     public class CompositeState : IInternalState
     {
-        protected Dictionary<string, IInternalState> states = new Dictionary<string, IInternalState>();
+        protected List<IInternalState> states = new List<IInternalState>();
 
-        public CompositeState(params DomainObject[] domainObjects)
+        public CompositeState(params IInternalState[] s)
         {
-            AddRange(domainObjects);
+            states = s.ToList();
         }
 
-        public void Add(DomainObject domainObject)
+        public void Add(IInternalState s)
         {
-            states[domainObject.GetType().Name] = domainObject.GetState();
+            states.Add(s);
         }
 
-        public void AddRange(params DomainObject[] domainObjects)
+        public List<IInternalState> States
         {
-            foreach (var domainObject in domainObjects)
+            get
             {
-                Add(domainObject);
+                return states;
             }
         }
 
@@ -33,47 +31,36 @@ namespace Adf.Base.Data
 
         public bool IsEmpty
         {
-            get { return states.All(state => state.Value.IsEmpty); }
+            get { return states.All(state => state.IsEmpty); }
         }
 
         public bool IsAltered
         {
-            get { return states.Any(state => state.Value.IsAltered); }
+            get { return states.Any(state => state.IsAltered); }
         }
 
         public bool IsNew
         {
-            get { return states.All(state => state.Value.IsNew); }
+            get { return states.All(state => state.IsNew); }
+        }
+
+        public bool Has(IColumn property)
+        {
+            return states.Exists(s => s.Has(property));
         }
 
         public T Get<T>(IColumn property)
         {
-            return states.ContainsKey(property.Table.Name) ? states[property.Table.Name].Get<T>(property) : default(T);
+            var state = states.FirstOrDefault(s => s.Has(property));
+
+            return (state == null) ? default(T) : state.Get<T>(property);
         }
 
         public void Set<T>(IColumn property, T value)
         {
-            if (states.ContainsKey(property.Table.Name)) states[property.Table.Name].Set(property, value);
-        }
+            var state = states.FirstOrDefault(s => s.Has(property));
 
-        public T? GetNullable<T>(IColumn property) where T : struct
-        {
-            return states.ContainsKey(property.Table.Name) ? states[property.Table.Name].GetNullable<T>(property) : null;
-        }
-
-        public void SetNullable<T>(IColumn property, T? value) where T : struct
-        {
-            if (states.ContainsKey(property.Table.Name)) states[property.Table.Name].SetNullable(property, value);
-        }
-
-        public T GetValue<T>(IColumn property) where T : IValueObject
-        {
-            return states.ContainsKey(property.Table.Name) ? states[property.Table.Name].GetValue<T>(property) : default(T);
-        }
-
-        public void SetValue<T>(IColumn property, T value) where T : IValueObject
-        {
-            if (states.ContainsKey(property.Table.Name)) states[property.Table.Name].SetValue(property, value);
+            if (state != null) state.Set(property, value);
         }
     }
 }

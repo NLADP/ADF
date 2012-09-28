@@ -1,10 +1,10 @@
 namespace Adf.Web.UI.SmartView
 {
-    public class TextColumn : BaseColumn
+    public class CodeColumn : BaseColumn
     {
-        public TextColumn()
+        public CodeColumn()
         {
-            ColumnStyle = "TextColumn";
+            ColumnStyle = "CodeColumn";
         }
     }
 }

@@ -10,21 +10,11 @@ namespace Adf.Test
 {
     public static class AssertTaskFuncExtensions
     {
-
-        public static T IsEqual<T>(this T task, Func<T, object> func, object origin) where T : ITask
+        public static T IsSet<T>(this T task, Func<T, object> func, object origin) where T : ITask
         {
             var property = func.Invoke(task);
 
-            Assert.AreEqual(origin, property, "Property [{0}] is not equal to [{1}] .", property.ToString(), origin.ToString());
-
-            return task;
-        }
-        
-        public static T IsNotEqual<T>(this T task, Func<T, object> func, object origin) where T : ITask
-        {
-            var property = func.Invoke(task);
-
-            Assert.AreNotEqual(origin, property, "Property [{0}] is equal to [{1}] .", property.ToString(), origin.ToString());
+            Assert.AreEqual(property, origin, "Property [{0}] is not equal to [{1}] .", property.ToString(), origin.ToString());
 
             return task;
         }
@@ -33,7 +23,7 @@ namespace Adf.Test
         {
             var collection = func.Invoke(task);
 
-            Assert.IsTrue(collection.Contains(target), "Domain object [{0}] is not an element in the collection.", target.Title);
+            Assert.IsTrue(collection.Contains((D) target), "Domain object [{0}] is not an element in the collection.", target.Title);
 
             return task;
         }
@@ -85,33 +75,6 @@ namespace Adf.Test
             return task;
         }
 
-        public static T IsInitialized<T, D>(this T task, Func<T, DomainCollection<D>> func) where T : ITask where D : IDomainObject
-        {
-            var list = func.Invoke(task);
-
-            Assert.IsTrue(list.IsNullOrEmpty(), "Domain collection [{0}] is not initialised.", list);
-
-            return task;
-        }
-
-        public static T IsIn<T, D>(this T task, Func<T, DomainCollection<D>> func, D domainobject) where T : ITask where D : IDomainObject
-        {
-            var list = func.Invoke(task);
-
-            Assert.IsTrue(list.Contains(domainobject), "Domain collection [{0}] does not contain [{1}].", list, domainobject);
-
-            return task;
-        }
-
-        public static T IsNotIn<T, D>(this T task, Func<T, DomainCollection<D>> func, D domainobject) where T : ITask where D : IDomainObject
-        {
-            var list = func.Invoke(task);
-
-            Assert.IsTrue(!list.Contains(domainobject), "Domain collection [{0}] does not contain [{1}].", list, domainobject);
-
-            return task;
-        }
-
         public static T IsNotEmpty<T>(this T task, Func<T, IValueObject> func) where T : ITask
         {
             var property = func.Invoke(task);
@@ -127,6 +90,35 @@ namespace Adf.Test
             var property = func.Invoke(task);
 
             Assert.IsNull(property, "Object is null.");
+
+            return task;
+        }
+
+        public static T IsInitialized<T, D>(this T task, Func<T, DomainCollection<D>> func) where T : ITask where D : IDomainObject
+        {
+            var list = func.Invoke(task);
+
+            Assert.IsTrue(list.IsNullOrEmpty(), "Domain collection [{0}] is not initialised.", list);
+
+            return task;
+        }
+
+        public static T HasCount<T, D>(this T task, Func<T, DomainCollection<D>> func, int count) where T : ITask where D : IDomainObject
+        {
+            var list = func.Invoke(task);
+
+            Assert.IsNotNull(list, "Domain collection [{0}] is null.", list);
+            Assert.IsTrue(list.Count == count, "Domain collection [{0}] has {1} elements, but {2} elements were expected.", list, list.Count, count);
+
+            return task;
+        }
+
+        public static T IsReturnSet<T, D>(this T task, Func<D, object> func, int index, object origin) where T : ITask
+        {
+            D returns = task.GetReturnParameter<D>(index);
+            var property = func.Invoke(returns);
+
+            Assert.AreEqual(property, origin, "Property [{0}] is not equal to [{1}] .", property.ToString(), origin.ToString());
 
             return task;
         }

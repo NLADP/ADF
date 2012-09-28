@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Test
 {
-    public class TestProvider : ITestProvider
+    public class TestProvider : ITestProvider 
     {
         private List<TestItem> _items = new List<TestItem>();
 
@@ -159,6 +159,13 @@ namespace Adf.Test
             return _items
                .Where(item => item.Type == type)
                .Where(item => item.Subject == subject)
+               .Where(item => item.Action == action);
+        }
+
+        public virtual IEnumerable<TestItem> FindItems(TestItemType type, TestAction action)
+        {
+            return _items
+               .Where(item => item.Type == type)
                .Where(item => item.Action == action);
         }
 

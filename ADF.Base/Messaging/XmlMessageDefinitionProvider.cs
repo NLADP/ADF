@@ -15,7 +15,7 @@ namespace Adf.Base.Messaging
         {
             var filename = messageName;
             
-            if (!File.Exists(filename)) throw new FileNotFoundException("Unable to locate message definition file {0}", filename);
+            if (!File.Exists(filename)) throw new FileNotFoundException(string.Format("Unable to locate message definition file {0}", filename), filename);
 
             var definition = XDocument.Load(filename);
             var message = definition.Element("message");

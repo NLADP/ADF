@@ -249,11 +249,11 @@ namespace Adf.Data
             if (query == null || data == null) return false;
             if (!data.IsAltered) return true;
 
-            var row = data as RowState;
-            if (row == null) return false;
+            var rowState = data as RowState;
+            if (rowState == null) return false;
 
-            var set = row.BuildUpDataSet();
-            if (set == null) return false;
+            var row = rowState.BuildUpDataRow();
+            if (row == null) return false;
 
             IDbConnection connection = Provider.GetConnection(DataSource);
             IDbDataAdapter da = Provider.SetUpAdapter(DataSource, connection, query);
@@ -265,21 +265,19 @@ namespace Adf.Data
                 IDbTransaction transaction = Provider.GetTransaction(DataSource);
                 if (transaction != null) da.SelectCommand.Transaction = transaction;
 
-                var autoincrement = set.Tables[0].Columns.Cast<DataColumn>().FirstOrDefault(column => column.AutoIncrement);
+                var autoincrement = row.Table.Columns.Cast<DataColumn>().FirstOrDefault(column => column.AutoIncrement);
                 if (autoincrement != null)
                 {
                     da.InsertCommand.CommandText += "; if (IsNumeric(SCOPE_IDENTITY()) = 1) select SCOPE_IDENTITY() as " + autoincrement.ColumnName;
                 }
 
-                var count = da.Update(set);
+                var count = Provider.Update(da, row);
 
-                // this DataRow keeps a reference to his DataSet, possibly containing more items (results of a query), 
-                // so updating the DataSet will save also other rows if they are modified!
-                // Bug: this is a serious bug, should be fixed as soon as possible!
-                if (count != 1) throw new DataException(string.Format("Saving {0} ({1}) changed {2} rows", query.LeadTable(), row.ID, count));
+                // The count should never be more than 1, since we request to update only 1 record. If the count is more than 1,
+                // it means that the Provider updates the DataSet instead of the DataRow.
+                if (count != 1) throw new DataException(string.Format("Saving {0} ({1}) changed {2} rows", query.LeadTable(), rowState.ID, count));
 
-                set.AcceptChanges();
-                row.AcceptChanges();
+                rowState.AcceptChanges();
 
                 result = true;
             }

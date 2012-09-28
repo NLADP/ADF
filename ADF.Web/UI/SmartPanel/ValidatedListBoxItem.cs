@@ -42,7 +42,7 @@ namespace Adf.Web.UI
 
         public static ValidatedListBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, ListSelectionMode mode = ListSelectionMode.Single)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, mandatory, mode);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory, mode);
         }
 
         public static ValidatedListBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, ListSelectionMode mode = ListSelectionMode.Single)

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Adf.Base.State;
 using Adf.Core.Authorization;
+using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
 using Adf.Core.State;
@@ -20,6 +19,17 @@ namespace Adf.Base.Tasks
     public class TaskProvider : ITaskProvider
     {
         private ITask main;
+        private readonly Dictionary<string, Type> _alltasks = new Dictionary<string, Type>();
+ 
+        private ITask Get(ApplicationTask name, ITask origin)
+        {
+            var taskname = string.Format("{0}Task", name);
+            var type = _alltasks[taskname];
+
+            object[] parms = { name, origin ?? Main };
+
+            return type.New<ITask>(parms);
+        }
 
         /// <summary>
         /// Gets the object builder for task handling of <see cref="System.Collections.Hashtable"/>.
@@ -43,6 +53,14 @@ namespace Adf.Base.Tasks
                 if (main == null)
                 {
                     main = ObjectFactory.BuildUp<ITask>();
+
+                    var tasktype = typeof (ITask);
+
+                    foreach (var type in main.GetType().Assembly.GetTypes().Where(t => tasktype.IsAssignableFrom(t)))
+                    {
+                        if (!_alltasks.ContainsKey(type.Name))
+                            _alltasks.Add(type.Name, type);
+                    }
                 }
                 tasks[main.Id] = main;      // always set the main task in task list, tasks are stored in session
                 return main;
@@ -63,20 +81,7 @@ namespace Adf.Base.Tasks
                 return;
             }
 
-            var mainType = Main.GetType();
-
-            var typeName =
-                string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}Task",
-                              mainType.Namespace,
-                              Type.Delimiter,
-                              name.Name.Replace('/', Type.Delimiter));
-
-            var type = mainType.Assembly.GetType(typeName, true);
-
-            object[] parms = { name, origin ?? Main };
-
-            var task = Activator.CreateInstance(type, parms) as ITask;
-
+            var task = Get(name, origin);
             if (task == null) return;
 
             tasks[task.Id] = task;
@@ -123,7 +128,15 @@ namespace Adf.Base.Tasks
         {
             ITask task;
 
-            if (!tasks.TryGetValue(id, out task)) throw new TaskNotFoundException();
+            if (!tasks.TryGetValue(id, out task))
+            {
+                if (id == Guid.Empty || tasks.Count == 0)
+                {
+                    main = null;
+                    Home();
+                }
+                throw new TaskNotFoundException();
+            }
 
             return task ?? Task.Empty;
         }

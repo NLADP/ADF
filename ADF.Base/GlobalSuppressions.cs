@@ -44,3 +44,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "Adf.Base.Mail.SmtpMailProvider.#Send(System.Net.Mail.MailMessage)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "Adf.Base.Validation.BusinessRuleValidationContext.#CloseScope()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Scope = "type", Target = "Adf.Base.ViewModels.ViewModel`1")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "Adf.Base.Messaging.CsvMessageHandler.#TryGetCultureInfo(System.String,System.Globalization.CultureInfo&)")]

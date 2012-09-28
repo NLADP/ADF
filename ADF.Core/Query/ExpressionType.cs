@@ -11,6 +11,7 @@ namespace Adf.Core.Query
         public static readonly ExpressionType Min = new ExpressionType("MIN");
         public static readonly ExpressionType Average = new ExpressionType("AVG");
         public static readonly ExpressionType Count = new ExpressionType("COUNT");
+        public static readonly ExpressionType Sum = new ExpressionType("SUM");
 
         public ExpressionType(string name) : base(name)
         {

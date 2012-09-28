@@ -27,6 +27,7 @@ namespace Adf.Core.Data
             _isIdentity = isIdentity;
             _isAutoIncrement = isAutoIncrement;
             _isTimestamp = isTimestamp;
+            _hashCode = _columnName.ToLower().GetHashCode();    // memory optimization
         }
 
         /// <summary>
@@ -122,6 +123,8 @@ namespace Adf.Core.Data
             get { return _isTimestamp; }
         }
 
+        private readonly int _hashCode;
+
         #region FullName
 
 //        /// <summary>
@@ -191,7 +194,7 @@ namespace Adf.Core.Data
 
         public override int GetHashCode()
         {
-            return ColumnName.ToLower().GetHashCode();
+            return _hashCode;
         }
     }
 }

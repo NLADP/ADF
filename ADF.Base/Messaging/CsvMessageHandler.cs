@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Adf.Base.Data;
 using Adf.Base.Domain;
 using Adf.Core.Data;
@@ -41,9 +42,17 @@ namespace Adf.Base.Messaging
                 var line = reader.ReadLine();
                 if (definition.HasHeader) line = reader.ReadLine();
 
+                string seperator = recordDefinition.FieldSeparator.Length == 1
+                                       ? string.Format(@"(?<=^(?:[^""]*""[^""]*"")*[^""]*){0}",
+                                                       recordDefinition.FieldSeparator)
+                                       : recordDefinition.FieldSeparator;
+                Regex seperatorRegex = recordDefinition.FieldSeparator.Length == 1
+                                           ? new Regex(seperator, RegexOptions.Compiled)
+                                           : null;
+
                 while (line != null)
                 {
-                    string[] fields = line.Split(new[] { recordDefinition.FieldSeparator }, StringSplitOptions.None);
+                    string[] fields = seperatorRegex != null ? seperatorRegex.Split(line) : line.Split(new[] { recordDefinition.FieldSeparator }, StringSplitOptions.None);
 
                     var state = new DictionaryState { IsNew = true };
 
@@ -68,7 +77,7 @@ namespace Adf.Base.Messaging
 
                 return records;
             }
-            catch (Exception exception)
+            catch (FormatException exception)
             {
                 throw new MessagingException(string.Format("Unknown message format. Line {1}, field {2}. {0}", exception.Message, currentLine, currentRecord), exception);
             }
@@ -76,15 +85,24 @@ namespace Adf.Base.Messaging
 
         protected virtual void ReadRecordField(DictionaryState state, TableDescriber table, FieldDefinition fieldDefinition, string[] fields)
         {
-            if (fieldDefinition.StartPosition >= fields.Length) throw new MessagingException("Message does not match definition. Too few fields in current record.");
+            if (fieldDefinition.StartPosition >= fields.Length)
+            {
+                if (fieldDefinition.IsOptional) return;
+                throw new MessagingException("Message does not match definition. Too few fields in current record.");
+            }
+
+            if (fields[fieldDefinition.StartPosition].StartsWith("\"") && fields[fieldDefinition.StartPosition].EndsWith("\"")) // Remove quotes
+            {
+                fields[fieldDefinition.StartPosition] = fields[fieldDefinition.StartPosition].Substring(1, fields[fieldDefinition.StartPosition].Length - 2);
+            }
 
             var describer = new ColumnDescriber(fieldDefinition.Name, table);
 
             if (fieldDefinition.Type.IsIn(FieldDefinitionType.DateTime))
             {
-                state[describer] = DateTime.ParseExact(fields[fieldDefinition.StartPosition], fieldDefinition.Format, CultureInfo.InvariantCulture);
+                state[describer] = DateTime.ParseExact(fields[fieldDefinition.StartPosition].Trim('"'), fieldDefinition.Format, CultureInfo.InvariantCulture);
             }
-            else if (fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.Decimal))
+            else if (fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.InvertedAmount, FieldDefinitionType.Decimal))
             {
                 object oldvalue;
 
@@ -92,10 +110,12 @@ namespace Adf.Base.Messaging
                                         ? (decimal) oldvalue
                                         : 0;
 
-                decimal amount = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition])
-                            ? Decimal.Parse(fields[fieldDefinition.StartPosition],
+                decimal amount = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition].Trim('"'))
+                            ? Decimal.Parse(fields[fieldDefinition.StartPosition].Trim('"'),
                                 fieldDefinition.Format.IsNullOrEmpty() ? CultureInfo.InvariantCulture : new CultureInfo(fieldDefinition.Format))
                             : 0;
+
+                if (fieldDefinition.Type == FieldDefinitionType.InvertedAmount) amount *= -1;
 
                 state[describer] = oldAmount + amount;
             }
@@ -167,7 +187,7 @@ namespace Adf.Base.Messaging
 
             if(fieldDefinition.Type.IsIn(FieldDefinitionType.DateTime))
             {
-                DateTime? dateTime = state.GetNullable<DateTime>(columnDescriber);
+                var dateTime = state.Get<DateTime?>(columnDescriber);
 
                 if (!dateTime.HasValue)
                     return fieldDefinition.Default;
@@ -176,16 +196,19 @@ namespace Adf.Base.Messaging
                 return !format.IsNullOrEmpty() ? dateTime.Value.ToString(format, CultureInfo.InvariantCulture) : dateTime.Value.ToShortDateString();
             }
 
-            if(fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.Decimal))
+            if(fieldDefinition.Type.IsIn(FieldDefinitionType.Amount, FieldDefinitionType.InvertedAmount, FieldDefinitionType.Decimal))
             {
-                Money money = state.GetValue<Money>(columnDescriber);
+                var money = state.Get<Money>(columnDescriber);
 
-                return money.IsEmpty ? fieldDefinition.Default : ToString(money, format);
+                if (money.IsEmpty) return fieldDefinition.Default;
+                if (fieldDefinition.Type == FieldDefinitionType.InvertedAmount) money *= -1;
+                
+                return ToString(money, format);
             }
 
             if(fieldDefinition.Type.IsIn(FieldDefinitionType.Int16, FieldDefinitionType.Int32, FieldDefinitionType.Int64))
             {
-                long? value = state.GetNullable<long>(columnDescriber);
+                var value = state.Get<long?>(columnDescriber);
 
                 return !value.HasValue ? fieldDefinition.Default : ToString(value, format);
             }

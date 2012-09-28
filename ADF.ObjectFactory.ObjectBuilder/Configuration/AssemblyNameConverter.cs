@@ -39,8 +39,8 @@ namespace Adf.ObjectFactory.ObjectBuilder.Configuration
         /// <returns>Type of the data</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            string stringValue = (string)value;
-            Type result = Type.GetType(stringValue, false);
+            var stringValue = (string)value;
+            var result = Type.GetType(stringValue, false);
             if (result == null)
             {
                 throw new ArgumentException(string.Format(Resources.Culture, Resources.ExceptionInvalidType, stringValue));

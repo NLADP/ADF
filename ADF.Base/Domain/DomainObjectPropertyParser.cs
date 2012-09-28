@@ -44,6 +44,7 @@ namespace Adf.Base.Domain
         /// Gets the collection of the property info for the specified target object.
         /// </summary>
         /// <param name="target">Object to get collection for.</param>
+        /// <param name="items">The list of items to use, or null to get the list from the domainobject.</param>
         /// <returns>Collection of values for type of property, using the value on the target object 
         /// for this property as default value.</returns>
         protected virtual List<ValueItem> GetCollection(object target, IEnumerable items = null)
@@ -76,7 +77,7 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a ValueCollection of instances of the type of the target having an empty ValueItem.</returns>
-        public virtual IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public virtual ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target, items);
 
@@ -91,6 +92,11 @@ namespace Adf.Base.Domain
             }
 
             return collection;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection(DomainObjectExtensions.Empty(targetType), includeEmpty, items);
         }
 
         /// <summary>

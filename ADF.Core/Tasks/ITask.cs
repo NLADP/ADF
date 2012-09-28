@@ -1,5 +1,4 @@
 ﻿using System;
-using Adf.Core.Domain;
 
 namespace Adf.Core.Tasks
 {

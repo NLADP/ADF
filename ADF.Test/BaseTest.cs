@@ -1,33 +1,32 @@
-﻿using System;
-using Adf.Core.Tasks;
-using Adf.Core.Test;
+﻿using Adf.Core.Test;
 using Adf.Core.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Test
 {
-    public class BaseTest
+    public abstract class BaseTest 
     {
         [TestInitialize]
         public void Initialize()
+        {
+            OnInit();
+        }
+
+        protected virtual void OnInit()
         {
             TestManager.Clear();
             ValidationManager.Clear();
         }
-    }
 
-    [TestClass]
-    public class BaseTest<T>  where T : ITask
-    {
-        protected T Task;
-
-        [TestInitialize]
-        public void Initialize()
+        [TestCleanup]
+        public void CleanupTest()
         {
-            TestManager.Clear();
-            ValidationManager.Clear();
+            OnCleanup();
+        }
 
-            Task = (T)Activator.CreateInstance(typeof(T), ApplicationTask.Main, null);
+        protected virtual void OnCleanup()
+        {
+            
         }
     }
 }

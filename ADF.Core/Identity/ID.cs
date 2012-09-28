@@ -23,6 +23,7 @@ namespace Adf.Core.Identity
     public struct ID : IValueObject, IComparable
     {
         private readonly object value;
+        private readonly int hashCode;
 
         #region Constructors
 
@@ -33,6 +34,8 @@ namespace Adf.Core.Identity
         public ID(object newValue)
         {
             value = newValue;
+
+            hashCode = value == null || value.ToString().Length == 0 ? 0 : value.ToString().ToUpperInvariant().GetHashCode();
         }
 
         #endregion Constructors        
@@ -52,12 +55,15 @@ namespace Adf.Core.Identity
             // If both are null, or both are same instance, return true.
 //            if (ReferenceEquals(x, y))
 //                return true;
+            if (x.Value == null && y.Value == null)
+                return true;
 
             // If one is null, but not both, return false.
             if ((x.Value == null) || ( y.Value == null))
                 return false;
 
-            return x.Value.ToString().Equals(y.Value.ToString(), StringComparison.OrdinalIgnoreCase);
+            return  x.hashCode == y.hashCode &&  // performance & memory optimization
+                    x.Value.ToString().Equals(y.Value.ToString(), StringComparison.OrdinalIgnoreCase);  // equal hashes could also be a hash collision, so be sure that those are equal
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace Adf.Core.Identity
         /// </returns>
         public override int GetHashCode()
         {
-            return value.ToString().GetHashCode();
+            return hashCode;
         }
 
         public int CompareTo(object obj)
@@ -119,7 +125,7 @@ namespace Adf.Core.Identity
         /// </returns>
         public bool IsEmpty
         {
-            get { return value == null || value.ToString().Length == 0; }
+            get { return hashCode == 0; }
         }
 
         #endregion Empty

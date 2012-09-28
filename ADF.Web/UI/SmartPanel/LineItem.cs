@@ -1,4 +1,3 @@
-using System;
 using System.Web.UI.WebControls;
 
 namespace Adf.Web.UI

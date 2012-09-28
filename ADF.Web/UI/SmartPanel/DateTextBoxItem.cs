@@ -49,7 +49,7 @@ namespace Adf.Web.UI
         /// <param name="format">The format to display data in <see cref="Adf.Web.UI.SmartDateTextBox"/> control.</param>
         /// <param name="description">Defines description to show the datetime format.</param>
         /// <returns>A new instance of the <see cref="Adf.Web.UI.DateTextBoxItem"/> class.</returns>
-        public static DateTextBoxItem Create(string label, string name, int width, bool enabled, string format = null, string description = null)
+        public static DateTextBoxItem Create(string label, string name, int width, bool enabled, string format = null, string description = null, int tabIndex = 0)
         {
             var l = new Label {Text = ResourceManager.GetString(label)};
 
@@ -76,7 +76,7 @@ namespace Adf.Web.UI
 
         public static DateTextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, string format = null, string description = null)
         {
-            return Create(property.GetExpressionMember().Name, property, width, enabled, format, description);
+            return Create(property.GetMemberInfo().Name, property, width, enabled, format, description);
         }
 
         public static DateTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, string format = null, string description = null)

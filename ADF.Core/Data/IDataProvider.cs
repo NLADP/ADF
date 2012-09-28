@@ -40,6 +40,14 @@ namespace Adf.Core.Data
         IDbTransaction StartTransaction(DataSources source);
 
         /// <summary>
+        /// Updates the selected rows.
+        /// </summary>
+        /// <param name="adapter">The dataadapter to use.</param>
+        /// <param name="dataRows">The rows to update.</param>
+        /// <returns></returns>
+        int Update(IDbDataAdapter adapter, params DataRow[] dataRows);
+
+        /// <summary>
         /// Commits the database transaction.
         /// </summary>
         /// <param name="source">The <see cref="DataSources"/> used to get the data source name.</param>

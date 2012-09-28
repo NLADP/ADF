@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Adf.Base.Domain;
+using Adf.Base.Data;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Query;
@@ -27,7 +26,7 @@ namespace Adf.Base.Query
         /// 7 = Group By
         /// </summary>
         private const string _select = "SELECT {4} {3} {2} FROM {0} {5} {1} {6} {7}";
-        private const string _delete = "DELETE FROM {0} {1}";
+        private const string _delete = "DELETE {0} FROM {0} {5} {1}";
         private const string _count = "SELECT COUNT(*) FROM {0} {5} {1}";
         
         public DataSourceType Type { get { return DataSourceType.SqlServer;  } }
@@ -146,14 +145,37 @@ namespace Adf.Base.Query
                                  "".PadLeft(where.CloseBracket, ')'));
         }
 
+        private static IEnumerable<IWhere> GetAndConfigureInnerWheres(IList<IWhere> wheres, int paramExtension = 0)
+        {
+            if (wheres == null || wheres.Count == 0) return new List<IWhere>();
+
+            var allWheres = new List<IWhere>();
+            var subQueries = wheres.Where(w => w.Parameter.Type == ParameterType.Query)
+                                   .Select(w => (IAdfQuery) w.Parameter.Value).ToList();
+            var innerparams = wheres.Where(w => w.Parameter.Type == ParameterType.Query)
+                                    .SelectMany(w => ((IAdfQuery)w.Parameter.Value).Wheres).ToList();
+
+            foreach(var query in subQueries)
+            {
+                query.RenameFunctionParameters(++paramExtension);
+                query.RenameJoinFunctionParameters(paramExtension);
+            }
+
+            if (innerparams.Count > 0)
+            {
+                allWheres.AddRange(innerparams);
+                allWheres.AddRange(GetAndConfigureInnerWheres(innerparams, ++paramExtension));
+            }
+
+            return allWheres;
+        }
+
         private static void ParseParameters(IList<IWhere> wheres)
         {
             var index = 1;
             var list = new List<string>();
 
-            var innerparams = wheres
-                .Where(w => w.Parameter.Type == ParameterType.Query)
-                .SelectMany(w => ((IAdfQuery) w.Parameter.Value).Wheres);
+            var innerparams = GetAndConfigureInnerWheres(wheres);
 
             // NULL and NOT NULL are rendered different and dont use a parameter
             var allWheres = wheres.Concat(innerparams).Where(w => w.Operator != OperatorType.IsNull && w.Operator != OperatorType.IsNotNull);
@@ -183,8 +205,8 @@ namespace Adf.Base.Query
             if (string.IsNullOrEmpty(text) || text.Contains("%")) return;
 
             if (where.Operator == OperatorType.Like) where.Parameter.Value = string.Format(CultureInfo.InvariantCulture, "%{0}%", text);
-            else if (where.Operator == OperatorType.LikeLeft) where.Parameter.Value = string.Format(CultureInfo.InvariantCulture, "%{0}", text);
-            else if (where.Operator == OperatorType.LikeRight) where.Parameter.Value = string.Format(CultureInfo.InvariantCulture, "{0}%", text);
+            else if (where.Operator == OperatorType.LikeRight) where.Parameter.Value = string.Format(CultureInfo.InvariantCulture, "%{0}", text);
+            else if (where.Operator == OperatorType.LikeLeft) where.Parameter.Value = string.Format(CultureInfo.InvariantCulture, "{0}%", text);
         }
 
         #endregion Where
@@ -218,7 +240,7 @@ namespace Adf.Base.Query
         {
             var from = ParseTables(query.Tables);
 
-            var wheres = query.Wheres.Where(w => w.Parameter.Type == ParameterType.QueryParameter);
+            var wheres = query.Wheres.Where(w => w.Parameter.Type == ParameterType.QueryParameter).ToList();
 
             var columns = string.Join(", ", wheres.Select(w => w.Column.EncloseInBrackets()));
 
@@ -227,9 +249,9 @@ namespace Adf.Base.Query
             var parameters = string.Join(", ", wheres.Select(w => w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name));
 
             var result = string.Format("INSERT INTO {0} ({1}) VALUES({2})", from, columns, parameters);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-
+#endif
             return result;
         }
 
@@ -247,9 +269,9 @@ namespace Adf.Base.Query
                                                          w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name)));
 
             var result = string.Format("UPDATE {0} SET {1} {2}", from, sets, where);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-
+#endif
             return result;
         }
 
@@ -272,9 +294,9 @@ namespace Adf.Base.Query
             var groupby = ParseGroupBy(query.GroupBys);
 
             var result = string.Format(CultureInfo.InvariantCulture, statement, from, where, select, top, distinct, joins, orderby, groupby);
-
+#if DEBUG
             Debug.WriteLine(DebugQueryString(query, result));
-            
+#endif            
             return result;
         }
 
@@ -286,10 +308,14 @@ namespace Adf.Base.Query
 
             foreach (var where in wheres)
             {
-                if (!where.Parameter.Name.IsNullOrEmpty())
-                {
-                    querystring.Replace("@" + where.Parameter.Name, where.Parameter.Value == null ? "null" : where.Parameter.Value.ToString());
-                }
+                if (@where.Parameter.Name.IsNullOrEmpty()) continue;
+
+                var parValue = @where.Parameter.Value;
+                string value = parValue == null ? "null"
+                                   : (parValue is IEnumerable && !(parValue is string) ? string.Join(",", ((IEnumerable)parValue).Cast<object>().Select(o => o.ToString()))
+                                   : parValue is DateTime ? string.Format("'{0}'", ((DateTime)parValue).ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"))
+                                   : string.Format("'{0}'", parValue));
+                querystring.Replace("@" + @where.Parameter.Name, value);
             }
             return querystring.ToString();
         }
@@ -332,6 +358,15 @@ namespace Adf.Base.Query
             var name = indexOf == -1 ? table.Name : table.Name.Substring(0, indexOf); // remove () part
 
             return string.Format(CultureInfo.InvariantCulture, "[{0}]", name);
+        }
+
+        public static IEnumerable<string> GetParameters(this ITable table)
+        {
+            var indexOf = table.Name.IndexOf('(');
+
+            if(indexOf == -1) return new List<string>();
+
+            return table.Name.Substring(indexOf + 1, table.Name.IndexOf(')') - indexOf - 1).Split(',').Select(s => s.Trim());
         }
     }
 }

@@ -12,6 +12,10 @@ namespace Adf.Web.UI.SmartView
     /// </summary>
     public abstract class BaseColumn : DataControlField
     {
+        public delegate void FormatDelegate(object sender, FormatEventArgs e);
+
+        public event FormatDelegate Format;
+
         public string ColumnStyle { get; set; }
         public string Width { get; set; }
         public string ToolTipField { get; set; }
@@ -29,6 +33,7 @@ namespace Adf.Web.UI.SmartView
             set { tooltip = ResourceManager.GetString(value); }
         }
 
+        public string DescriberField { get; set; }
 
         private string datafield;
         /// <summary>
@@ -42,6 +47,14 @@ namespace Adf.Web.UI.SmartView
             get { return datafield; } 
             set {  datafield = value;  if (SortExpression.IsNullOrEmpty()) SortExpression = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the format used to show the data field
+        /// </summary>
+        /// <returns>The format string of the data field.</returns>
+        /// <remarks>Use the DataField property to specify the field to bind to the <see cref="BaseColumn"/>.
+        /// </remarks>
+        public string DataFieldFormat { get; set; }
 
         /// <summary>
         /// Add text or controls to a cell's control collection.
@@ -84,7 +97,9 @@ namespace Adf.Web.UI.SmartView
             if (item == null || item.DataItem == null) return;
 
             var value = PropertyHelper.GetValue(item.DataItem, DataField);
-            cell.Text = FormatHelper.ToString(value);
+            FormatEventArgs fea = new FormatEventArgs(FormatHelper.ToString(value));
+            OnFormat(fea);
+            cell.Text = string.Format(string.IsNullOrEmpty(DataFieldFormat) ? "{0}" : DataFieldFormat, fea.Value);
 
             if (value is Enum) cell.ToolTip = (value as Enum).GetDescription();
             else if (!ToolTipField.IsNullOrEmpty()) cell.ToolTip = FormatHelper.ToString(PropertyHelper.GetValue(item.DataItem, ToolTipField));
@@ -97,6 +112,15 @@ namespace Adf.Web.UI.SmartView
         protected override DataControlField CreateField()
         {
             return new BoundField();
+        }
+
+
+        protected virtual void OnFormat(FormatEventArgs e)
+        {
+            if (Format != null)
+            {
+                Format(this, e);
+            }
         }
     }
 }

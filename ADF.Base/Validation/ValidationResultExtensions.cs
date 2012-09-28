@@ -10,21 +10,21 @@ using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
 {
-    public static class ValidationResultExtensions
-    {
-        public static ValidationResult CreateError<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p)
-        {
-            return ValidationResult.CreateError((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
-        }
+    //public static class ValidationResultExtensions
+    //{
+    //    public static ValidationResult CreateError<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p)
+    //    {
+    //        return ValidationResult.CreateError((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
+    //    }
 
-        public static ValidationResult CreateInfo<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p)
-        {
-            return ValidationResult.CreateInfo((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
-        }
+    //    public static ValidationResult CreateInfo<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p)
+    //    {
+    //        return ValidationResult.CreateInfo((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
+    //    }
 
-        public static ValidationResult CreateWarning<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p) 
-        {
-            return ValidationResult.CreateWarning((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
-        }
-    }
+    //    public static ValidationResult CreateWarning<T>(this T validatedobject, Expression<Func<T, object>> propertyexpression, string message, params object[] p) 
+    //    {
+    //        return ValidationResult.CreateWarning((PropertyInfo) propertyexpression.GetExpressionMember(), message, p);
+    //    }
+    //}
 }

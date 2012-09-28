@@ -1,5 +1,4 @@
 using System.Web.UI;
-using Adf.Web.UI.SmartView;
 
 namespace Adf.Web.UI.Styling
 {

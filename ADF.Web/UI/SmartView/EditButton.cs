@@ -10,9 +10,11 @@ namespace Adf.Web.UI.SmartView
         public EditButton()
         {
             CommandName = "Edit";
-            Image = "Edit";
-            ToolTip = "Edit current item";
-
+            IconFormat = "~/Images/{0}";
+            Icon = "edit.png";
+            Header = "Edit";
+            ToolTipFormat = "Click to edit {0}";
+            ToolTipField = "Title";
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Web.UI.WebControls;
 using Adf.Core.Resources;
 

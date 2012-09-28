@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
+using Adf.Core.Extensions;
 
 namespace Adf.Business.SmartReferences
 {
@@ -23,10 +24,10 @@ namespace Adf.Business.SmartReferences
         /// <param name="pi">Property info for the property to set.</param>
         /// <param name="newvalue">Value for the property.</param>
         /// <param name="culture"></param>
-        /// <exception cref="System.ArgumentException">Not a valid argument.</exception>         
+        /// <exception cref="System.ArgumentException">Not a valid argument.</exception>                    
         public void SetValue(object instance, PropertyInfo pi, object newvalue, CultureInfo culture = null)
         {
-            var item = SmartReferenceFactory.Get((ID) newvalue, pi.PropertyType.GetGenericArguments()[0]);
+            var item = SmartReferenceFactory.Get(pi.PropertyType.GetGenericArguments()[0], (ID) newvalue);
 
             pi.SetValue(instance, item, null);
         }
@@ -42,7 +43,7 @@ namespace Adf.Business.SmartReferences
 
             if (value == null) return new List<ValueItem>();
 
-            var list = items == null ? SmartReferenceFactory.GetByType(value.Type) : items.Cast<ISmartReference>();
+            var list = items == null ? SmartReferenceFactory.GetAll(value.Type) : items.Cast<ISmartReference>();
             var collection = new List<ValueItem>();
 
             collection.AddRange(list.Select(smartReference => ValueItem.New(smartReference.ToString(), smartReference.Id, smartReference.Id == value.Id)));
@@ -64,7 +65,7 @@ namespace Adf.Business.SmartReferences
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a collection of instances of the type of the target having an empty ValueItem</returns>
-        public IEnumerable<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target);
 
@@ -74,6 +75,11 @@ namespace Adf.Business.SmartReferences
             }
 
             return collection;
+        }
+
+        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        {
+            return GetCollection(targetType.New<ISmartReference>(), includeEmpty, items);
         }
 
         /// <summary>

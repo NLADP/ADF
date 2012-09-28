@@ -49,19 +49,39 @@ namespace Adf.Web.Binding
         {
             if (value == null) return;
 
-            RadioButtonList rbl = control as RadioButtonList;
+            var rbl = control as RadioButtonList;
 
             if (rbl == null) return;
 
             rbl.Items.Clear();
 
+            var items = BindManager.GetListFor(pi);
+
+            if (p != null && p.Length > 0)
+            {
+                var typeResolver = p[0] as ObjectResolver;
+
+                if (typeResolver != null)
+                {
+                    Func<IEnumerable> func;
+                    if (typeResolver.TryGetValue(rbl.ID, out func))
+                    {
+                        items = func.Invoke();
+                    }
+                    else if (typeResolver.TryGetValue(value.GetType(), out func))
+                    {
+                        items = func.Invoke();
+                    }
+                }
+            }
+
             var includeEmpty = !pi.IsNonEmpty();
 
-            IEnumerable<ValueItem> list = PropertyHelper.GetCollectionWithDefault(value, includeEmpty);
+            var list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty);
 
-            foreach (ValueItem item in list)
+            foreach (var item in list)
             {
-                ListItem listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
+                var listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
 
                 rbl.Items.Add(listitem);
             }

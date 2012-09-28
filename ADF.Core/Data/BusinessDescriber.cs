@@ -27,10 +27,7 @@ namespace Adf.Core.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessDescriber"/> class with no arguments.
         /// </summary>
-        protected BusinessDescriber()
-        {
-        }
-
+        protected BusinessDescriber() {}
 
         /// <summary>
         /// Provide a null value column by the specified type of <see cref="System.Type"/> and column name.
@@ -40,7 +37,7 @@ namespace Adf.Core.Data
         /// <returns>The expected <see cref="ColumnDescriber"/>.</returns>
         /// <exception cref="System.ArgumentNullException">Name is null.</exception>
         /// <exception cref="System.Reflection.TargetException">The object does not match the target type, or a property is an instance property but obj is null.</exception>
-        public static ColumnDescriber GetColumn(Type type, string name)
+        public static IColumn GetColumn(Type type, string name)
         {
             if (type == null) return ColumnDescriber.Empty;
 

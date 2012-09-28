@@ -17,6 +17,7 @@ using Adf.Base.Domain;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
+using Adf.Core.State;
 using Adf.Data.Search;
 using Adf.Data.SmartReferences;
 
@@ -27,7 +28,33 @@ namespace Adf.Business.SmartReferences
     /// </summary>
     public static class SmartReferenceFactory
     {
+        private static string Key(Type type)
+        {
+            return string.Format("Adf.SmartReferences.Cache<{0}>", type.Name);
+        }
+
+        private static string Key<T>() where T : References
+        {
+            return Key(typeof(T));
+        }
+
+        private static ISmartReference Create(Type type)
+        {
+            var genericType = typeof (SmartReference<>).MakeGenericType(new[] {type});
+
+            return Activator.CreateInstance(genericType) as ISmartReference;
+        }
+
+        private static ISmartReference Create(Type type, IInternalState state)
+        {
+            var genericType = typeof (SmartReference<>).MakeGenericType(new[] {type});
+
+            return Activator.CreateInstance(genericType, state) as ISmartReference;
+        }
+
+
         #region CodeGuard(Method New)
+
         /// <summary>
         /// Creates and returns a SmartReference.
         /// </summary>
@@ -35,7 +62,7 @@ namespace Adf.Business.SmartReferences
         /// <returns>The newly created SmartReference.</returns>
         public static SmartReference<T> New<T>()
         {
-            return new SmartReference<T>(SmartReferenceGateway.New(typeof(T).Name));
+            return (SmartReference<T>) New(typeof(T));
         }
 
         /// <summary>
@@ -45,65 +72,31 @@ namespace Adf.Business.SmartReferences
         /// <returns>The newly created <see cref="ISmartReference"/>.</returns>
         public static ISmartReference New(Type type)
         {
-            var cotype = typeof(SmartReference<>).MakeGenericType(new[] { type });
-
-            return Activator.CreateInstance(cotype, SmartReferenceGateway.New(type.Name)) as ISmartReference;
+            return Create(type, SmartReferenceGateway.New(type.Name));
         }
+
         #endregion CodeGuard(Method New)
 
         #region CodeGuard(Method List)
+
         /// <summary>
         /// Returns a list of type DomainCollection with the supplied
         /// array of <see cref="IInternalState"/> added to it.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="states">The supplied array of <see cref="IInternalState"/>.</param>
         /// <returns>A DomainCollection.</returns>
-        private static DomainCollection<SmartReference<T>> List<T>(IEnumerable<IInternalState> states)
+        private static DomainCollection<ISmartReference> List(Type type, IEnumerable<IInternalState> states)
         {
-            var list = new DomainCollection<SmartReference<T>>();
+            var list = new DomainCollection<ISmartReference>();
+
+            var genericType = typeof(SmartReference<>).MakeGenericType(new[] {type});
 
             foreach (var state in states)
             {
-                list.Add(new SmartReference<T>(state));
+                list.Add(Activator.CreateInstance(genericType, state) as ISmartReference);
             }
 
             return list;
-        }
-
-        /// <summary>
-        /// Returns an array of type <see cref="ISmartReference"/> for the supplied <see cref="Type"/>.
-        /// </summary>
-        /// <param name="type">The supplied <see cref="Type"/>.</param>
-        /// <returns>An array of type <see cref="ISmartReference"/>.</returns>
-        public static ISmartReference[] GetByType(Type type)
-        {
-            return List(type, SmartReferenceGateway.GetByType(type.Name));
-        }
-
-        /// <summary>
-        /// Creates and returns a SmartReference with the supplied name.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="name">The name.</param>
-        /// <returns>The newly created SmartReference.</returns>
-        public static SmartReference<T> GetByName<T>(string name)
-        {
-            return new SmartReference<T>(SmartReferenceGateway.GetByName(name, typeof(T).Name));
-        }
-
-        /// <summary>
-        /// Creates and returns a list of <see cref="ISmartReference"/> with the 
-        /// supplied <see cref="Type"/> and the supplied array of type <see cref="IInternalState"/>.
-        /// </summary>
-        /// <param name="type">The <see cref="Type"/>.</param>
-        /// <param name="states">The array of type <see cref="IInternalState"/>.</param>
-        /// <returns>The newly created array of type <see cref="IInternalState"/>.</returns>
-        private static ISmartReference[] List(Type type, IEnumerable<IInternalState> states)
-        {
-            var cotype = typeof(SmartReference<>).MakeGenericType(new[] { type });
-
-            return states.Select(state => Activator.CreateInstance(cotype, state) as ISmartReference).ToArray();
         }
 
         #endregion CodeGuard(Method List)
@@ -117,7 +110,12 @@ namespace Adf.Business.SmartReferences
         /// <returns>A DomainCollection.</returns>
         public static DomainCollection<SmartReference<T>> Search<T>(ISearchObject searchObject)
         {
-            return List<T>(SmartReferenceGateway.Search(searchObject.GetParameters()));
+            return new DomainCollection<SmartReference<T>>(Search(typeof(T), searchObject).Select(s => s as SmartReference<T>));
+        }
+
+        public static DomainCollection<ISmartReference> Search(Type type, ISearchObject searchObject)
+        {
+            return List(type, SmartReferenceGateway.Search(searchObject.GetParameters()));
         }
 
         #endregion CodeGuard(Method Search)
@@ -132,7 +130,7 @@ namespace Adf.Business.SmartReferences
         /// <returns>A SmartReference.</returns>
         public static SmartReference<T> Get<T>(ID id) where T : References
         {
-            return id.IsEmpty ? GetEmpty<T>() : new SmartReference<T>(SmartReferenceGateway.Get(id, typeof(T).Name));
+            return Get(typeof(T), id) as SmartReference<T>;
         }
 
         /// <summary>
@@ -142,18 +140,9 @@ namespace Adf.Business.SmartReferences
         /// <param name="id">The <see cref="ID"/>.</param>
         /// <param name="type">The <see cref="Type"/>.</param>
         /// <returns>An <see cref="ISmartReference"/>.</returns>
-        public static ISmartReference Get(ID id, Type type)
+        public static ISmartReference Get(Type type, ID id)
         {
-            var cotype = typeof(SmartReference<>).MakeGenericType(new[] { type });
-
-            if (id.IsEmpty)
-            {
-                return Activator.CreateInstance(cotype) as ISmartReference;
-            }
-
-            var state = SmartReferenceGateway.Get(id, type.Name);
-
-            return Activator.CreateInstance(cotype, state) as ISmartReference;
+            return GetAll(type).FirstOrDefault(sr => sr.Id == id) ?? Create(type);
         }
 
         /// <summary>
@@ -161,26 +150,21 @@ namespace Adf.Business.SmartReferences
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static DomainCollection<SmartReference<T>> GetAll<T>()
+        public static DomainCollection<SmartReference<T>> GetAll<T>() where T : References
         {
-            return List<T>(SmartReferenceGateway.GetByType(typeof(T).Name));
+            return new DomainCollection<SmartReference<T>>(GetAll(typeof (T)).Select(s => s as SmartReference<T>));
+        }
+
+        /// <summary>
+        /// Returns a DomainCollection of all SmartReferences of type T
+        /// </summary>
+        /// <returns></returns>
+        public static DomainCollection<ISmartReference> GetAll(Type type)
+        {
+            return StateManager.Application.GetOrSetValue(Key(type), () => List(type, SmartReferenceGateway.GetByType(type.Name)));
         }
 
         #endregion CodeGuard(Method Get)
-
-        #region CodeGuard(Property Count)
-        /// <summary>
-        /// Gets the number of records for a query.
-        /// </summary>
-        public static int Count
-        {
-            get
-            {
-                return SmartReferenceGateway.Count();
-            }
-        }
-
-        #endregion CodeGuard(Property Count)
 
         #region CodeGuard(Method Remove)
         /// <summary>
@@ -191,6 +175,8 @@ namespace Adf.Business.SmartReferences
         public static bool Remove(ISmartReference smartreference)
         {
             var domainobject = smartreference as DomainObject;
+
+            ClearCache(smartreference.GetType());
 
             return domainobject == null || SmartReferenceGateway.Remove(domainobject.GetState());
         }
@@ -207,35 +193,42 @@ namespace Adf.Business.SmartReferences
         {
             var domainobject = smartreference as DomainObject;
 
-            if (domainobject == null)
-                return true;
+            if (domainobject.IsNullOrEmpty()) throw new ArgumentNullException("smartreference");
 
             if (domainobject.IsAltered)
             {
-                if (SmartReferenceGateway.Save(domainobject.GetState()))
-                {
-                    return false;
-                }
+                if (!SmartReferenceGateway.Save(domainobject.GetState())) return false;
+
+                ClearCache(smartreference.GetType());
             }
 
-            return domainobject.SaveCompositions();
+            return true;
         }
 
         #endregion CodeGuard(Method Save)
 
-
-
-        #region CodeGuard(Custom)
-        /// <summary>
-        /// Creates and returns a SmartReference.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>The newly created empty SmartReference.</returns>
         public static SmartReference<T> GetEmpty<T>()
         {
             return new SmartReference<T>();
         }
 
-        #endregion CodeGuard(Custom)
+        public static void ClearCache(Type type)
+        {
+            if (StateManager.Application.Has(Key(type))) StateManager.Application.Remove(Key(type));
+        }
+        
+        public static void ClearCache<T>() where T : References
+        {
+            if (StateManager.Application.Has(Key<T>())) StateManager.Application.Remove(Key<T>());
+        }
+
+        //public static DomainCollection<SmartReference<T>> FilterOnCurrentDate<T>(SmartReference<T> current)
+        //{
+        //    var results = List<T>(SmartReferenceGateway.GetByType(typeof (T).Name)).Where(s => s.BeginDate <= DateTime.Now && s.EndDate >= DateTime.Now);
+            
+        //    if(!current.IsNullOrEmpty()) results.AddItem(current);
+
+        //    return results;
+        //}
     }
 }

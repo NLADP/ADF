@@ -12,6 +12,11 @@
     <AssemblyName>Adf.Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -53,17 +59,24 @@
     <Compile Include="Authorization\Actions.cs" />
     <Compile Include="Authorization\AllAuthorizationProvider.cs" />
     <Compile Include="Authorization\NoAuthorizationProvider.cs" />
+    <Compile Include="Configuration\AssemblyQualifiedTypeNameConverter.cs" />
+    <Compile Include="Configuration\ObjectFactoryConfigurationSection.cs" />
     <Compile Include="Data\CompositeState.cs" />
+    <Compile Include="Data\DomainCompositeState.cs" />
     <Compile Include="Data\DictionaryQueryHandler.cs" />
     <Compile Include="Data\DictionaryState.cs" />
+    <Compile Include="Data\InternalStateExtensions.cs" />
     <Compile Include="Data\InvalidColumnException.cs" />
     <Compile Include="Data\QueryExtensions.cs" />
+    <Compile Include="Data\SimpleInternalState.cs" />
     <Compile Include="Data\SqlProvider.cs" />
     <Compile Include="Domain\CompositionAttribute.cs" />
+    <Compile Include="Domain\ListPropertyParser.cs" />
     <Compile Include="Domain\DefaultPropertyParser.cs" />
     <Compile Include="Domain\DescriptorPropertyParser.cs" />
     <Compile Include="Domain\DomainCollection.cs" />
     <Compile Include="Domain\DomainCollectionExtensions.cs" />
+    <Compile Include="Domain\DomainHierarchyExtensions.cs" />
     <Compile Include="Domain\DomainObject.cs" />
     <Compile Include="Domain\DomainObjectExtensions.cs" />
     <Compile Include="Domain\DomainObjectPropertyParser.cs" />
@@ -72,13 +85,13 @@
     <Compile Include="Domain\ListSorter.cs" />
     <Compile Include="Domain\Money.cs" />
     <Compile Include="Domain\NullablePropertyParser.cs" />
-    <Compile Include="Domain\ObjectScope.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
     <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
     <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
     <Compile Include="Extensions\ValueObjectExtensions.cs" />
     <Compile Include="Formatting\FormatHelper.cs" />
+    <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Identity\GuidProvider.cs" />
     <Compile Include="Identity\IntIdProvider.cs" />
@@ -96,6 +109,11 @@
     <Compile Include="Panels\PanelExtensions.cs" />
     <Compile Include="Panels\PanelItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Query\AdfQuery.cs" />
     <Compile Include="Query\Expression.cs" />
     <Compile Include="Query\ExpressionExtensions.cs" />
@@ -128,14 +146,15 @@
     <Compile Include="Tasks\TaskNotFoundException.cs" />
     <Compile Include="Tasks\TaskViewExtensions.cs" />
     <Compile Include="Tasks\TaskProvider.cs" />
+    <Compile Include="Transactions\TransactionScopeProvider.cs" />
     <Compile Include="Types\EnumTypeConverter.cs" />
     <Compile Include="Types\ValueObjectTypeConverter.cs" />
     <Compile Include="Types\NullableTypeConverter.cs" />
-    <Compile Include="Types\TypeExtensions.cs" />
     <Compile Include="Validation\AttributeValidationPolicy.cs" />
     <Compile Include="Validation\BusinessRuleValidationContext.cs" />
     <Compile Include="Validation\BusinessRuleValidationPolicy.cs" />
     <Compile Include="Validation\ChildValidationPolicy.cs" />
+    <Compile Include="Validation\EmptySelectItemAttribute.cs" />
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
@@ -154,7 +173,13 @@
       <Name>ADF.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="ADF.snk" />
     <None Include="Messaging\MessageDefinitionSchema.xsd">

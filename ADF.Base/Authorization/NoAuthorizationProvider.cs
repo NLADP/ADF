@@ -14,9 +14,9 @@ namespace Adf.Base.Authorization
         /// <param name="name">Login name</param>
         /// <param name="password">Password (if required)</param>
         /// <returns>It always returns true. It indicates login is always possible.</returns>
-        public bool Login(string name, string password)
+        public LoginResult Login(string name, string password)
         {
-            return true;
+            return LoginResult.Success;
         }
 
         /// <summary>
@@ -59,6 +59,7 @@ namespace Adf.Base.Authorization
         /// <summary>
         /// Checks whether the current user is allowed to performs the IAction.
         /// </summary>
+        /// <param name="subject">The subject for which authentication is requested.</param>
         /// <param name="action">Any action that implements IAction (such as ApplicationTask).</param>
         /// <returns>True if the action is allowed for this user, false otherwise. Here it always 
         /// returns false.</returns>

@@ -50,7 +50,7 @@ namespace Adf.Web.UI
 
         public static ImageItem Create<T>(Expression<Func<T, object>> property, string url = "", int width = 16, int height = 16)
         {
-            return Create(property.GetExpressionMember().Name, property, url, width, height);
+            return Create(property.GetMemberInfo().Name, property, url, width, height);
         }
 
         public static ImageItem Create<T>(string label, Expression<Func<T, object>> property, string url = "", int width = 16, int height = 16)

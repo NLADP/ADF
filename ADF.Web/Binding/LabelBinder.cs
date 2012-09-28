@@ -53,7 +53,7 @@ namespace Adf.Web.Binding
             }
             else
             {
-                l.Text = FormatHelper.ToString(value);
+                l.Text = FormatHelper.ToString(value, breakLongWords:true);
             }
         }
 

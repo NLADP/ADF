@@ -13,7 +13,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class CheckBoxBinder : IControlBinder
     {
-        private string[] types = {"cbx"};
+        private readonly string[] types = {"cbx"};
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.CheckBox"/> id prefixes that support binding.
@@ -38,7 +38,7 @@ namespace Adf.Web.Binding
         /// <param name="p">The parameters used for binding. Currently not being used.</param>
         public virtual void Bind(object control, object value, PropertyInfo pi, params object[] p)
         {
-            CheckBox c = control as CheckBox;
+            var c = control as CheckBox;
             if (c == null) return;
 
             c.Checked = value != null && (bool) value;

@@ -3,7 +3,6 @@ using System.Web.UI.WebControls;
 using Adf.Base.Formatting;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
-using Adf.Core.Resources;
 
 namespace Adf.Web.UI.SmartView
 {
@@ -32,7 +31,8 @@ namespace Adf.Web.UI.SmartView
 
             var value = PropertyHelper.GetValue(item.DataItem, DataField);
 
-            cell.Text = string.Format(@"<img src='{0}'>", value);
+            string url = string.Format(string.IsNullOrEmpty(DataFieldFormat) ? "{0}" : DataFieldFormat, value);
+            cell.Text = string.Format(@"<img src='{0}'>", url);
 
             if (value is Enum) cell.ToolTip = (value as Enum).GetDescription();
             else if (!ToolTipField.IsNullOrEmpty()) cell.ToolTip = FormatHelper.ToString(PropertyHelper.GetValue(item.DataItem, ToolTipField));

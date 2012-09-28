@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Objects;
-using Adf.Web.UI.Styling;
+using Adf.Core.Styling;
 
 namespace Adf.Web.UI
 {
@@ -33,7 +33,15 @@ namespace Adf.Web.UI
         /// </summary>
         protected bool _visible = true;
 
-        private static readonly IStyler _styler = ObjectFactory.BuildUp<IStyler>("SmartPanelDefaultStyler");
+        private static IStyler _styler;
+        /// <summary>
+        /// Gets the style of a control within the panel.
+        /// </summary>
+        /// <returns>The style of a control within the panel.</returns>
+        public virtual IStyler Styler
+        {
+            get { return _styler ?? (_styler = ObjectFactory.BuildUp<IStyler>("SmartPanelDefaultStyler")); }
+        }
 
         /// <summary>
         /// Gets the identifier of the pannel.
@@ -57,12 +65,6 @@ namespace Adf.Web.UI
         /// </summary>
         /// <returns>The array of item control which contains the child control names within the panel.</returns>
         public virtual IList<Control> Controls { get { return _itemControls; } }
-
-        /// <summary>
-        /// Gets the style of a control within the panel.
-        /// </summary>
-        /// <returns>The style of a control within the panel.</returns>
-        public virtual IStyler Styler { get { return _styler; } }
 
         /// <summary>
         /// Gets or sets the visibility of controls within the panel.
@@ -96,6 +98,16 @@ namespace Adf.Web.UI
         public void AddControl(WebControl control)
         {
             _itemControls.Add(control);
+        }
+
+        /// <summary>
+        /// Insert the <see cref="System.Web.UI.Control"/> to item control list at the specified index
+        /// </summary>
+        /// <param name="index">index at which item should be added </param>
+        /// <param name="control">The <see cref="System.Web.UI.Control"/> that defines the control which will be added.</param>
+        public void InsertControl(int index, Control control)
+        {
+            _itemControls.Insert(index, control);
         }
 
         /// <summary>

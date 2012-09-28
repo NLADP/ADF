@@ -192,7 +192,7 @@ namespace Adf.Base.Domain
 
         public void Set<T>(IColumn column, T value)
         {
-            if (PropertyHelper.IsEqual(Get<T>(column), value)) state.Set(column, Converter.ToPrimitive(value));
+            if (!PropertyHelper.IsEqual(Get<T>(column), value)) state.Set(column, Converter.ToPrimitive(value));
         }
 
         #endregion Get & Set

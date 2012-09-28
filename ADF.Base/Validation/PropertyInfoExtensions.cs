@@ -1,4 +1,8 @@
+using System;
+using System.Linq.Expressions;
 using System.Reflection;
+using Adf.Core.Validation;
+using Adf.Core.Extensions;
 
 namespace Adf.Base.Validation
 {
@@ -20,6 +24,14 @@ namespace Adf.Base.Validation
             var attributes = (NonEmptyAttribute[]) pi.GetCustomAttributes(typeof (NonEmptyAttribute), false);
 
             return (attributes.Length > 0);
+        }
+
+        public static ValidationResult IsValid<T>(this IPropertyValidator validator, T entity, Expression<Func<T, object>> propertyExpression, Func<bool> predicate = null)
+        {
+            // return if condition is false
+            if (predicate != null && !predicate()) return ValidationResult.Success;
+
+            return validator.IsValid(propertyExpression.GetPropertyInfo(), propertyExpression.Compile()(entity));
         }
     }
 }

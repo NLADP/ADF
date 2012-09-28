@@ -48,20 +48,6 @@ namespace Adf.Business.SmartReferences
 
         #endregion CodeGuard(Constructors)
 
-        #region CodeGuard(Empty)
-
-        //        private static SmartReference<> empty = new SmartReference<>();
-        //	    
-        //	    public static SmartReference<> Empty
-        //	    {
-        //	        get
-        //	        {
-        //	            return empty;
-        //	        }
-        //        }
-
-        #endregion CodeGuard(Empty)
-
         #region CodeGuard(Method Save)
         /// <summary>
         /// Saves this instance.
@@ -93,7 +79,7 @@ namespace Adf.Business.SmartReferences
         /// </summary>
         public override ID Id
         {
-            get { return state.GetValue<ID>(SmartReferenceDescriber.Id); }
+            get { return Get<ID>(SmartReferenceDescriber.Id); }
         }
 
         #endregion CodeGuard(Property Id)
@@ -117,8 +103,8 @@ namespace Adf.Business.SmartReferences
         [MaxLength(255)]
         public string Name
         {
-            get { return state.Get<string>(SmartReferenceDescriber.Name); }
-            set { state.Set(SmartReferenceDescriber.Name, value); }
+            get { return Get<string>(SmartReferenceDescriber.Name); }
+            set { Set(SmartReferenceDescriber.Name, value); }
         }
 
         #endregion CodeGuard(Property Name)
@@ -131,8 +117,8 @@ namespace Adf.Business.SmartReferences
         [MaxLength(255)]
         public string Description
         {
-            get { return state.Get<string>(SmartReferenceDescriber.Description); }
-            set { state.Set(SmartReferenceDescriber.Description, value); }
+            get { return Get<string>(SmartReferenceDescriber.Description); }
+            set { Set(SmartReferenceDescriber.Description, value); }
         }
 
         #endregion CodeGuard(Property Description)
@@ -144,13 +130,19 @@ namespace Adf.Business.SmartReferences
         [NonEmpty]
         public bool IsDefault
         {
+            get { return _isDefault == true; }
+            set { _isDefault = value; }
+        }
+
+        private bool? _isDefault
+        {
             get
             {
-                return state.Get<bool>(SmartReferenceDescriber.IsDefault);
+                return Get<bool>(SmartReferenceDescriber.IsDefault);
             }
             set
             {
-                state.Set(SmartReferenceDescriber.IsDefault, value);
+                Set(SmartReferenceDescriber.IsDefault, value);
             }
         }
 
@@ -162,14 +154,8 @@ namespace Adf.Business.SmartReferences
         /// </summary>
         public DateTime? BeginDate
         {
-            get
-            {
-                return state.GetNullable<DateTime>(SmartReferenceDescriber.BeginDate);
-            }
-            set
-            {
-                state.SetNullable(SmartReferenceDescriber.BeginDate, value);
-            }
+            get { return Get<DateTime?>(SmartReferenceDescriber.BeginDate); }
+            set { Set(SmartReferenceDescriber.BeginDate, value); }
         }
 
         #endregion CodeGuard(Property BeginDate)
@@ -180,22 +166,13 @@ namespace Adf.Business.SmartReferences
         /// </summary>
         public DateTime? EndDate
         {
-            get
-            {
-                return state.GetNullable<DateTime>(SmartReferenceDescriber.EndDate);
-            }
-            set
-            {
-                state.SetNullable(SmartReferenceDescriber.EndDate, value);
-            }
+            get { return Get<DateTime?>(SmartReferenceDescriber.EndDate); }
+            set { Set(SmartReferenceDescriber.EndDate, value); }
         }
 
         #endregion CodeGuard(Property EndDate)
 
-        #region CodeGuard(Custom)
-
         #region CodeGuard(Property Type )
-        
         /// <summary>
         /// Gets the <see cref="Type"/> of this instance.
         /// </summary>
@@ -205,7 +182,5 @@ namespace Adf.Business.SmartReferences
         }
 
         #endregion CodeGuard(Property Type)
-
-        #endregion CodeGuard(Custom)
     }
 }

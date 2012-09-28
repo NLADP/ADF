@@ -19,6 +19,8 @@ namespace Adf.Core.Types
         /// <returns>Object converted to rich type.</returns>
         T To<T>(object value);
 
+        object To(Type type, object value);
+
         /// <summary>
         /// Extracts the primitive value of a rich type.
         /// </summary>

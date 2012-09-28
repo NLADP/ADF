@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Adf.Core.Data;
+using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
-using Adf.Core.Extensions;
 
 namespace Adf.Core.Query
 {
@@ -172,13 +172,19 @@ namespace Adf.Core.Query
 
         public void Dispose()
         {
+            //Trace.Write(message);
+
             if (_name.IsNullOrEmpty())
             {
+#if DEBUG
                 Debug.WriteLine("trace: {0} ms", Convert.ToInt32((DateTime.Now - _started).TotalMilliseconds));
+#endif
             }
             else
             {
-                LogManager.Log(LogLevel.Verbose, string.Format("trace {1}: {0} ms", Convert.ToInt32((DateTime.Now - _started).TotalMilliseconds), _name));
+                var message = string.Format("trace {1}: {0} ms", Convert.ToInt32((DateTime.Now - _started).TotalMilliseconds), _name);
+
+                LogManager.Log(LogLevel.Verbose, message);
             }
         }
     }

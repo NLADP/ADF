@@ -112,9 +112,14 @@ namespace Adf.Core.Test
 
         #endregion
 
-        public static IEnumerable<TestItem> FindItems(TestItemType task, object subject, TestAction action)
+        public static IEnumerable<TestItem> FindItems(TestItemType type, object subject, TestAction action)
         {
-            return Provider.FindItems(task, subject, action);
+            return Provider.FindItems(type, subject, action);
+        }
+
+        public static IEnumerable<TestItem> FindItems(TestItemType type, TestAction action)
+        {
+            return Provider.FindItems(type, action);
         }
     }
 }

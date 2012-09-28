@@ -1,6 +1,5 @@
 using System.Web.UI.WebControls;
 using Adf.Core.State;
-using Adf.Web.UI;
 using Adf.Web.UI.SmartView;
 
 namespace Adf.Web
