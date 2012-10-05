@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using Adf.Core;
 //
 // General Information about an assembly is controlled through the following 
@@ -17,8 +16,8 @@ using Adf.Core;
 [assembly: AssemblyCulture(Framework.Culture)]
 [assembly: AssemblyCopyright(Framework.Copyright)]
 [assembly: AssemblyTrademark(Framework.Trademark)]
-[assembly: ComVisible(Framework.ComVisible)]
+//[assembly: ComVisible(Framework.ComVisible)]
 [assembly: CLSCompliant(Framework.ClsCompliant)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: GuidAttribute("BD62F83E-E881-4aa0-89E8-42457A465689")]
+//[assembly: GuidAttribute("BD62F83E-E881-4aa0-89E8-42457A465689")]

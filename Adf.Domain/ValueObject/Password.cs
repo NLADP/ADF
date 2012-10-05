@@ -12,6 +12,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Text.RegularExpressions;
+using Adf.Core;
 using Adf.Core.Domain;
 using Adf.Core.Encryption;
 

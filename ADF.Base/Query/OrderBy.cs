@@ -1,4 +1,5 @@
 ﻿using System;
+using Adf.Core;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Query;

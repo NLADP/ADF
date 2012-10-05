@@ -16,8 +16,8 @@ using Adf.Core;
 [assembly: AssemblyCulture(Framework.Culture)]
 [assembly: AssemblyCopyright(Framework.Copyright)]
 [assembly: AssemblyTrademark(Framework.Trademark)]
-[assembly: ComVisible(Framework.ComVisible)]
+//[assembly: ComVisible(Framework.ComVisible)]
 [assembly: CLSCompliant(Framework.ClsCompliant)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5e5d6236-10e9-47a0-a0be-8c2c03542b1c")]
+//[assembly: Guid("5e5d6236-10e9-47a0-a0be-8c2c03542b1c")]

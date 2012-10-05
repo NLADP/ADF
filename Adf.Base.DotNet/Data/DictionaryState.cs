@@ -15,7 +15,7 @@ namespace Adf.Base.Data
     /// Represents the current state of a data source implementing the internal state of a domain object.
     /// It is a kind of a property bag for the domain object.
     /// </summary>
-    [Serializable]
+    [Core.Serializable]
     public class DictionaryState : Dictionary<IColumn, object>, IInternalState, INotifyPropertyChanged
     {
         public DictionaryState()

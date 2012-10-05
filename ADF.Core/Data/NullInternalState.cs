@@ -12,7 +12,7 @@ namespace Adf.Core.Data
     /// Implements the all internal state with null value. It holds the null state of a domain object. 
     /// It is a kind of a property bag for the null domain object.
     /// </summary>
-    [Serializable]
+//    [Serializable]
     public class NullInternalState : IInternalState
     {
         /// <summary>

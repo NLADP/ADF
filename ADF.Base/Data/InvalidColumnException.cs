@@ -1,4 +1,5 @@
 ﻿using System;
+using Adf.Core;
 
 namespace Adf.Base.Data
 {

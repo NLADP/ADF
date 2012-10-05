@@ -8,7 +8,7 @@ namespace Adf.Core.Data
     /// Represents the functionality and characteristics to describe a column of database table.
     /// Provides the formated column name and attributes of <see cref="ColumnDescriber"/>.
     /// </summary>
-    [Serializable]
+//    [Serializable]
     public class ColumnDescriber : IColumn
     {
         #region Constructors

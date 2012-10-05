@@ -39,7 +39,7 @@ namespace Adf.Base.Logging
         /// <param name="user">The user information to log.</param>
         public void Log(Exception exception, IUser user = null)
         {
-            Debug.WriteLine(exception + Environment.NewLine + Environment.StackTrace);
+            Debug.WriteLine(exception /*+ Environment.NewLine + Environment.StackTrace*/);
         }
     }
 }

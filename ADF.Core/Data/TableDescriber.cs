@@ -7,7 +7,7 @@ namespace Adf.Core.Data
     /// Represents the functionality and characteristics to describe a database table.
     /// Provides the formated table name of <see cref="TableDescriber"/>.
     /// </summary>
-    [Serializable]
+//    [Serializable]
     public class TableDescriber : ITable
     {
         /// <summary>

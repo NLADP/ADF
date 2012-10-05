@@ -35,7 +35,7 @@ namespace Adf.Base.Validation
             var type = validatable.GetType();
 
             //Validate This Business Entity
-            var methods = type.GetMethods(BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             
             foreach (var methodInfo in methods.Where(methodInfo => methodInfo.IsDefined(typeof (BusinessRuleAttribute), true)))
             {

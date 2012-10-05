@@ -22,7 +22,7 @@ namespace Adf.Base.Configuration
             Type typeValue = value as Type;
             if (typeValue == null)
             {
-                throw new ArgumentException(string.Format(Properties.Resources.Culture, Properties.Resources.ExceptionCanNotConvertType, typeof(Type).Name));
+                throw new ArgumentException(string.Format(DotNet.Properties.Resources.Culture, DotNet.Properties.Resources.ExceptionCanNotConvertType, typeof(Type).Name));
             }
 
             return (typeValue).AssemblyQualifiedName;
@@ -41,7 +41,7 @@ namespace Adf.Base.Configuration
             Type result = String.IsNullOrEmpty(stringValue) ? null : Type.GetType(stringValue, false);
             if (result == null)
             {
-                throw new ArgumentException(string.Format(Properties.Resources.Culture, Properties.Resources.ExceptionInvalidType, stringValue));
+                throw new ArgumentException(string.Format(DotNet.Properties.Resources.Culture, DotNet.Properties.Resources.ExceptionInvalidType, stringValue));
             }
 
             return result;

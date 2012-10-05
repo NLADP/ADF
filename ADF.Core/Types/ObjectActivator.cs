@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Adf.Core.Types
 {
-    class ObjectActivator
+    public class ObjectActivator
     {
         class CtorType
         {
@@ -53,7 +53,7 @@ namespace Adf.Core.Types
 
             if (_activators.TryGetValue(ctype, out a))
             {
-                activator = (ActivateObject<T>) a;
+                activator = (ActivateObject<T>)a;
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Adf.Core.Types
 
         private static ActivateObject<T> CreateActivator<T>(Type type, Type[] argTypes)
         {
-            var ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, argTypes, null)
+            var ctor = type.GetConstructor(argTypes)
                        ?? FindConstructor(type, argTypes);
 
             if (ctor == null) throw new InvalidOperationException("Could not find corresponding constructor on Type");
@@ -111,13 +111,13 @@ namespace Adf.Core.Types
         {
             return type.GetConstructors(BindingFlags.Instance | BindingFlags.Public)
                 .FirstOrDefault(c =>
-                                    {
-                                        var parameters = c.GetParameters();
+                {
+                    var parameters = c.GetParameters();
 
-                                        if (parameters.Length != argTypes.Length) return false;
+                    if (parameters.Length != argTypes.Length) return false;
 
-                                        return !parameters.Where((p, i) => !p.ParameterType.IsAssignableFrom(argTypes[i]) && argTypes[i] != typeof(object)).Any();
-                                    });
+                    return !parameters.Where((p, i) => !p.ParameterType.IsAssignableFrom(argTypes[i]) && argTypes[i] != typeof(object)).Any();
+                });
         }
     }
 }

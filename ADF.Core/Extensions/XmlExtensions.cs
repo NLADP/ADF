@@ -20,7 +20,7 @@ namespace Adf.Core.Extensions
         {
             var value = element.GetAttributeOrDefault(attribute);
 
-            return value.IsNullOrEmpty() ? defaultValue : (T) Convert.ChangeType(value, typeof(T));
+            return value.IsNullOrEmpty() ? defaultValue : (T) Convert.ChangeType(value, typeof(T), null);
         }
 
         public static T GetAttributeFromDescriptorOrDefault<T>(this XElement element, string attribute) where T : Descriptor

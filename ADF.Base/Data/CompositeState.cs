@@ -46,7 +46,7 @@ namespace Adf.Base.Data
 
         public bool Has(IColumn property)
         {
-            return states.Exists(s => s.Has(property));
+            return states.Any(s => s.Has(property));
         }
 
         public T Get<T>(IColumn property)

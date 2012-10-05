@@ -26,7 +26,6 @@ namespace Adf.Base.Domain
         /// <exception cref="System.ArgumentNullException">null reference is not accept as a valid argument.</exception>
         /// <exception cref="System.ArgumentException">Not a valid argument.</exception> 
         /// <exception cref="System.Reflection.TargetInvocationException"></exception> 
-        /// <exception cref="System.MethodAccessException"></exception>
         public void SetValue(object instance, PropertyInfo pi, object newvalue, CultureInfo culture = null)
         {
             string value = null;
@@ -37,7 +36,7 @@ namespace Adf.Base.Domain
             {
                 value = "Empty";
             }
-            Object e = Enum.Parse(pi.PropertyType, value);
+            Object e = Enum.Parse(pi.PropertyType, value, false);
 
             pi.SetValue(instance, e, null);
         }
@@ -57,7 +56,7 @@ namespace Adf.Base.Domain
                 return new List<ValueItem>();
             }
 
-            var values = items ?? Enum.GetValues(enumValue.GetType());
+            var values = items ?? enumValue.GetValues();
 
             var collection = new List<ValueItem>();
 
@@ -84,6 +83,8 @@ namespace Adf.Base.Domain
 
             return collection;
         }
+
+        
 
         /// <summary>
         /// Gets the collection of the property info for the specified target object.

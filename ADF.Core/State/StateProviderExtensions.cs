@@ -19,7 +19,7 @@ namespace Adf.Core.State
 
             if (value == null) { provider[key] = value = typeof(T).New<T>(); }
 
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, typeof(T), null);
         }
         
         public static T GetOrSetValue<T>(this IStateProvider provider, string key, Func<T> defaultvalue)
@@ -33,7 +33,7 @@ namespace Adf.Core.State
                 provider[key] = value;
             }
 
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, typeof(T), null);
         }
 
         public static T GetOrSetValue<T>(this IStateProvider provider, string key, T value)
@@ -45,7 +45,7 @@ namespace Adf.Core.State
         {
             object value = provider[key];
 
-            return value == null || key == value as string ? defaultValue : (T)Convert.ChangeType(value, typeof(T));
+            return value == null || key == value as string ? defaultValue : (T)Convert.ChangeType(value, typeof(T), null);
         }
     }
 }

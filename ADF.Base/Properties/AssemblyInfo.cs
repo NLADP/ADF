@@ -17,9 +17,9 @@ using System.Resources;
 [assembly: AssemblyCulture(Framework.Culture)]
 [assembly: AssemblyCopyright(Framework.Copyright)]
 [assembly: AssemblyTrademark(Framework.Trademark)]
-[assembly: ComVisible(Framework.ComVisible)]
+//[assembly: ComVisible(Framework.ComVisible)]
 [assembly: CLSCompliant(Framework.ClsCompliant)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("517cd34e-e7c5-447f-ab68-d4f859867b1f")]
+//[assembly: Guid("517cd34e-e7c5-447f-ab68-d4f859867b1f")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using Adf.Core.Extensions;
 
 namespace Adf.Core.Objects
 {
@@ -14,20 +12,21 @@ namespace Adf.Core.Objects
     /// </remarks>
     public static class ObjectFactory
     {
-        private static IObjectProvider _objectProvider;
+//        private static IObjectProvider _objectProvider;
 
-        private static IObjectProvider ObjectProvider
+        public static IObjectProvider ObjectProvider
         {
-            get
-            {
-                if (_objectProvider == null)
-                {
-                    ObjectFactorySection section = (ObjectFactorySection)ConfigurationManager.GetSection(ObjectFactorySection.SectionName) ??
-                                                         new ObjectFactorySection();
-                    _objectProvider = section.FactoryType.New<IObjectProvider>();
-                }
-                return _objectProvider;
-            }
+            get;
+            set;
+            //            {
+            //                if (_objectProvider == null)
+            //                {
+            //                    ObjectFactorySection section = (ObjectFactorySection)ConfigurationManager.GetSection(ObjectFactorySection.SectionName) ??
+            //                                                         new ObjectFactorySection();
+            //                    _objectProvider = section.FactoryType.New<IObjectProvider>();
+            //                }
+            //                return _objectProvider;
+            //            }
         }
 
         /// <overloads>

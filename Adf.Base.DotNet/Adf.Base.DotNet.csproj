@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B3B2ACD-4D10-44BD-BD11-FEAB80AD6FDB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adf.Base.DotNet</RootNamespace>
+    <AssemblyName>Adf.Base.DotNet</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ADF.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\AssemblyQualifiedTypeNameConverter.cs" />
+    <Compile Include="Configuration\ObjectFactoryConfigurationSection.cs" />
+    <Compile Include="Data\DictionaryQueryHandler.cs" />
+    <Compile Include="Data\DictionaryState.cs" />
+    <Compile Include="Data\SimpleInternalState.cs" />
+    <Compile Include="Data\SqlProvider.cs" />
+    <Compile Include="Domain\NullablePropertyParser.cs" />
+    <Compile Include="Encryption\MD5EncryptionProvider.cs" />
+    <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
+    <Compile Include="Extensions\MoneyExtensions.cs" />
+    <Compile Include="Logging\EventLogProvider.cs" />
+    <Compile Include="Logging\FlatFileLogProvider.cs" />
+    <Compile Include="Mail\DummyMailProvider.cs" />
+    <Compile Include="Mail\SmtpMailProvider.cs" />
+    <Compile Include="Messaging\CsvMessageHandler.cs" />
+    <Compile Include="Messaging\XmlMessageDefinitionProvider.cs" />
+    <Compile Include="Messaging\XmlMessageHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ResourcesFileResourceProvider.cs" />
+    <Compile Include="State\ConfigStateProvider.cs" />
+    <Compile Include="Transactions\TransactionScopeProvider.cs" />
+    <Compile Include="Types\NullableTypeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
+      <Project>{e7f721b6-7250-4254-927a-a4f1ad3e6dfe}</Project>
+      <Name>ADF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adf.Core.DotNet\Adf.Core.DotNet.csproj">
+      <Project>{03a1c360-4fa6-4148-a988-ce634b29f247}</Project>
+      <Name>Adf.Core.DotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+      <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
+      <Name>ADF.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ADF.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

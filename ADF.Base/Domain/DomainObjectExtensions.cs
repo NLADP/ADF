@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Adf.Base.Validation;
@@ -62,7 +61,7 @@ namespace Adf.Base.Domain
             if (domainObject == null) return default(T);
             if (method == null) return default(T);
 
-            return (T)domainObject.GetFactoryType().InvokeMember(method, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, p, CultureInfo.InvariantCulture);
+            return (T)domainObject.GetFactoryType().GetMethod(method, BindingFlags.Static | BindingFlags.Public).Invoke(null, p);
         }
         
         // internal so cant accidentally be called in user code, its a dirty way anyway

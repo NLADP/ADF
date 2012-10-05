@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Adf.Core.Resources;
 
 namespace Adf.Core.Extensions
@@ -55,6 +57,15 @@ namespace Adf.Core.Extensions
         public static bool IsEqual(this Enum item, int value)
         {
             return item != null && Convert.ToInt32(item) == value;
+        }
+
+        public static object[] GetValues(this Enum value)
+        {
+            Type enumType = value.GetType();
+
+            return (from field in enumType.GetFields()
+                    where field.IsLiteral
+                    select field.GetValue(enumType)).ToArray();
         }
     }
 }

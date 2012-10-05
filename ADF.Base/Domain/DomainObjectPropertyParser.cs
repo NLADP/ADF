@@ -27,14 +27,13 @@ namespace Adf.Base.Domain
         /// <exception cref="System.ArgumentNullException">null reference is not accept as a valid argument.</exception>
         /// <exception cref="System.ArgumentException">Not a valid argument.</exception> 
         /// <exception cref="System.Reflection.TargetInvocationException"></exception> 
-        /// <exception cref="System.MethodAccessException"></exception>
         public void SetValue(object instance, PropertyInfo pi, object newvalue, CultureInfo culture = null)
         {
             if (pi.PropertyType.FullName == null) throw new ArgumentException("pi.PropertyType.FullName cannot be null.");
             if (pi.PropertyType.AssemblyQualifiedName == null) throw new ArgumentException("pi.PropertyType.AssemblyQualifiedName cannot be null.");
 
             var type = Type.GetType(pi.PropertyType.AssemblyQualifiedName.Replace(pi.PropertyType.FullName, pi.PropertyType.FullName + "Factory"));
-            var method = type.GetMethod("Get", BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(ID) }, null);
+            var method = type.GetMethod("Get", new[] { typeof(ID) });
             var domainobject = method.Invoke(null, new object[] { IdManager.New(newvalue) });
 
             pi.SetValue(instance, domainobject, null);

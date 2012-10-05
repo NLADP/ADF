@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Validation;
@@ -31,7 +32,8 @@ namespace Adf.Base.Domain
             IValueObject parsedValue = null;
 
             var args = new object[] {newvalue.ToString(), culture, parsedValue};
-            var isValid = (bool) propertyType.InvokeMember("TryParse", BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, args, culture);
+
+            var isValid = (bool)propertyType.GetMethod("TryParse", BindingFlags.Static | BindingFlags.Public).Invoke(null, args);
 
             parsedValue = args[2] as IValueObject;  // get returned out param from args array
 
@@ -111,7 +113,7 @@ namespace Adf.Base.Domain
         /// <returns>True if the specified <see cref="Type"/> is parsable, false otherwise.</returns>
         public bool IsParsable(Type type)
         {
-            return type.GetInterface("IValueObject") != null;
+            return type.GetInterfaces().Any(i => i.Name == "IValueObject");
         }
 
         #endregion

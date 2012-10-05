@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Adf.Test</RootNamespace>
     <AssemblyName>Adf.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +43,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\ADF\ADF.Core\Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -84,10 +86,6 @@
       <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
       <Name>ADF.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ADF.Business\ADF.Business.csproj">
-      <Project>{DAF88DC8-041E-4424-85F7-6ED3D24816F5}</Project>
-      <Name>ADF.Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
       <Name>ADF.Core</Name>
@@ -95,6 +93,14 @@
     <ProjectReference Include="..\ADF.Data\ADF.Data.csproj">
       <Project>{5B241780-88E6-4C01-9FFE-A88154B28124}</Project>
       <Name>ADF.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adf.Domain.DotNet\Adf.Domain.DotNet.csproj">
+      <Project>{7ec9e615-5e59-4d55-87aa-f595d50673b7}</Project>
+      <Name>Adf.Domain.DotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adf.Domain\Adf.Domain.csproj">
+      <Project>{45916573-9fe3-4f1c-94d8-baf5f0535c85}</Project>
+      <Name>Adf.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

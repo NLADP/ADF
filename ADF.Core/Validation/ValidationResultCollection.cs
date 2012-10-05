@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Adf.Core.Extensions;
+using System.Linq;
 
 namespace Adf.Core.Validation
 {
@@ -72,11 +73,11 @@ namespace Adf.Core.Validation
         {
             get
             {
-                bool result = Exists(validationResult => validationResult.IsError);
+                bool result = this.Any(validationResult => validationResult.IsError);
 
                 if (!result && _childResults != null)
                 {
-                    result = _childResults.Exists(collection => collection.ContainsErrorResult);
+                    result = _childResults.Any(collection => collection.ContainsErrorResult);
                 }
                 return result;
             }
@@ -93,11 +94,11 @@ namespace Adf.Core.Validation
         {
             get
             {
-                bool result = Exists(validationResult => validationResult.IsWarning);
+                bool result = this.Any(validationResult => validationResult.IsWarning);
 
                 if (!result && _childResults != null)
                 {
-                    result = _childResults.Exists(collection => collection.ContainsWarningResult);
+                    result = _childResults.Any(collection => collection.ContainsWarningResult);
                 }
                 return result;
             }
@@ -113,11 +114,11 @@ namespace Adf.Core.Validation
         {
             get
             {
-                bool result = Exists(validationResult => validationResult.IsError || validationResult.IsWarning);
+                bool result = this.Any(validationResult => validationResult.IsError || validationResult.IsWarning);
 
                 if (!result && _childResults != null)
                 {
-                    result = _childResults.Exists(collection => collection.IsSucceeded);
+                    result = _childResults.Any(collection => collection.IsSucceeded);
                 }
                 return !result;
             }
@@ -134,11 +135,11 @@ namespace Adf.Core.Validation
         /// </returns>
         public bool ContainsErrorForProperty(PropertyInfo property)
         {
-            bool exists = Exists(validationResult => validationResult.AffectedProperty == property);
+            bool exists = this.Any(validationResult => validationResult.AffectedProperty == property);
 
             if (!exists && _childResults != null)
             {
-                exists = _childResults.Exists(collection => collection.ContainsErrorForProperty(property));
+                exists = _childResults.Any(collection => collection.ContainsErrorForProperty(property));
             }
             return exists;
         }

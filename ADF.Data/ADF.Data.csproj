@@ -37,7 +37,7 @@
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -79,6 +79,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <CodeAnalysisRuleSet>Migrated rules for ADF.Data.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\Bin\Output\</OutputPath>
@@ -106,6 +107,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <CodeAnalysisRuleSet>..\ADF.Core\Migrated rules for ADF.Core.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
     <OutputPath>bin\Documentation\</OutputPath>
@@ -122,6 +124,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <CodeAnalysisRuleSet>Migrated rules for ADF.Data.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -171,9 +174,17 @@
     <None Include="Migrated rules for ADF.Data.ruleset" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Adf.Base.DotNet\Adf.Base.DotNet.csproj">
+      <Project>{6b3b2acd-4d10-44bd-bd11-feab80ad6fdb}</Project>
+      <Name>Adf.Base.DotNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
       <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
       <Name>ADF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adf.Core.DotNet\Adf.Core.DotNet.csproj">
+      <Project>{03a1c360-4fa6-4148-a988-ce634b29f247}</Project>
+      <Name>Adf.Core.DotNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>

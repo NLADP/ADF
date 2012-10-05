@@ -206,7 +206,7 @@ namespace Adf.Business.ValueObject
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return string.IsNullOrEmpty(_value) ? string.Empty : _value.ToString(formatProvider);
+            return string.IsNullOrEmpty(_value) ? string.Empty : _value;
         }
 		
 		/// <summary>

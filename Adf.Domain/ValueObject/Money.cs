@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Adf.Core;
 using Adf.Core.Domain;
 using Adf.Core.State;
 
@@ -576,10 +577,10 @@ namespace Adf.Business.ValueObject
             return 0;
         }
 
-        public Money Round(int decimals = 2, MidpointRounding midpointRounding = MidpointRounding.ToEven)
-        {
-            return IsEmpty ? this : new Money(decimal.Round(Amount.Value, decimals, midpointRounding));
-        }
+//        public Money Round(int decimals = 2, MidpointRounding midpointRounding = MidpointRounding.ToEven)
+//        {
+//            return IsEmpty ? this : new Money(decimal.Round(Amount.Value, decimals, midpointRounding));
+//        }
 
         #endregion CodeGuard(Operators)
 

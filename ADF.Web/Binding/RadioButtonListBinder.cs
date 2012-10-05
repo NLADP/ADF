@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Web.UI.WebControls;
 using Adf.Base.Validation;
-using Adf.Business;
 using Adf.Core.Binding;
 using Adf.Core.Domain;
 
@@ -77,7 +75,7 @@ namespace Adf.Web.Binding
 
             var includeEmpty = !pi.IsNonEmpty();
 
-            var list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty);
+            var list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty, items);
 
             foreach (var item in list)
             {

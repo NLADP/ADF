@@ -44,7 +44,7 @@ namespace Adf.Business.ValueObject
             {
                 new Uri(newValue);
             }
-            catch (UriFormatException)
+            catch (FormatException)
             {
                 return false;
             }

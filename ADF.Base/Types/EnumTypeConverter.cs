@@ -25,12 +25,12 @@ namespace Adf.Base.Types
         public T To<T>(object value)
         {
             // TODO: check 
-            return (T)Enum.Parse(typeof(T), value.ToString());
+            return (T)Enum.Parse(typeof(T), value.ToString(), false);
         }
 
         public object To(Type type, object value)
         {
-            return Enum.Parse(type, value.ToString());
+            return Enum.Parse(type, value.ToString(), false);
         }
 
         /// <summary>
