@@ -49,7 +49,7 @@ namespace Adf.Web.UI
             return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory, height, infoText);
         }
 
-        public static ValidatedTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int height = 0, string infoText = null)
+        public static ValidatedTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int height = 0, string infoText = null, int tabIndex = 0)
         {
             return new ValidatedTextBoxItem(TextBoxItem.Create(label, property.GetControlName(), width, enabled, height, infoText: infoText), property.GetControlName(), mandatory);
         }

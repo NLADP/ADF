@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Adf.Base.State;
 using Adf.Core.Extensions;
 using Adf.Core.State;
 

@@ -62,7 +62,7 @@ namespace Adf.Core.Extensions
                 memberExpression = memberExpression.Expression as MemberExpression;
             }
 
-            return string.Join(".", path);
+            return string.Join(".", path.ToArray());
         }
     }
 }

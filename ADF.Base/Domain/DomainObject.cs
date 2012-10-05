@@ -1,4 +1,5 @@
 ﻿using System;
+using Adf.Base.Data;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Identity;

@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
+using Adf.Core.Extensions;
 using Adf.Core.Styling;
 using Adf.Web.Panels;
 using Adf.Web.UI;
@@ -31,9 +33,10 @@ namespace Adf.Web.Styling
 
         private static void StyleControl(WebControl control)
         {
-            if (control == null || control is TableCell) return;
+            if (control == null || control is TableCell || control is LinkButton) return;
 
-            control.CssClass = (control is Label) ? "SmartPanelErrorLabel" : !(control is LinkButton) ? "SmartPanelErrorControl" : control.CssClass;
+            if (control is Label) control.CssClass.Toggle("ErrorLabel", "{0} {1}");
+            else control.CssClass.Toggle("ErrorItem", "{0} {1}");
         }
 
         private static void StylePanel(SmartPanel panel)
@@ -51,10 +54,6 @@ namespace Adf.Web.Styling
 
             renderer.PanelStyle = "AdfPanelPanel";
             renderer.RowStyle = "AdfPanelRow";
-            renderer.LabelCellStyle = "AdfPanelLabelCell";
-            renderer.LabelStyle = "AdfPanelLabel";
-            renderer.ItemCellStyle = "AdfPanelItemCell";
-            renderer.ItemStyle = "AdfPanelItem";
         }
     }
 }

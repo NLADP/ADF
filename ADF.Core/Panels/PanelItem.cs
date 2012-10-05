@@ -11,6 +11,7 @@ namespace Adf.Core.Panels
         public PanelItemType Type { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public int MaxLength { get; set; }
         public bool Editable { get; set; }
         public bool Visible { get; set; }
         public bool Optional { get; set; }
@@ -37,6 +38,7 @@ namespace Adf.Core.Panels
             Type = PanelItemType.EditableText;
             Width = Row.Panel.DefaultWidth;
             Height = 0;
+            MaxLength = 0;
             Editable = true;
             Visible = true;
             Optional = false;

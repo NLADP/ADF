@@ -15,7 +15,7 @@
         /// <returns>
         /// true if the login is succesful; otherwise, false.
         /// </returns>
-        bool Login(string name, string password);
+        LoginResult Login(string name, string password);
         
         /// <summary>
         /// Gets a value indicating if any user is logged on.
@@ -53,6 +53,7 @@
         /// Returns a value indicating whether the current user is allowed to performs the 
         /// specified <see cref="IAction"/>.
         /// </summary>
+        /// <param name="subject">The subject for which authentication is requested.</param>
         /// <param name="action">Any action that implements <see cref="IAction"/> (such as ApplicationTask).</param>
         /// <returns>
         /// true if the <see cref="IAction"/> is allowed for the current user; otherwise, false.

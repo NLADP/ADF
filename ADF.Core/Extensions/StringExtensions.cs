@@ -197,5 +197,33 @@ namespace Adf.Core.Extensions
 
             return returnCols.ToArray();
         }
+      public static bool IsIn(this string value, params string[] p)
+        {
+            if (p == null || p.Length == 0) return false;
+
+            return p.Any(s => value.ToUpper() == s.ToUpper());
+        }
+
+        public static string FillRight(this string value, int length, char fillwith)
+        {
+            if (length <= 0) return string.Empty;
+            if (value.IsNullOrEmpty()) return new string(fillwith, length);
+
+            return value + new string(fillwith, length - value.Length);
+        }
+
+        public static string FillLeft(this string value, int length, char fillwith)
+        {
+            if (length <= 0) return string.Empty;
+            if (value.IsNullOrEmpty()) return new string(fillwith, length);
+
+            return new string(fillwith, length - value.Length) + value;
+        }
+
+        public static string Toggle(this string origin, string toggle, string format = "{0}{1}")
+        {
+            return origin.Contains(toggle) ? origin.Replace(toggle, "") : string.Format(format, origin, toggle);
+        }
+
 	}
 }

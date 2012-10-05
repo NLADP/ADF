@@ -16,7 +16,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class DropDownListBinder : IControlBinder
     {
-        private string[] types = { "ddl" };
+        private readonly string[] types = { "ddl" };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.DropDownList"/> id prefixes that support binding.
@@ -72,7 +72,7 @@ namespace Adf.Web.Binding
             
             var includeEmpty = !pi.IsNonEmpty();
 
-            foreach (var item in PropertyHelper.GetCollectionWithDefault(value, includeEmpty, items))
+            foreach (var item in PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty, items))
             {
                 ddl.Items.Add(new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected});
             }

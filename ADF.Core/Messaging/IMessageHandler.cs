@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Adf.Core.Data;
+﻿using Adf.Core.Data;
 
 namespace Adf.Core.Messaging
 {

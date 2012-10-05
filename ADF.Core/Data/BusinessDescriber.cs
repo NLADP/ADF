@@ -9,6 +9,21 @@ namespace Adf.Core.Data
     /// </summary>
     public class BusinessDescriber
     {
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BusinessDescriber"/> class.
+        /// </summary>
+        public static readonly BusinessDescriber Empty = new BusinessDescriber();
+
+        /// <summary>
+        /// Gets the instance of <see cref="BusinessDescriber"/> is empty or not.
+        /// </summary>
+        /// <returns>True if the instance of <see cref="BusinessDescriber"/> is empty; otherwise, false.</returns>
+        public bool IsEmpty
+        {
+            get { return this == Empty; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessDescriber"/> class with no arguments.
         /// </summary>
@@ -24,20 +39,29 @@ namespace Adf.Core.Data
         /// <exception cref="System.Reflection.TargetException">The object does not match the target type, or a property is an instance property but obj is null.</exception>
         public static IColumn GetColumn(Type type, string name)
         {
-            if (type == null) return null;
+            if (type == null) return ColumnDescriber.Empty;
+
+            ColumnDescriber describer = ColumnDescriber.Empty;
 
             var memberInfos = type.GetMember(name, (BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy));
             var mi = memberInfos.Length > 0 ? memberInfos[0] : null;
 
-            if (ExcludeAttribute.IsExcluded(mi)) return null;
+            if (!ExcludeAttribute.IsExcluded(mi))
+            {
+                var propertyInfo = mi as PropertyInfo;
+                var fieldInfo = mi as FieldInfo;
 
-            var propertyInfo = mi as PropertyInfo;
-            if (propertyInfo != null) return propertyInfo.GetValue(null, null) as IColumn;
+                if (propertyInfo != null)
+                {
+                    describer = propertyInfo.GetValue(null, null) as ColumnDescriber;
+                }
+                else if (fieldInfo != null)
+                {
+                    describer = fieldInfo.GetValue(null) as ColumnDescriber;
+                }
+            }
 
-            var fieldInfo = mi as FieldInfo;
-            if (fieldInfo != null) return fieldInfo.GetValue(null) as ColumnDescriber;
-
-            return null;
+            return describer;
         }
     }
 }

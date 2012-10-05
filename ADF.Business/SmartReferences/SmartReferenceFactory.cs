@@ -221,5 +221,14 @@ namespace Adf.Business.SmartReferences
         {
             if (StateManager.Application.Has(Key<T>())) StateManager.Application.Remove(Key<T>());
         }
+
+        //public static DomainCollection<SmartReference<T>> FilterOnCurrentDate<T>(SmartReference<T> current)
+        //{
+        //    var results = List<T>(SmartReferenceGateway.GetByType(typeof (T).Name)).Where(s => s.BeginDate <= DateTime.Now && s.EndDate >= DateTime.Now);
+            
+        //    if(!current.IsNullOrEmpty()) results.AddItem(current);
+
+        //    return results;
+        //}
     }
 }

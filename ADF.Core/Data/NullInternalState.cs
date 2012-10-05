@@ -20,38 +20,24 @@ namespace Adf.Core.Data
         /// </summary>
         public static readonly IInternalState Null = new NullInternalState();
 
-//        /// <summary>
-//        /// Creates a new array instance of the <see cref="NullInternalState"/> class with array size 0.
-//        /// </summary>
-//        public static readonly NullInternalState[] NullArray = new NullInternalState[0];
+        //        /// <summary>
+        //        /// Creates a new array instance of the <see cref="NullInternalState"/> class with array size 0.
+        //        /// </summary>
+        //        public static readonly NullInternalState[] NullArray = new NullInternalState[0];
 
         /// <summary>
         /// Creates an empty list if <see cref="NullInternalState"/>  
         /// </summary>
-        public static readonly IEnumerable<IInternalState> NullList = Enumerable.Empty<NullInternalState>();
+        public static readonly IEnumerable<IInternalState> NullList = (IEnumerable<IInternalState>) Enumerable.Empty<NullInternalState>();
 
         /// <summary>
-        /// Get the data of specified <see cref="ColumnDescriber"/>.
-        /// Used only for Adf.Core.IValueObject object.
+        /// Determines wether or not the IInternalState has the specified property.
         /// </summary>
-        /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
-        /// <returns>An instance of specified type.</returns>
-        public T GetValue<T>(IColumn property) where T : IValueObject
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>Returns true if the state has the property; otherwise false.</returns>
+        public bool Has(IColumn property)
         {
-            return typeof(T).New<T>(string.Empty);
-        }
-
-        /// <summary>
-        /// Get the data for nullable value type.
-        /// Returns null value.
-        /// </summary>
-        /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
-        /// <returns>Null value.</returns>
-        public T? GetNullable<T>(IColumn property) where T : struct
-        {
-            return null;
+            return false;
         }
 
         /// <summary>

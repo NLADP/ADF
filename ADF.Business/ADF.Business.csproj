@@ -26,10 +26,14 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -149,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Extentions\GravatarEmailExtentions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Messaging\CsvMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -163,6 +168,7 @@
     <Compile Include="ValueObject\HumanName.cs" />
     <Compile Include="ValueObject\MaskedAttribute.cs" />
     <Compile Include="ValueObject\AccountNumber.cs" />
+    <Compile Include="ValueObject\Money.cs" />
     <Compile Include="ValueObject\Postcode.cs" />
     <Compile Include="ValueObject\Sofinummer.cs" />
     <Compile Include="ValueObject\PhoneNumber.cs" />
@@ -171,6 +177,7 @@
     <Compile Include="ValueObject\Isbn.cs" />
     <Compile Include="ValueObject\Password.cs" />
     <Compile Include="ValueObject\Url.cs" />
+    <Compile Include="ValueObject\ValueObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

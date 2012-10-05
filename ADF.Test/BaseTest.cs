@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Test
 {
-    public abstract class BaseTest
+    public abstract class BaseTest 
     {
         [TestInitialize]
         public void Initialize()

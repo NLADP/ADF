@@ -5,7 +5,6 @@ using Adf.Core;
 using Adf.Core.Authorization;
 using Adf.Core.Logging;
 using Adf.Core.State;
-using Adf.Base.State;
 
 namespace Adf.Base.Logging
 {

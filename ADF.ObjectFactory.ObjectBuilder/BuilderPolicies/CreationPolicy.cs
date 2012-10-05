@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.ObjectBuilder;
-using Adf.Core.Extensions;
 
 namespace Adf.ObjectFactory.ObjectBuilder.BuilderPolicies
 {
@@ -32,7 +31,7 @@ namespace Adf.ObjectFactory.ObjectBuilder.BuilderPolicies
                 {
                     Type genericList = typeof(List<>);
                     Type fullType = genericList.MakeGenericType(parms[i].ParameterType.GetGenericArguments()[0]);
-                    parmsValueArray[i] = fullType.New<object>();
+                    parmsValueArray[i] = Activator.CreateInstance(fullType);
 
                     foreach (object o in Core.Objects.ObjectFactory.BuildAll(parms[i].ParameterType.GetGenericArguments()[0]))
                     {

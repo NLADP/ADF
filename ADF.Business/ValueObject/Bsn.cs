@@ -35,10 +35,28 @@ namespace Adf.Business.ValueObject
             value = null;
 
             if (string.IsNullOrEmpty(newvalue)) return;
+            if (newvalue.Length < 8 || newvalue.Length > 9) throw new FormatException("value is not a valid dutch social security number");
+
+            // TODO: equals "000000000" hack aanpassen/verwijderen
+            int val;
+            if (int.TryParse(newvalue, out val) && val == 0) return;
 
             if (!IsValidBsn(newvalue)) throw new FormatException("value is not a valid dutch social security number");
 
             value = newvalue;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bsn"/> class.
+        /// </summary>
+        /// <remarks>
+        /// If the <see cref="Bsn"/> could not be validated, a <see cref="FormatException"/> 
+        /// exception is thrown.
+        /// </remarks>
+        /// <param name="newvalue">The <see cref="Bsn"/> to use.</param>
+        public Bsn(uint newvalue)
+            : this(newvalue == 0 ? string.Empty : newvalue.ToString())
+        {
         }
 
         /// <summary>
@@ -54,8 +72,6 @@ namespace Adf.Business.ValueObject
         #endregion CodeGuard(Constructors)
 
         #region CodeGuard(Operators)
-
-      
 
         /// <summary>
         /// Returns the equality of two <see cref="Bsn"/> objects.
@@ -139,7 +155,8 @@ namespace Adf.Business.ValueObject
         /// <summary>
         /// The empty <see cref="Bsn"/>.
         /// </summary>
-        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible")] public static Bsn Empty = new Bsn(string.Empty);
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible")]
+        public static Bsn Empty = new Bsn(string.Empty);
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
@@ -162,7 +179,7 @@ namespace Adf.Business.ValueObject
         /// </returns>
         public override string ToString()
         {
-            return string.IsNullOrEmpty(value) ? string.Empty : value;
+            return string.IsNullOrEmpty(value) ? string.Empty : Regex.Replace(value, @"(\d{4})(\d{2})(\d{3})", "$1.$2.$3");
         }
 
         /// <summary>
@@ -180,30 +197,26 @@ namespace Adf.Business.ValueObject
         /// <returns>True if the supplied value is a valid <see cref="Bsn"/>, false otherwise.</returns>
         private static bool ElfProef(string bsnNr)
         {
-            bool result = false;
+            bsnNr = bsnNr.Trim().Replace(".", string.Empty);
+
             long som = 0;
-            string cleanBsnNr = bsnNr.Replace(".", "");
 
-
-            // Een Bsn bestaat uit 9 cijfers 
-            if ((cleanBsnNr.Length == 9))
+            // Is het een numeric?
+            long nr;
+            if (long.TryParse(bsnNr, out nr) && nr != 0)
             {
-                for (int i = 1; (i <= 9); i++)
+                // Een Bsn bestaat uit 9 cijfers 
+                if (bsnNr.Length != 9) bsnNr = bsnNr.PadLeft(9, '0');
+
+                for (int i = 1; i <= 8; i++)
                 {
-                    int cijfer = int.Parse(cleanBsnNr.Substring((i - 1), 1), CultureInfo.CurrentCulture);
-                    if (i == 9)
-                    {
-                        som += (cijfer*-(i + 1));
-                    }
-                    else
-                    {
-                        som += (cijfer*(i + 1));
-                    }
+                    som += (bsnNr[i - 1] - '0') * (10 - i);
                 }
-                // De som van de vermenigvuldigingen moet deelbaar zijn door 11 
-                result = (((som%11) == 0));
+                som += (bsnNr[8] - '0') * -1;
             }
-            return result;
+
+            // De som van de vermenigvuldigingen moet deelbaar zijn door 11 en mag niet 0 zijn
+            return som != 0 && som % 11 == 0;
         }
 
         #endregion  CodeGuard(Value)
@@ -235,19 +248,21 @@ namespace Adf.Business.ValueObject
         /// <returns>True if the parsing is successful, false otherwise.</returns>
         public static bool TryParse(string s, out Bsn result)
         {
-            if (string.IsNullOrEmpty(s))
+            string cleanBsnNr = s.Trim().Replace(".", string.Empty);
+            result = Empty;
+
+            int val;
+            if (string.IsNullOrEmpty(cleanBsnNr))
             {
-                result = Empty;
                 return true;
             }
 
-            if (!IsValidBsn(s))
+            if (cleanBsnNr.Length < 8 || cleanBsnNr.Length > 9 || !int.TryParse(cleanBsnNr, out val) || val == 0 || !IsValidBsn(cleanBsnNr))
             {
-                result = Empty;
                 return false;
             }
 
-            result = new Bsn(s);
+            result = new Bsn(cleanBsnNr);
             return true;
         }
 

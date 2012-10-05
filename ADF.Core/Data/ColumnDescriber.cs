@@ -40,6 +40,35 @@ namespace Adf.Core.Data
 
         #endregion
 
+        #region Empty
+
+        /// <summary>
+        /// Creates an instance of the <see cref="ColumnDescriber"/> class with the specified empty column attribute and empty table name.
+        /// </summary>
+        private static readonly ColumnDescriber empty = new ColumnDescriber(string.Empty, string.Empty);
+
+
+        /// <summary>
+        /// Gets the empty <see cref="ColumnDescriber"/> object.
+        /// </summary>
+        /// <returns>The empty <see cref="ColumnDescriber"/> object.</returns>
+        public static ColumnDescriber Empty
+        {
+            get { return empty; }
+        }
+
+        /// <summary>
+        /// Gets the status of column's attribute and table's name is empty or null.
+        /// </summary>
+        /// <returns>True if the column's attribute and table's name are null or an empty string (""); 
+        /// otherwise, false.</returns>
+        public bool IsEmpty
+        {
+            get { return (string.IsNullOrEmpty(Attribute) && string.IsNullOrEmpty(Table.Name)); }
+        }
+
+        #endregion
+
         private readonly ITable _table;
 
         /// <summary>

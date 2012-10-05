@@ -28,5 +28,12 @@ namespace Adf.Web.UI
 
             if (table != null) Controls.Add(table);
         }
+
+        protected T GetTarget<T>(PanelItem item)
+        {
+            Render();
+
+            return (T)item.Target;
+        }
     }
 }

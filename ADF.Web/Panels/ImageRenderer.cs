@@ -6,7 +6,9 @@ using Adf.Base.Panels;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
 using Adf.Core.Resources;
+using Adf.Web.Styling;
 using Adf.Web.UI;
+using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
@@ -23,9 +25,11 @@ namespace Adf.Web.Panels
         {
             if (panelItem.Type == PanelItemType.Image)
             {
-                var image = new Image { ID = panelItem.GetId(), Enabled = false, Width = new Unit(panelItem.Width, UnitType.Pixel), CssClass = ItemStyle, Visible = panelItem.Visible };
+                var image = new Image { ID = panelItem.GetId(), Enabled = false, Width = new Unit(panelItem.Width, UnitType.Pixel), Visible = panelItem.Visible };
 
-                image.AttachToolTip(panelItem);
+                image
+                    .AddStyle(CssClass.Item)
+                    .AttachToolTip(panelItem);
 
                 panelItem.Target = image;
 
@@ -40,10 +44,13 @@ namespace Adf.Web.Panels
                     ToolTip = ResourceManager.GetString(panelItem.Text.IsNullOrEmpty() ? panelItem.GetPropertyName() + "Info" : panelItem.Text),
                     Enabled = false,
                     Width = new Unit(panelItem.Width, UnitType.Pixel),
-                    CssClass = ItemStyle,
                     Visible = panelItem.Visible
                 };
 
+                image
+                    .AddStyle(CssClass.Item)
+                    .AttachToolTip(panelItem);
+                
                 panelItem.Target = image;
 
                 return new List<Control> { image };

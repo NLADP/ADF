@@ -223,6 +223,16 @@ namespace Adf.Data.InternalState
         #region Get & Set Methods
 
         /// <summary>
+        /// Determines wether or not the IInternalState has the specified property.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>Returns true if the state has the property; otherwise false.</returns>
+        public bool Has(IColumn property)
+        {
+            return row.Table.Columns.IndexOf(property.ColumnName) != -1;
+        }
+
+        /// <summary>
         /// Get the data of specified <see cref="ColumnDescriber"/>.
         /// Also converts the column value of <see cref="System.Data.DataRow"/> by the specified type.
         /// </summary>

@@ -24,7 +24,7 @@ namespace Adf.Core
         }
 
         [Exclude]
-        private static readonly Dictionary<string, IEnumerable<Descriptor>> values = new Dictionary<string, IEnumerable<Descriptor>>();
+        private static readonly Dictionary<Type, IEnumerable<Descriptor>> values = new Dictionary<Type, IEnumerable<Descriptor>>();
 
         private readonly string _name;
 
@@ -102,7 +102,7 @@ namespace Adf.Core
         /// </returns>
         public static T Get<T>(string name) where T : Descriptor
         {
-            return (T) Get(typeof (T), name);
+            return GetValues<T>().Where(descriptor => descriptor.Name == name).FirstOrDefault();
         }
 
         public static Descriptor Get(Type type, string name)
@@ -112,19 +112,19 @@ namespace Adf.Core
 
         public static T Parse<T>(string name) where T : Descriptor
         {
-            return GetValues<T>().Single(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase));
+            return GetValues<T>().Where(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase)).Single();
         }
 
         public static bool TryParse<T>(string name, out T value) where T : Descriptor
         {
-            value = GetValues<T>().SingleOrDefault(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase));
+            value = GetValues<T>().Where(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
 
             return value != null;
         }
 
         public static T GetDefault<T>() where T : Descriptor
         {
-            return GetValues<T>().SingleOrDefault(d => d.IsDefault);
+            return GetValues<T>().Where(d => d.IsDefault).SingleOrDefault();
         }
 
         public static IEnumerable<T> GetValues<T>() where T : Descriptor
@@ -148,12 +148,12 @@ namespace Adf.Core
         public static IEnumerable<Descriptor> GetValues(Type type)
         {
             if (type == null) throw new ArgumentNullException("type");
-            
-            if (values.ContainsKey(type.Name)) return values[type.Name];
+
+            if (values.ContainsKey(type)) return values[type];
 
             Type descriptorType = typeof(Descriptor);
 
-            return (values[type.Name] =
+            return (values[type] =
                     (from fi in type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
                      where !fi.IsExcluded() && descriptorType.IsAssignableFrom(fi.FieldType)
                      select (Descriptor)fi.GetValue(type)));
@@ -163,6 +163,11 @@ namespace Adf.Core
         #endregion
 
         #region Operators
+
+        public virtual bool ValueEquals(Descriptor other) 
+        {
+            return (Name == other.Name);
+        }
 
         /// <summary>
         /// Returns a value indicating whether the two specified <seealso cref="Descriptor"/>s have 
@@ -183,7 +188,7 @@ namespace Adf.Core
             if (((object)x == null) || ((object)y == null))
                 return false;
 
-            return (x.Name == y.Name);
+            return (x.ValueEquals(y));
         }
 
         /// <summary>

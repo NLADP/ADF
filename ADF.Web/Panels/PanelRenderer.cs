@@ -5,8 +5,10 @@ using Adf.Core.Extensions;
 using Adf.Core.Objects;
 using Adf.Core.Panels;
 using Adf.Core.Resources;
+using Adf.Web.Styling;
 using Adf.Web.UI;
 using System.Linq;
+using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
@@ -22,6 +24,7 @@ namespace Adf.Web.Panels
 
         public object Render(AdfPanel panel)
         {
+            short index = 0;
             var table = new Table { CssClass = PanelStyle};
 
             int cellsperrow = panel.GetMaxItemsPerRow() * 2;
@@ -29,7 +32,7 @@ namespace Adf.Web.Panels
             foreach (var panelrow in panel.Rows)
             {
                 var row = new TableRow { CssClass = RowStyle };
-                var itemcell = new TableCell { CssClass = ItemCellStyle };
+                var itemcell = new TableCell();
 
                 for (int i = 0; i < panelrow.Items.Count(); i++)
                 {
@@ -38,17 +41,19 @@ namespace Adf.Web.Panels
                     var labels = RenderLabel(item);
                     var items = RenderItem(item);
 
+                    item.SetTabIndex(index += 3);
+
                     if (!item.AttachToPrevious)
                     {
                         if (!item.Label.IsNullOrEmpty())
                         {
-                            var labelcell = new TableCell {CssClass = LabelCellStyle};
+                            var labelcell = new TableCell();
 
                             labelcell.Controls.AddRange(labels);
                             row.Controls.Add(labelcell);
                         }
 
-                        itemcell = new TableCell {CssClass = ItemCellStyle};
+                        itemcell = new TableCell();
                     }
 
                     itemcell.Controls.AddRange(items);
@@ -78,7 +83,9 @@ namespace Adf.Web.Panels
 
             if (!panelItem.Label.IsNullOrEmpty())
             {
-                var label = new Label { ID = panelItem.GetLabelId(), Text = ResourceManager.GetString(panelItem.Label), CssClass = LabelStyle, Visible = panelItem.Visible };
+                var label = new Label { ID = panelItem.GetLabelId(), Text = ResourceManager.GetString(panelItem.Label), Visible = panelItem.Visible };
+
+                label.AddStyle(CssClass.Label);
                 
                 controls.Add(label);
                 panelItem.IDs.Add(label.ID);

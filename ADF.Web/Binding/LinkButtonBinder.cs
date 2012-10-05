@@ -52,6 +52,8 @@ namespace Adf.Web.Binding
             {
                 l.Text = value.ToString();
             }
+
+            if (l.Text.IsNullOrEmpty()) l.Visible = false;
         }
 
         /// <summary>

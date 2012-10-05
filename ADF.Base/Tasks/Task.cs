@@ -185,6 +185,15 @@ namespace Adf.Base.Tasks
         }
 
         /// <summary>
+        /// Provides the method to cancel one or more tasks by the value of <see cref="TaskResult"/>.
+        /// </summary>
+        /// <param name="p">The array of tasks, which will be executed.</param>
+        public virtual void Error(params object[] p)
+        {
+            Finish(TaskResult.Error, p);
+        }
+
+        /// <summary>
         /// Provides the method to finish one or more tasks. Also deactivate the task view of <see cref="Task"/> class object.
         /// </summary>
         /// <param name="returntype">The <see cref="TaskResult"/> that defines the current status of a task.</param>

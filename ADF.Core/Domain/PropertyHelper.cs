@@ -87,11 +87,11 @@ namespace Adf.Core.Domain
             return parser.GetCollection(value, includeEmpty, items);
         }
 
-        public static ICollection<ValueItem> GetCollectionWithDefault(Type type, bool includeEmpty, IEnumerable items = null)
+        public static ICollection<ValueItem> GetCollectionWithDefault(Type type, object value, bool includeEmpty, IEnumerable items = null)
         {
             var parser = GetParser(type);
 
-            return parser.GetCollection(type, includeEmpty, items);
+            return parser.GetCollection(value, includeEmpty, items);
         }
 
         /// <summary>

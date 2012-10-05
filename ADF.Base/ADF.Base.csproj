@@ -12,10 +12,15 @@
     <AssemblyName>Adf.Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,10 +66,13 @@
     <Compile Include="Configuration\AssemblyQualifiedTypeNameConverter.cs" />
     <Compile Include="Configuration\ObjectFactoryConfigurationSection.cs" />
     <Compile Include="Data\CompositeState.cs" />
+    <Compile Include="Data\DomainCompositeState.cs" />
     <Compile Include="Data\DictionaryQueryHandler.cs" />
     <Compile Include="Data\DictionaryState.cs" />
+    <Compile Include="Data\InternalStateExtensions.cs" />
     <Compile Include="Data\InvalidColumnException.cs" />
     <Compile Include="Data\QueryExtensions.cs" />
+    <Compile Include="Data\SimpleInternalState.cs" />
     <Compile Include="Data\SqlProvider.cs" />
     <Compile Include="Domain\CompositionAttribute.cs" />
     <Compile Include="Domain\ListPropertyParser.cs" />
@@ -79,13 +87,11 @@
     <Compile Include="Domain\EnumPropertyParser.cs" />
     <Compile Include="Domain\GuidPropertyParser.cs" />
     <Compile Include="Domain\ListSorter.cs" />
-    <Compile Include="Domain\Money.cs" />
     <Compile Include="Domain\NullablePropertyParser.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
     <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
     <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
-    <Compile Include="Extensions\ValueObjectExtensions.cs" />
     <Compile Include="Formatting\FormatHelper.cs" />
     <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -96,7 +102,6 @@
     <Compile Include="Logging\FlatFileLogProvider.cs" />
     <Compile Include="Mail\DummyMailProvider.cs" />
     <Compile Include="Mail\SmtpMailProvider.cs" />
-    <Compile Include="Messaging\CsvMessageHandler.cs" />
     <Compile Include="Messaging\FixedLengthMessageHandler.cs" />
     <Compile Include="Messaging\MessagingException.cs" />
     <Compile Include="Messaging\MessagingExtensions.cs" />
@@ -150,6 +155,7 @@
     <Compile Include="Validation\BusinessRuleValidationContext.cs" />
     <Compile Include="Validation\BusinessRuleValidationPolicy.cs" />
     <Compile Include="Validation\ChildValidationPolicy.cs" />
+    <Compile Include="Validation\EmptySelectItemAttribute.cs" />
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
@@ -159,6 +165,7 @@
     <Compile Include="Validation\NotInPastAttribute.cs" />
     <Compile Include="Validation\PropertyInfoExtensions.cs" />
     <Compile Include="Validation\RegexAttribute.cs" />
+    <Compile Include="Validation\ValidationResultExtensions.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +186,9 @@
     <None Include="Messaging\MessageDefinitionSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

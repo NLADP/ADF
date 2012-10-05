@@ -272,6 +272,9 @@ namespace Adf.Base.Panels
             panel.LastItem().Optional = !panel.LastItem().Member.IsDefined(typeof(NonEmptyAttribute), false);
             if (panel.AutoGenerateLabels) panel.LastItem().Label = expression.GetMemberInfo().Name;
 
+            var maxlength = panel.LastItem().Member.GetCustomAttributes(typeof(MaxLengthAttribute), false).FirstOrDefault() as MaxLengthAttribute;
+            if (maxlength != null) panel.LastItem().MaxLength = maxlength.Length;
+
             return panel;
         }
 

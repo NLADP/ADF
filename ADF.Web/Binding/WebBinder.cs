@@ -131,8 +131,6 @@ namespace Adf.Web.Binding
 
             foreach (PropertyInfo pi in properties)
             {
-//                string domainObject = pi.DeclaringType.Name;
-
                 foreach (string key in controlBinders.Keys)
                 {
                     string name = key + domainobject + pi.Name;
@@ -303,8 +301,6 @@ namespace Adf.Web.Binding
 
             foreach (PropertyInfo pi in properties)
             {
-//                string domainObject = pi.DeclaringType.Name;
-
                 foreach (string key in _persisters.Keys)
                 {
                     string name = key + domainobject + pi.Name;

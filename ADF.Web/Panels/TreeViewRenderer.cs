@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
 using Adf.Web.UI;
+using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {

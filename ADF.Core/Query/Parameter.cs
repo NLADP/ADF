@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Adf.Core.Domain;
-using Adf.Core.Identity;
 
 namespace Adf.Core.Query
 {

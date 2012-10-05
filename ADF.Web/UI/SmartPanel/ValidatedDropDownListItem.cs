@@ -46,7 +46,7 @@ namespace Adf.Web.UI
             return Create(property.GetMemberInfo().Name, property, width, enabled, mandatory);
         }
 
-        public static ValidatedDropDownListItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true)
+        public static ValidatedDropDownListItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int tabIndex = 0)
         {
             return new ValidatedDropDownListItem(DropDownListItem.Create(label, property.GetControlName(), width, enabled), property.GetControlName(), mandatory);
         }

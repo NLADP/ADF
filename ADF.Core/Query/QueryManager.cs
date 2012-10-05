@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Adf.Core.Data;
+using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
-using Adf.Core.Extensions;
 
 namespace Adf.Core.Query
 {

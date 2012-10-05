@@ -3,7 +3,8 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Panels;
-using Adf.Web.UI;
+using Adf.Web.Styling;
+using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
@@ -18,10 +19,13 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var upload = new FileUpload { Enabled = true, CssClass = ItemStyle, Visible = panelItem.Visible };
+            var upload = new FileUpload { Enabled = true, Visible = panelItem.Visible };
 
-            upload.AttachToolTip(panelItem);
-
+            upload
+                .AddStyle(CssClass.Item)
+                .AttachToolTip(panelItem)
+                .ToggleStyle(panelItem.Editable, CssClass.Editable, CssClass.ReadOnly);
+            
             panelItem.Target = upload;
 
             return new List<Control> { upload, PanelValidator.Create(panelItem) };

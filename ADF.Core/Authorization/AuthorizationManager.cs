@@ -25,9 +25,9 @@ namespace Adf.Core.Authorization
         /// <returns>
         /// true if login is succesful; otherwise, false.
         /// </returns>
-        public static bool Login(string name, string password)
+        public static LoginResult Login(string name, string password)
         {
-            return AuthorizationProvider.Login(name, password);
+            return IsLoggedOn ? LoginResult.Success : AuthorizationProvider.Login(name, password);
         }
 
         /// <summary>

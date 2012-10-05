@@ -44,6 +44,7 @@ namespace Adf.Base.Domain
         /// Gets the collection of the property info for the specified target object.
         /// </summary>
         /// <param name="target">Object to get collection for.</param>
+        /// <param name="items">The list of items to use, or null to get the list from the domainobject.</param>
         /// <returns>Collection of values for type of property, using the value on the target object 
         /// for this property as default value.</returns>
         protected virtual List<ValueItem> GetCollection(object target, IEnumerable items = null)

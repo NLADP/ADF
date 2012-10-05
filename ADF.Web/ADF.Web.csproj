@@ -26,10 +26,14 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -178,6 +182,7 @@
     <Compile Include="Panels\CalendarRenderer.cs" />
     <Compile Include="Panels\CheckBoxRenderer.cs" />
     <Compile Include="Panels\CheckBoxListRenderer.cs" />
+    <Compile Include="Panels\PanelRenderExtension.cs" />
     <Compile Include="Panels\RadioButtonListRenderer.cs" />
     <Compile Include="Panels\DropDownRenderer.cs" />
     <Compile Include="Panels\FileUploadRenderer.cs" />
@@ -241,14 +246,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Styling\BusinessGridViewStyler.cs" />
+    <Compile Include="Styling\Classes.cs" />
     <Compile Include="Styling\NullStyler.cs" />
     <Compile Include="Styling\SmartPanelDefaultStyler.cs" />
     <Compile Include="Styling\SmartPanelErrorStyler.cs" />
     <Compile Include="UI\Buttons\SmartButton.cs" />
     <Compile Include="UI\ControlExtensions.cs" />
     <Compile Include="UI\DropDownTreeView.cs" />
+    <Compile Include="UI\Extensions\WebControlExtensions.cs" />
     <Compile Include="UI\MessageImageButton.cs" />
     <Compile Include="UI\GenericComparer.cs" />
+    <Compile Include="UI\Minifier.cs" />
     <Compile Include="UI\PanelControl.cs" />
     <Compile Include="UI\RowSelectorColumn.cs" />
     <Compile Include="UI\SmartPanel\BasePanelItem.cs" />
@@ -284,6 +292,7 @@
     <Compile Include="UI\SmartView\AccountField.cs" />
     <Compile Include="UI\SmartView\BoolField.cs" />
     <Compile Include="UI\SmartView\CheckBoxField.cs" />
+    <Compile Include="UI\SmartView\FormatEventArgs.cs" />
     <Compile Include="UI\SmartView\SmartViewFooter.cs" />
     <Compile Include="UI\SmartView\TextButton.cs" />
     <Compile Include="UI\SmartView\DateField.cs" />

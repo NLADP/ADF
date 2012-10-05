@@ -3,6 +3,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
+using Adf.Web.Styling;
+using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
@@ -15,9 +17,12 @@ namespace Adf.Web.Panels
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            var checkBox = new CheckBox { ID = panelItem.GetId(), Enabled = panelItem.Editable, CssClass = ItemStyle, Visible = panelItem.Visible};
+            var checkBox = new CheckBox { ID = panelItem.GetId(), Enabled = panelItem.Editable, Visible = panelItem.Visible};
 
-            checkBox.AttachToolTip(panelItem);
+            checkBox
+                .AddStyle(CssClass.Item)
+                .AttachToolTip(panelItem)
+                .ToggleStyle(panelItem.Editable, CssClass.Editable, CssClass.ReadOnly);
 
             panelItem.Target = checkBox;
 

@@ -18,7 +18,11 @@ namespace Adf.Base.Data
     [Serializable]
     public class DictionaryState : Dictionary<IColumn, object>, IInternalState, INotifyPropertyChanged
     {
-        public DictionaryState() {}
+        public DictionaryState()
+        {
+            IsAltered = false;
+            IsNew = true;
+        }
 
         #region Serialization
 
@@ -54,12 +58,12 @@ namespace Adf.Base.Data
         private IColumn _primaryKey;
         internal IColumn PrimaryKey
         {
-            get { return _primaryKey ?? (_primaryKey = Keys.FirstOrDefault(c => c.IsIdentity) ?? Keys.First(c => c.ColumnName.Equals("Id", StringComparison.OrdinalIgnoreCase))); }
+            get { return _primaryKey ?? (_primaryKey = Keys.Count > 0 ? Keys.FirstOrDefault(c => c.IsIdentity) ?? Keys.First(c => c.ColumnName.Equals("Id", StringComparison.OrdinalIgnoreCase)) : new ColumnDescriber("Id", "")); }
         }
 
         #endregion
 
-        #region Status 
+        #region Status
 
         /// <summary>
         /// Gets the record count of a <see cref="System.Collections.Hashtable"/> is 0 or not.
@@ -83,11 +87,21 @@ namespace Adf.Base.Data
         #region Get & Set
 
         /// <summary>
-        /// Get the data of specified <see cref="ColumnDescriber"/>.
+        /// Determines wether or not the IInternalState has the specified property.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>Returns true if the state has the property; otherwise false.</returns>
+        public bool Has(IColumn property)
+        {
+            return ContainsKey(property);
+        }
+
+        /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
         /// Also converts the column value by the specified type.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>Converts the column value by the specified type if the value is not empty; otherwise, default value.</returns>
         /// <exception cref="System.NotSupportedException">The conversion cannot be performed.</exception>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -97,21 +111,39 @@ namespace Adf.Base.Data
 
             TryGetValue(property, out value);
 
-            return (value == null) ? default(T) : (T)Convert.ChangeType(value, typeof(T));
+            if (value == null) return default(T);
+
+            if (typeof(T).IsNullable()) return (T)new NullableConverter(typeof(T)).ConvertFrom(value);
+            if (typeof(T).IsValueObject()) return (T)Activator.CreateInstance(typeof(T), value);
+            if (value.GetType().IsValueObject()) value = ((IValueObject) value).Value;
+
+            if ((value is string && (!string.IsNullOrEmpty((string) value))) || typeof(T) == typeof(string))
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
+            }
+
+            try
+            {
+                return (T)value;
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
         }
 
         /// <summary>
         /// Set the specified value to the key. 
-        /// Here the key is specified <see cref="ColumnDescriber"/>.
+        /// Here the key is specified <see cref="IColumn"/>.
         /// </summary>
         /// <typeparam name="T">The type of value to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the key.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the key.</param>
         /// <param name="value">The value will set into the key.</param>
         public void Set<T>(IColumn property, T value)
         {
-            if (!PropertyHelper.IsEqual(Get<T>(property), value))
+            if (!ContainsKey(property) || !PropertyHelper.IsEqual(Get<T>(property), value))
             {
-                this[property] = value;
+                this[property] = (typeof(T).IsValueObject()) ? ((IValueObject)value).IsEmpty ? null : ((IValueObject)value).Value : value;
 
                 NotifyChange(property);
             }

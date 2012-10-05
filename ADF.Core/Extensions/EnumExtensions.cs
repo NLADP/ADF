@@ -46,5 +46,15 @@ namespace Adf.Core.Extensions
         {
             return values.Contains(value);
         }
+
+        public static bool IsEqual(this Enum item, uint? value)
+        {
+            return item != null && Convert.ToInt32(item) == value;
+        }
+
+        public static bool IsEqual(this Enum item, int value)
+        {
+            return item != null && Convert.ToInt32(item) == value;
+        }
     }
 }

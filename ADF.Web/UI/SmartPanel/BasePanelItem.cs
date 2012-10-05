@@ -101,6 +101,16 @@ namespace Adf.Web.UI
         }
 
         /// <summary>
+        /// Insert the <see cref="System.Web.UI.Control"/> to item control list at the specified index
+        /// </summary>
+        /// <param name="index">index at which item should be added </param>
+        /// <param name="control">The <see cref="System.Web.UI.Control"/> that defines the control which will be added.</param>
+        public void InsertControl(int index, Control control)
+        {
+            _itemControls.Insert(index, control);
+        }
+
+        /// <summary>
         /// Add the <see cref="System.Web.UI.WebControls.WebControl"/> to label control list.
         /// Used to hold the label of child controls within panel.
         /// </summary>

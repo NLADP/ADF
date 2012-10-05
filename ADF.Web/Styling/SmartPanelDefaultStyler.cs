@@ -33,7 +33,7 @@ namespace Adf.Web.Styling
         {
             if (control == null || control is TableCell) return;
 
-            control.CssClass = !(control is LinkButton) ? "SmartPanelLabel" : control.CssClass;
+            //control.CssClass = !(control is LinkButton) ? "SmartPanelLabel" : control.CssClass;
         }
 
         private static void StylePanel(SmartPanel panel)
@@ -53,10 +53,6 @@ namespace Adf.Web.Styling
 
             renderer.PanelStyle = "AdfPanelPanel";
             renderer.RowStyle = "AdfPanelRow";
-            renderer.LabelCellStyle = "AdfPanelLabelCell";
-            renderer.LabelStyle = "AdfPanelLabel";
-            renderer.ItemCellStyle = "AdfPanelItemCell";
-            renderer.ItemStyle = "AdfPanelItem";
         }
     }
 }

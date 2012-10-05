@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Test
 {
-    public class TestProvider : ITestProvider
+    public class TestProvider : ITestProvider 
     {
         private List<TestItem> _items = new List<TestItem>();
 

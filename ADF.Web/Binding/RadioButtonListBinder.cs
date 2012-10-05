@@ -49,7 +49,7 @@ namespace Adf.Web.Binding
         {
             if (value == null) return;
 
-            RadioButtonList rbl = control as RadioButtonList;
+            var rbl = control as RadioButtonList;
 
             if (rbl == null) return;
 
@@ -77,11 +77,11 @@ namespace Adf.Web.Binding
 
             var includeEmpty = !pi.IsNonEmpty();
 
-            IEnumerable<ValueItem> list = PropertyHelper.GetCollectionWithDefault(value, includeEmpty, items);
+            var list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty);
 
-            foreach (ValueItem item in list)
+            foreach (var item in list)
             {
-                ListItem listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
+                var listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
 
                 rbl.Items.Add(listitem);
             }
