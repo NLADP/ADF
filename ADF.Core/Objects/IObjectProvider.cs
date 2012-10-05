@@ -18,7 +18,9 @@ namespace Adf.Core.Objects
         /// <param name="serviceType">The type to build.</param>
         /// <param name="instanceName">The name of the instance to build, or null to build the default instance.</param>
         /// <returns>A new instance of <paramref name="serviceType"/> or any of it subtypes.</returns>
-        object BuildUp(Type serviceType, string instanceName);
+        object BuildUp(Type serviceType, string instanceName = null);
+
+        T BuildUp<T>(string instanceName = null);
 
         /// <overloads>
         /// Returns a list of instances of type <paramref name="serviceType"/>.
@@ -31,5 +33,9 @@ namespace Adf.Core.Objects
         /// <param name="inherited">Also search subtypes.</param>
         /// <returns>A list of instance of <paramref name="serviceType"/> or any of it subtypes.</returns>
         IEnumerable<object> BuildAll(Type serviceType, bool inherited);
+
+        IEnumerable<T> BuildAll<T>();
+
+        void Register<TInterface, TImplementation>(string instanceName = null);
     }
 }

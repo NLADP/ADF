@@ -79,9 +79,35 @@ namespace Adf.Objects.Unity
             }
         }
 
+        public T BuildUp<T>(string instanceName = null)
+        {
+            try
+            {
+                return unityContainer.Resolve<T>(instanceName);
+            }
+            catch (ArgumentException ae)
+            {
+                var exception = new ObjectFactoryConfigurationException(string.Format(Resources.CannotBuildUpInstanceOfType, typeof(T), instanceName), ae);
+
+                LogManager.Log(exception);
+
+                throw exception;
+            }
+        }
+
         public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
             return unityContainer.ResolveAll(serviceType);
+        }
+
+        public IEnumerable<T> BuildAll<T>()
+        {
+            return unityContainer.ResolveAll<T>();
+        }
+
+        public void Register<TInterface, TImplementation>(string instanceName = null)
+        {
+            throw new NotImplementedException();
         }
 
         #region Implementation of IDisposable

@@ -157,9 +157,24 @@ namespace Adf.Core.Objects
             return null;
         }
 
+        public T BuildUp<T>(string instanceName = null)
+        {
+            return default(T);
+        }
+
         public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
             return Enumerable.Empty<object>();
+        }
+
+        public IEnumerable<T> BuildAll<T>()
+        {
+            return Enumerable.Empty<T>();
+        }
+
+        public void Register<TInterface, TImplementation>(string instanceName = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

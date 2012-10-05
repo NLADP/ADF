@@ -113,6 +113,11 @@ namespace Adf.ObjectFactory.ObjectBuilder
             return BuildAll<TServiceType>(false);
         }
 
+        public void Register<TInterface, TImplementation>(string instanceName = null)
+        {
+            throw new NotSupportedException();
+        }
+
         public IEnumerable<object> BuildAll(Type serviceType)
         {
             return BuildAll(serviceType, false);

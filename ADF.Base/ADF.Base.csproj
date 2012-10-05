@@ -80,6 +80,7 @@
     <Compile Include="Messaging\FixedLengthMessageHandler.cs" />
     <Compile Include="Messaging\MessagingException.cs" />
     <Compile Include="Messaging\MessagingExtensions.cs" />
+    <Compile Include="Objects\CompiledLambdaObjectProvider.cs" />
     <Compile Include="Panels\PanelExtensions.cs" />
     <Compile Include="Panels\PanelItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
