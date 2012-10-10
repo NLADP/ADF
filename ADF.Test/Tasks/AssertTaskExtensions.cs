@@ -57,6 +57,18 @@ namespace Adf.Test.Tasks
             return task;
         }
 
+        public static R GetTaskStartedParameter<R>(this ITask task, ApplicationTask startedTask, int index)
+        {
+            var item = TestManager.FindItems(TestItemType.Task, startedTask, TestAction.TaskStarted).FirstOrDefault();
+
+            Assert.IsNotNull(item, "Task {0} was not started", startedTask);
+
+            if (item.Parameters == null) return default(R);
+            if (item.Parameters.Count <= index) return default(R);
+
+            return (R)item.Parameters[index];
+        }
+
         public static T OtherTaskIsNotStarted<T>(this T task, ApplicationTask startedtask) where T : ITask
         {
             TestManager.IsNotPresent(TestItemType.Task, startedtask, TestAction.TaskStarted);
@@ -167,6 +179,8 @@ namespace Adf.Test.Tasks
         public static R GetReturnParameter<R>(this ITask task, int index)
         {
             var item = TestManager.FindItems(TestItemType.Task, task.Name, new TestAction(TaskResult.Ok.ToString())).FirstOrDefault();
+
+            Assert.IsNotNull(item, "No return items");
 
             if (item.Parameters == null) return default(R);
             if (item.Parameters.Count <= index) return default(R);

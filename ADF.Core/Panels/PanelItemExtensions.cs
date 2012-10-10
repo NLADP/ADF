@@ -4,11 +4,12 @@ namespace Adf.Core.Panels
 {
     public static class PanelItemExtensions
     {
-        public static string GetId(this PanelItem panelitem)
+        public static string GetId(this PanelItem panelitem, string prefix = null)
         {
+            prefix = prefix ?? panelitem.Type.Prefix;
             var type = panelitem.Member.ReflectedType.Name;
 
-            return String.Format("{0}{1}{2}", panelitem.Type.Prefix, type, panelitem.Member.Name);
+            return String.Format("{0}{1}{2}", prefix, type, panelitem.Member.Name);
         }
 
         public static string GetPropertyName(this PanelItem panelitem)

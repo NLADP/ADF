@@ -183,6 +183,7 @@
     <Compile Include="Panels\FileUploadRenderer.cs" />
     <Compile Include="Panels\ImageRenderer.cs" />
     <Compile Include="Panels\PanelValidator.cs" />
+    <Compile Include="Panels\SelectButtonRenderer.cs" />
     <Compile Include="Panels\TextRenderer.cs" />
     <Compile Include="Panels\PanelRenderer.cs" />
     <Compile Include="Panels\TreeViewRenderer.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="UI\GenericComparer.cs" />
     <Compile Include="UI\PanelControl.cs" />
     <Compile Include="UI\RowSelectorColumn.cs" />
+    <Compile Include="UI\SmartPanel\AlwaysEnabledLinkButton.cs" />
     <Compile Include="UI\SmartPanel\BasePanelItem.cs" />
     <Compile Include="UI\SmartPanel\BlankItem.cs" />
     <Compile Include="UI\SmartPanel\CheckBoxItem.cs" />

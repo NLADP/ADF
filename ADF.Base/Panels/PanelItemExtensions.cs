@@ -96,6 +96,13 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static AdfPanel ShowSelectButton<T>(this AdfPanel panel, Expression<Func<T, object>> property, string label = null, int width = 10, bool mandatory = true, bool editable = true)
+        {
+            panel.CreateItem(PanelItemType.SelectButton, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
         private static void CreateItem<TDomainObject>(this AdfPanel panel, PanelItemType itemType, Expression<Func<TDomainObject, object>> property, string label, int? width, bool? mandatory, bool? editable)
         {
             panel.Show(property);
@@ -268,9 +275,12 @@ namespace Adf.Base.Panels
         {
             panel.AddPanelItem();
 
-            panel.LastItem().Member = expression.GetMemberInfo();
-            panel.LastItem().Optional = !panel.LastItem().Member.IsDefined(typeof(NonEmptyAttribute), false);
-            if (panel.AutoGenerateLabels) panel.LastItem().Label = expression.GetMemberInfo().Name;
+            var panelItem = panel.LastItem();
+            var memberInfo = expression.GetMemberInfo();
+
+            panelItem.Member = memberInfo;
+            panelItem.Optional = !panelItem.Member.IsDefined(typeof(NonEmptyAttribute), false);
+            if (panel.AutoGenerateLabels) panelItem.Label = memberInfo.Name;
 
             return panel;
         }

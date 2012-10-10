@@ -133,6 +133,7 @@
     <Compile Include="Encryption\EncryptionManager.cs" />
     <Compile Include="Encryption\EncryptionType.cs" />
     <Compile Include="Encryption\IEncryptionProvider.cs" />
+    <Compile Include="Extensions\BoolExtensions.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DescriptorExtensions.cs" />
