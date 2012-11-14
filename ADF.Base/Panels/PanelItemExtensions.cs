@@ -89,7 +89,7 @@ namespace Adf.Base.Panels
         }
 
 
-        public static AdfPanel ShowCalendar<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 10, bool? mandatory = true, bool? editable = true)
+        public static AdfPanel ShowCalendar<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 11, bool? mandatory = true, bool? editable = true)
         {
             panel.CreateItem(PanelItemType.Calendar, property, label, width, mandatory, editable);
 
@@ -163,7 +163,7 @@ namespace Adf.Base.Panels
         public static P AsCalender<P>(this P panel) where P : AdfPanel
         {
             panel.LastItem().Type = PanelItemType.Calendar;
-            panel.LastItem().Width = 10;
+            panel.LastItem().Width = 11;
 
             return panel;
         }

@@ -246,7 +246,7 @@ namespace Adf.Web.UI.SmartView
 
         private void CreateFooter()
         {
-            var footer = new SmartViewFooter {Owner = this, Visible = true, PageSizes = PageSizes };
+            var footer = new SmartViewFooter {Owner = this, Visible = true, PageSizes = PageSizes, AllowPaging = AllowPaging};
 
             Controls.Add(footer);
         }
