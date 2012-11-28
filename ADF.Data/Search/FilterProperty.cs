@@ -11,6 +11,7 @@ namespace Adf.Data.Search
         public FilterType Type { get; set; }
         public string DisplayName { get; set; }
         public IColumn Column { get; set; }
+        public CollationType Collation { get; set; }
         public IEnumerable<OperatorType> Operators { get; set; }
         public Func<Dictionary<string, string>> ValueList { get; set; }
 

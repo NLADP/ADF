@@ -181,6 +181,7 @@
     <Compile Include="Panels\PanelItemType.cs" />
     <Compile Include="Panels\PanelManager.cs" />
     <Compile Include="Panels\PanelRow.cs" />
+    <Compile Include="Query\CollationType.cs" />
     <Compile Include="Query\ExpressionType.cs" />
     <Compile Include="Query\IExpression.cs" />
     <Compile Include="Query\IOrderBy.cs" />

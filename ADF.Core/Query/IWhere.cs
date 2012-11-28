@@ -10,5 +10,6 @@ namespace Adf.Core.Query
         PredicateType Predicate { get; set; }
         int OpenBracket { get; set; }
         int CloseBracket { get; set; }
+        CollationType Collation { get; set; }
     }
 }

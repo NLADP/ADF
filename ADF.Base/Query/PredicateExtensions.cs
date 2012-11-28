@@ -66,5 +66,14 @@ namespace Adf.Base.Query
 
             return query;
         }
+
+        public static Q Collate<Q>(this Q query, CollationType collation) where Q : IAdfQuery
+        {
+            IWhere w = query.Wheres.Last();
+
+            w.Collation = collation;
+
+            return query;
+        }
     }
 }

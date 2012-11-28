@@ -26,7 +26,8 @@ namespace Adf.Data.Search
                 {
                     Column = column,
                     Operator = parameter.OperatorType,
-                    Parameter = new Parameter(parameter.Value, parameter.ParameterType)
+                    Parameter = new Parameter(parameter.Value, parameter.ParameterType),
+                    Collation = parameter.Collation
                 };
 
                 query.Wheres.Add(where);
@@ -49,7 +50,8 @@ namespace Adf.Data.Search
                                 {
                                     Column = filterParameter.Property.Column,
                                     Operator = filterParameter.Operator,
-                                    Predicate = Descriptor.Parse<PredicateType>(filterParameter.Predicate.ToString())
+                                    Predicate = Descriptor.Parse<PredicateType>(filterParameter.Predicate.ToString()),
+                                    Collation = filterParameter.Property != null ? filterParameter.Property.Collation : null
                                 };
 
                 // Handle sub queries
