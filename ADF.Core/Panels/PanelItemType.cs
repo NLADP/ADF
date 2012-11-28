@@ -24,5 +24,6 @@
         public static readonly PanelItemType FileUpload = new PanelItemType("upl", "FileUpload");
         public static readonly PanelItemType RadioButtonList = new PanelItemType("rbl", "RadioButtonList");
         public static readonly PanelItemType CheckBoxList = new PanelItemType("cbl", "CheckBoxList");
+        public static readonly PanelItemType SelectButton = new PanelItemType("lb", "SelectButton");
     }
 }

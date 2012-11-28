@@ -10,6 +10,7 @@ namespace Adf.Web.UI.SmartView
     {
         public GridView Owner { get; set; }
         public string PageSizes { get; set; }
+        public bool AllowPaging { get; set; }
 
         private int ItemCount
         {
@@ -33,22 +34,25 @@ namespace Adf.Web.UI.SmartView
             var cellright = new TableCell { Width = Unit.Parse("50%"), HorizontalAlign = HorizontalAlign.Right };
 
             var results = new Literal { Text = string.Format(ResourceManager.GetString("Total results: {0}"), ItemCount) };
-
-            var dropdown = new DropDownList { AutoPostBack = true, ID = "ddlPageSize" };
-
-            foreach (var pageSize in PageSizes.Trim().Split(','))
-            {
-                dropdown.Items.Add(pageSize);
-            }
-            
-            dropdown.SelectedValue = (Owner == null) ? dropdown.Items[0].Value : Owner.PageSize.ToString(CultureInfo.InvariantCulture);
-            dropdown.SelectedIndexChanged += dropdown_SelectedIndexChanged;
-
-            var items = new Literal {Text = ResourceManager.GetString("items per page.")};
-
             cellleft.Controls.Add(results);
-            cellright.Controls.Add(dropdown);
-            cellright.Controls.Add(items);
+
+            if (AllowPaging)
+            {
+                var dropdown = new DropDownList {AutoPostBack = true, ID = "ddlPageSize"};
+
+                foreach (var pageSize in PageSizes.Trim().Split(','))
+                {
+                    dropdown.Items.Add(pageSize);
+                }
+
+                dropdown.SelectedValue = (Owner == null) ? dropdown.Items[0].Value : Owner.PageSize.ToString(CultureInfo.InvariantCulture);
+                dropdown.SelectedIndexChanged += dropdown_SelectedIndexChanged;
+
+                var items = new Literal {Text = ResourceManager.GetString("items per page.")};
+
+                cellright.Controls.Add(dropdown);
+                cellright.Controls.Add(items);
+            }
 
             row.Controls.Add(cellleft);
             row.Controls.Add(cellright);

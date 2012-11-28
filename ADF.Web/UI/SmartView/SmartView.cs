@@ -55,6 +55,9 @@ namespace Adf.Web.UI.SmartView
             set
             {
                 PageIndex = 0;
+
+                // need to set PagerSettings.Visible before CreateChildControls runs
+                PagerSettings.Visible = value != null && (value as IEnumerable).Count() > PageSize;
                 
                 if (Source.IsNullOrEmpty())
                 {
@@ -140,8 +143,6 @@ namespace Adf.Web.UI.SmartView
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-
-            PagerSettings.Visible = DataSource != null && (DataSource as IEnumerable).Count() > PageSize;
 
             if (!Source.IsNullOrEmpty()) DataBind();
         }
@@ -245,7 +246,7 @@ namespace Adf.Web.UI.SmartView
 
         private void CreateFooter()
         {
-            var footer = new SmartViewFooter {Owner = this, Visible = true, PageSizes = PageSizes };
+            var footer = new SmartViewFooter {Owner = this, Visible = true, PageSizes = PageSizes, AllowPaging = AllowPaging};
 
             Controls.Add(footer);
         }

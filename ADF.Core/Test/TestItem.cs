@@ -11,5 +11,10 @@ namespace Adf.Core.Test
         public object Subject { get; set; }
         public TestAction Action { get; set; }
         public IList Parameters { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}", Type, Subject, Action);
+        }
     }
 }

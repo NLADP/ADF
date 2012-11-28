@@ -88,5 +88,17 @@ namespace Adf.Web.UI.SmartView
                 PropertyHelper.SetValue(source[row.DataItemIndex], pi, selected);
             }
         }
+
+        public static List<T> GetSelectedItems<T>(this SmartView grid, string field = null) where T : IDomainObject
+        {
+            if (field.IsNullOrEmpty()) field = "IsSelected";
+
+            var source = ((IEnumerable<T>) grid.DataSource).ToList();
+
+            return (from row in grid.Rows.Cast<GridViewRow>()
+                    where ((CheckBox) row.FindControl(field)).Checked
+                    select source[row.DataItemIndex]
+                   ).ToList();
+        }
     }
 }

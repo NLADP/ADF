@@ -9,6 +9,8 @@ namespace Adf.Web.UI.SmartView
         protected Label label;
         protected Label tooltiplabel;
 
+        public bool Multiline { get; set; }
+
         public TextField()
         {
             FieldStyle = "TextColumn";
@@ -41,11 +43,11 @@ namespace Adf.Web.UI.SmartView
 
             if (HideOnEmpty && text.IsNullOrEmpty()) return;
 
-            label.Text = text.Left(MaxCharacters);
+            label.Text = Multiline ? text.Replace(Environment.NewLine, "<br />") : text.Left(MaxCharacters);
             label.ToolTip = this.Compose(entity, ToolTipField, ToolTipFormat);
             label.Visible = tooltiplabel.Visible = this.IsEnabled(entity, text);
 
-            if (text.Length > MaxCharacters)
+            if (!Multiline && text.Length > MaxCharacters)
             {
                 tooltiplabel.Text = " ...";
                 tooltiplabel.ToolTip = text;

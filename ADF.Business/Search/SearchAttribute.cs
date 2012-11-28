@@ -32,18 +32,21 @@ namespace Adf.Business.Search
 
         public bool IncludeWhenEmpty { get; protected set; }
 
+        public CollationType Collation { get; private set; }
+
         /// <summary>
         /// Sets the method name and column name of this instance with the supplied method name and 
         /// column name.
         /// </summary>
         /// <param name="op">The supplied method name.</param>
         /// <param name="column">The supplied column name.</param>
-        public SearchAttribute(string op, OperatorType operatorType, string column, ParameterType parameterType = null)
+        public SearchAttribute(string op, OperatorType operatorType, string column, ParameterType parameterType = null, CollationType collation = null)
         {
             Operator = op;
             OperatorType = operatorType;
             Column = column;
             ParameterType = parameterType;
+            Collation = collation;
         }
     }
 
