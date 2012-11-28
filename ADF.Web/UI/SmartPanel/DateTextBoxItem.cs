@@ -74,12 +74,12 @@ namespace Adf.Web.UI
             return new DateTextBoxItem(l, box, descriptionLabel);
         }
 
-        public static DateTextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, string format = null, string description = null)
+        public static DateTextBoxItem Create<T>(Expression<Func<T, object>> property, int width = 11, bool enabled = true, string format = null, string description = null)
         {
             return Create(property.GetMemberInfo().Name, property, width, enabled, format, description);
         }
 
-        public static DateTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width, bool enabled = true, string format = null, string description = null)
+        public static DateTextBoxItem Create<T>(string label, Expression<Func<T, object>> property, int width = 11, bool enabled = true, string format = null, string description = null)
         {
             return Create(label, property.GetControlName(), width, enabled, format, description);
         }

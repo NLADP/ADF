@@ -89,9 +89,16 @@ namespace Adf.Base.Panels
         }
 
 
-        public static AdfPanel ShowCalendar<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 10, bool? mandatory = true, bool? editable = true)
+        public static AdfPanel ShowCalendar<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 11, bool? mandatory = true, bool? editable = true)
         {
             panel.CreateItem(PanelItemType.Calendar, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+        public static AdfPanel ShowSelectButton<T>(this AdfPanel panel, Expression<Func<T, object>> property, string label = null, int width = 10, bool mandatory = true, bool editable = true)
+        {
+            panel.CreateItem(PanelItemType.SelectButton, property, label, width, mandatory, editable);
 
             return panel;
         }
@@ -156,7 +163,7 @@ namespace Adf.Base.Panels
         public static P AsCalender<P>(this P panel) where P : AdfPanel
         {
             panel.LastItem().Type = PanelItemType.Calendar;
-            panel.LastItem().Width = 10;
+            panel.LastItem().Width = 11;
 
             return panel;
         }
@@ -268,9 +275,12 @@ namespace Adf.Base.Panels
         {
             panel.AddPanelItem();
 
-            panel.LastItem().Member = expression.GetMemberInfo();
-            panel.LastItem().Optional = !panel.LastItem().Member.IsDefined(typeof(NonEmptyAttribute), false);
-            if (panel.AutoGenerateLabels) panel.LastItem().Label = expression.GetMemberInfo().Name;
+            var panelItem = panel.LastItem();
+            var memberInfo = expression.GetMemberInfo();
+
+            panelItem.Member = memberInfo;
+            panelItem.Optional = !panelItem.Member.IsDefined(typeof(NonEmptyAttribute), false);
+            if (panel.AutoGenerateLabels) panelItem.Label = memberInfo.Name;
 
             var maxlength = panel.LastItem().Member.GetCustomAttributes(typeof(MaxLengthAttribute), false).FirstOrDefault() as MaxLengthAttribute;
             if (maxlength != null) panel.LastItem().MaxLength = maxlength.Length;

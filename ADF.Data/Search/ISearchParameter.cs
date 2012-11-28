@@ -34,6 +34,8 @@ namespace Adf.Data.Search
         /// The value of the instance.
         /// </remarks>
         object Value { get; set; }
+
+        CollationType Collation { get; }
     }
 
     public interface IFilterParameter

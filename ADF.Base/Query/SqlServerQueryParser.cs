@@ -76,6 +76,12 @@ namespace Adf.Base.Query
 
         private string ParseWheres(IList<IWhere> wheres)
         {
+            // 0 = Column
+            // 1 = Operator
+            // 2 = Parameter
+            // 3 = Predicate
+            // 4 = Open brackets
+            // 5 = Closing brackets
             const string _where = "WHERE {0}";
             const string condition = "{3} {4}{0} {1} {2}{5}";
             const string conditionfirst = "{4}{0} {1} {2}{5} ";
@@ -118,6 +124,9 @@ namespace Adf.Base.Query
                 parameter =  (where.Parameter.Type == ParameterType.Column)
                                 ? ((IColumn) where.Parameter.Value).FullName()
                                 : string.Format(CultureInfo.InvariantCulture, "@{0}", where.Parameter.Name);
+
+                if (!where.Collation.IsNullOrEmpty())
+                    parameter += string.Format(CultureInfo.InvariantCulture, " COLLATE {0}", where.Collation);
 
                 if (where.Operator == OperatorType.IsNotEqualOrIsNull)
                 {

@@ -212,7 +212,7 @@ namespace Adf.Web.UI
         {
             // Check if the function has already been registered, 
             // before we're doing more than strictly needed.
-            if (Page.ClientScript.IsClientScriptBlockRegistered(OnKeyPressFunctionName) == false)
+            if (!Page.ClientScript.IsClientScriptBlockRegistered(OnKeyPressFunctionName))
             {
                 StringBuilder jsCode = new StringBuilder();
 

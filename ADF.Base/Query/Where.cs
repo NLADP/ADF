@@ -12,6 +12,8 @@ namespace Adf.Base.Query
         public int OpenBracket { get; set; }
         public int CloseBracket { get; set; }
 
+        public CollationType Collation { get; set; }
+
         public IColumn Column { get; set; }
         public OperatorType Operator  { get { return _operator;  } set { _operator = value;  } }
         public Parameter Parameter  { get; set; }
@@ -20,7 +22,7 @@ namespace Adf.Base.Query
         // note: tostring just for debugging purposes
         public override string ToString()
         {
-            return string.Format("{3} {0} {1} {2}", Column, Operator.Value, Parameter, Predicate);
+            return string.Format("{3} {0} {4} {1} {2}", Column, Operator.Value, Parameter, Predicate, Collation);
         }
     }
 }

@@ -132,6 +132,7 @@
     <Compile Include="Query\OrderBy.cs" />
     <Compile Include="Query\OrderByExtensions.cs" />
     <Compile Include="Query\QueryTypeExtension.cs" />
+    <Compile Include="Query\SqlServerCollationType.cs" />
     <Compile Include="Query\SqlServerQueryParser.cs" />
     <Compile Include="Query\IsNotEqualExtensions.cs" />
     <Compile Include="Query\IsEqualExtensions.cs" />

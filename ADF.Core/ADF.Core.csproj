@@ -137,6 +137,7 @@
     <Compile Include="Encryption\EncryptionManager.cs" />
     <Compile Include="Encryption\EncryptionType.cs" />
     <Compile Include="Encryption\IEncryptionProvider.cs" />
+    <Compile Include="Extensions\BoolExtensions.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DescriptorExtensions.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Panels\PanelItemType.cs" />
     <Compile Include="Panels\PanelManager.cs" />
     <Compile Include="Panels\PanelRow.cs" />
+    <Compile Include="Query\CollationType.cs" />
     <Compile Include="Query\ExpressionType.cs" />
     <Compile Include="Query\IExpression.cs" />
     <Compile Include="Query\IOrderBy.cs" />

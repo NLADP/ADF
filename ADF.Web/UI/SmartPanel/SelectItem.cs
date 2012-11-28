@@ -64,7 +64,7 @@ namespace Adf.Web.UI
         {
             var l = new Label { Text = ResourceManager.GetString(label), ID = "itemLabel_" + name };
 
-            var textControl = new LinkButton { ID = Prefix + name, Width = new Unit(width, UnitType.Ex), CssClass = "SmartPanelSelectItem" };
+            var textControl = new AlwaysEnabledLinkButton { ID = Prefix + name, Width = new Unit(width, UnitType.Ex), CssClass = "SmartPanelSelectItem" };
 
             var textDisabledControl = new Label { ID = "lbl" + name, Width = new Unit(width, UnitType.Ex), CssClass = "SmartPanelSelectItemDisabled" };
 
@@ -94,10 +94,9 @@ namespace Adf.Web.UI
 
         public override bool Enabled
         {
-            get { return TextButton.Visible; }
+            get { return SelectButton.Enabled; }
             set
             {
-                TextButton.Visible = value;
                 SelectButton.Enabled = value;
                 ClearButton.Enabled = value;
             }
