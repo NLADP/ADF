@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Web.UI.WebControls;
 using Adf.Core.Binding;
@@ -45,11 +45,22 @@ namespace Adf.Web.Binding
             var value = pi.GetValue(bindableObject, null);
             if (value is IDomainObject)
             {
-                PropertyHelper.SetValue(bindableObject, pi, IdManager.New(d.SelectedValue));
-            }
-            else if (value is Enum)
-            {
-                PropertyHelper.SetValue(bindableObject, pi, d.SelectedValue);
+                var id = IdManager.New(d.SelectedValue);
+
+                // check if a BindScope is used
+                var items = BindManager.GetListFor(pi);
+
+                if (items != null)
+                {
+                    var item = items.Cast<IDomainObject>().FirstOrDefault(o => o.Id == id);
+
+                    if (item != null)
+                    {
+                        PropertyHelper.SetValue(bindableObject, pi, item);
+                        return;
+                    }
+                }
+                PropertyHelper.SetValue(bindableObject, pi, id);
             }
             else
             {
