@@ -6,18 +6,18 @@ using Adf.Core.Validation;
 namespace Adf.Base.Validation
 {
 	/// <summary>
-	/// Attribute to determine if the value to check has at least the specified minimum length.
+	/// Attribute to determine if the value to check is exact as the specified length.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
-	public sealed class MinLengthAttribute : Attribute, IPropertyValidator
+	public sealed class ExactLengthAttribute : Attribute, IPropertyValidator
 	{
 		private readonly int length;
 
 		/// <summary>
-		/// Creates a new <see cref="MinLengthAttribute"/> instance with the supplied length.
+		/// Creates a new <see cref="ExactLengthAttribute"/> instance with the supplied length.
 		/// </summary>
-        /// <param name="length">The supplied length.</param>
-		public MinLengthAttribute(int length)
+		/// <param name="length">The supplied length.</param>
+        public ExactLengthAttribute(int length)
 		{
 			this.length = length;
 		}
@@ -26,26 +26,23 @@ namespace Adf.Base.Validation
         /// Determines whether the specified value is valid for the supplied property. 
 		/// </summary>
         /// <param name="propertyToValidate">The supplied property.</param>
-        /// <param name="value">The supplied value.</param>
+		/// <param name="value">The supplied value.</param>
 		/// <returns>
         /// 	<c>true</c> if the specified value is valid; otherwise, <c>false</c>.
 		/// </returns>
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
 		{
-            if (value == null) return ValidationResult.Success;
-
-            return !value.ToString().HasMinLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMinLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
+            if (value == null || value.ToString() == string.Empty) return ValidationResult.Success;
+		    
+            return !value.ToString().HasExactLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeExactLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
 		}
 	    
         /// <summary>
-        /// Returns the minimum length.
+        /// Returns the length.
         /// </summary>
 	    public int Length
 	    {
-	        get
-	        {
-	            return length;
-	        }
+	        get{return (int)length;}
 	    }
 	}
 }

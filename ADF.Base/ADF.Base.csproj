@@ -151,6 +151,7 @@
     <Compile Include="Validation\BusinessRuleValidationContext.cs" />
     <Compile Include="Validation\BusinessRuleValidationPolicy.cs" />
     <Compile Include="Validation\ChildValidationPolicy.cs" />
+    <Compile Include="Validation\ExactLengthAttribute.cs" />
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />

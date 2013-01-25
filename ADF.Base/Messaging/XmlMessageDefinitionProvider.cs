@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using Adf.Core.Extensions;
 using Adf.Core.Messaging;
@@ -29,6 +30,17 @@ namespace Adf.Base.Messaging
                                             RecordSeparator = message.GetAttributeOrDefault("recordSeparator", ","),
                                             HasHeader = message.GetAttributeOrDefault<bool>("hasHeader"),
                                         };
+
+            var encoding = message.GetAttributeOrDefault("encoding");
+
+            if(!encoding.IsNullOrEmpty())
+            {
+                try { messageDefinition.Encoding = Encoding.GetEncoding(encoding); }
+                catch(ArgumentException)
+                {
+                    throw new MessagingException(string.Format("Invalid encoding specified: {0}", encoding));
+                }
+            }
 
             foreach (XElement record in message.Elements("record"))
             {

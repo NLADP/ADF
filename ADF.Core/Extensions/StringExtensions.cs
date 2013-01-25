@@ -68,6 +68,21 @@ namespace Adf.Core.Extensions
         }
 
         /// <summary>
+        /// Returns a value indicating whether the length of the specified string is equal to the specified length.
+        /// </summary>
+        /// <param name="value">The string, the length of which is to be checked.</param>
+        /// <param name="length">the length to check against.</param>
+        /// <returns>
+        /// true if length of the string is equal to the specified length;
+        /// otherwise, false.
+        /// </returns>
+        public static bool HasExactLength(this string value, int length)
+        {
+            if (value == null) return false;
+
+            return (value.Length == length);
+        }
+        /// <summary>
         /// Returns a value indicating whether the length of the specified string is greater than or 
         /// equal to the specified length.
         /// </summary>
