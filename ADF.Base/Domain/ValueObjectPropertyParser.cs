@@ -6,13 +6,14 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Validation;
+using Adf.Core.Extensions;
 
 namespace Adf.Base.Domain
 {
     /// <summary>
     /// Represents ValueObject property parsing operations.
     /// </summary>
-    class ValueObjectPropertyParser : IPropertyParser
+    public class ValueObjectPropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -32,8 +33,9 @@ namespace Adf.Base.Domain
             IValueObject parsedValue = null;
 
             var args = new object[] {newvalue.ToString(), culture, parsedValue};
+            var types = new[] { typeof(string), typeof(IFormatProvider), propertyType.MakeByRefType() };
 
-            var isValid = (bool)propertyType.GetMethod("TryParse", BindingFlags.Static | BindingFlags.Public).Invoke(null, args);
+            var isValid = (bool)propertyType.GetMethod("TryParse", types).Invoke(null, args);
 
             parsedValue = args[2] as IValueObject;  // get returned out param from args array
 
@@ -55,14 +57,16 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a new instance of ValueCollection with no ValueItems.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
-            return new List<ValueItem>();
+            return new List<IValueObject>();
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection((object) null, includeEmpty, items);
+            var currentItem = target as IValueObject;
+
+            return (from item in items.Cast<IValueObject>() select ValueItem.New(item.ToString(), item.Value, IsEqual(currentItem, item))).ToList();
         }
 
         /// <summary>

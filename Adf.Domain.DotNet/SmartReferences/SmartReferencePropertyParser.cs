@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
-using Adf.Core.Extensions;
 
 namespace Adf.Business.SmartReferences
 {
@@ -36,25 +35,15 @@ namespace Adf.Business.SmartReferences
         /// Gets the collection of the property info for the specified target object.
         /// </summary>
         /// <param name="target">Object to get collection for.</param>
+        /// <param name="items"></param>
         /// <returns>Returns a collection of instances of the type of the target.</returns>
-        private static List<ValueItem> GetCollection(object target, IEnumerable items = null)
+        private static List<ISmartReference> GetCollection(object target, IEnumerable items = null)
         {
             var value = target as ISmartReference;
 
-            if (value == null) return new List<ValueItem>();
+            if (value == null) return new List<ISmartReference>();
 
-            var list = items == null ? SmartReferenceFactory.GetAll(value.Type) : items.Cast<ISmartReference>();
-            var collection = new List<ValueItem>();
-
-            collection.AddRange(list.Select(smartReference => ValueItem.New(smartReference.ToString(), smartReference.Id, smartReference.Id == value.Id)));
-
-            // if current value is not in list, add it
-            if (!value.IsEmpty && !collection.Any(vi => vi.Selected))
-            {
-                collection.Insert(0, ValueItem.New(string.Format("<{0}>", value), value.Id, true));
-            }
-
-            return collection;
+            return items == null ? SmartReferenceFactory.GetAll(value.Type).ToList() : items.Cast<ISmartReference>().ToList();
         }
 
         /// <summary>
@@ -65,22 +54,37 @@ namespace Adf.Business.SmartReferences
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a collection of instances of the type of the target having an empty ValueItem</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target);
 
             if (includeEmpty)
             {
-                collection.Insert(0, ValueItem.New(string.Empty, IdManager.Empty(), ((ISmartReference)target).IsEmpty));
+                collection.Insert(0, SmartReferenceFactory.Create(((ISmartReference) target).Type)); // ValueItem.New(string.Empty, IdManager.Empty(), ((ISmartReference)target).IsEmpty));
             }
 
             return collection;
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection(targetType.New<ISmartReference>(), includeEmpty, items);
+            var value = target as ISmartReference;
+            if (value == null) throw new ArgumentException("not a ISmartReference", "target");
+
+            var collection = items.Cast<ISmartReference>().Select(smartReference => ValueItem.New(smartReference.ToString(), smartReference.Id, smartReference.Id == value.Id)).ToList();
+
+            // if current value is not in list, add it
+            if (!value.IsEmpty && !collection.Any(vi => vi.Selected))
+            {
+                collection.Insert(0, ValueItem.New(string.Format("<{0}>", value), value.Id, true));
+            }
+            return collection;
         }
+
+//        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+//        {
+//            return GetCollection(targetType.New<ISmartReference>(), includeEmpty, items);
+//        }
 
         /// <summary>
         /// Indicates whether the supplied object is empty or not.

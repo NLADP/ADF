@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Adf.Core.Domain;
 using Adf.Core.Types;
@@ -42,5 +44,13 @@ namespace Adf.Core.Extensions
 
             return ObjectActivator.GetActivator<T>(type, argType)(args);
         }
+
+        public static MethodInfo FindMethod(this Type type, string method, params object[] p)
+        {
+            Type[] types = p.Select(param => param == null ? typeof(object) : param.GetType()).ToArray();
+
+            return type.GetMethod(method, types);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Adf.Base.Validation;
 using Adf.Core.Tasks;
 using Adf.Core.Validation;
 
@@ -10,7 +11,11 @@ namespace Adf.Base.Tasks
         {
             foreach (var action in actions)
             {
-                action.Invoke();
+                try
+                {
+                    action.Invoke();
+                }
+                catch (ValidationException) {}
 
                 if (ValidationManager.IsSucceeded) continue;
                 

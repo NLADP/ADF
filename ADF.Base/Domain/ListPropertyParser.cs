@@ -19,7 +19,7 @@ namespace Adf.Base.Domain
             throw new NotImplementedException();
         }
 
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var list = target as IList;
             if (list == null) throw new InvalidOperationException("Not an IList");
@@ -28,19 +28,26 @@ namespace Adf.Base.Domain
 
             if (argTypes.Length != 1) throw new InvalidOperationException("Please use a IList<T>");
 
-            var valueList = PropertyHelper.GetCollectionWithDefault(argTypes[0], includeEmpty, items);
+            var valueList = PropertyHelper.GetCollection(argTypes[0], null, includeEmpty, items);
 
-            foreach (var valueItem in valueList)
-            {
-                valueItem.Selected = list.Cast<object>().Any(o => o.ToString() == valueItem.Value.ToString());
-            }
+            
             return valueList;
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
+//            PropertyHelper.GetValueItems()
+//            foreach (var valueItem in items)
+//            {
+//                valueItem.Selected = list.Cast<object>().Any(o => o.ToString() == valueItem.Value.ToString());
+//            }
             throw new NotImplementedException();
         }
+
+//        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+//        {
+//            throw new NotImplementedException();
+//        }
 
         public bool IsEmpty(object value)
         {

@@ -10,6 +10,7 @@
         public static readonly LogLevel Informational = new LogLevel("Informational", 20);
         public static readonly LogLevel Warning = new LogLevel("Warning", 30);
         public static readonly LogLevel Error = new LogLevel("Error", 40);
+        public static readonly LogLevel Debug = new LogLevel("Debug", 40);
 
         public LogLevel(string name, int order) : base(name, order: order)
         {

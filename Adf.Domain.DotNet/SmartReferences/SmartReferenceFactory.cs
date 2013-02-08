@@ -38,7 +38,7 @@ namespace Adf.Business.SmartReferences
             return Key(typeof(T));
         }
 
-        private static ISmartReference Create(Type type)
+        public static ISmartReference Create(Type type)
         {
             var genericType = typeof (SmartReference<>).MakeGenericType(new[] {type});
 

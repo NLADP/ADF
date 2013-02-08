@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+
 namespace Adf.Core.Domain
 {
     /// <summary>
@@ -76,6 +79,45 @@ namespace Adf.Core.Domain
         public override string ToString()
         {
             return Text;
+        }
+
+        public static bool operator ==(ValueItem x, ValueItem y)
+        {
+            // If both are null, or both are same instance, return true.
+            if (ReferenceEquals(x, y))
+                return true;
+
+            // If one is null, but not both, return false.
+            if (((object)x == null) || ((object)y == null))
+                return false;
+
+            if (x.GetType() != y.GetType()) return false;
+
+            if (x.Value == null || y.Value == null) return false;
+            if (x.Value.GetType() != y.Value.GetType()) return false;
+
+            return x.Value.Equals(y.Value);
+        }
+
+        public static bool operator !=(ValueItem x, ValueItem y)
+        {
+            return !(x == y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+
+            var other = obj as ValueItem;
+
+            if (other == null) return false;
+
+            return this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
     }
 }

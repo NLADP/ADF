@@ -6,6 +6,7 @@ using Adf.Core.Binding;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.UI;
 
 namespace Adf.Web.Binding
@@ -16,7 +17,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class TreeViewPersister : IControlPersister
     {
-        readonly string[] types = { PanelItemType.TreeView.Prefix };
+        readonly string[] types = { RenderItemType.TreeView.Prefix };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.DropDownList"/> id prefixes 

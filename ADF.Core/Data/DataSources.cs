@@ -6,7 +6,7 @@ namespace Adf.Core.Data
     /// Represents the configured connection to a database or other source of data.
     /// Provides the initialization of connection.
     /// </summary>
-//    [Serializable]
+    [Serializable]
     public class DataSources : Descriptor
     {
 

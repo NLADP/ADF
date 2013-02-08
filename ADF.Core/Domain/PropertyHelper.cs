@@ -80,18 +80,25 @@ namespace Adf.Core.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The collection.</returns>
-        public static ICollection<ValueItem> GetCollectionWithDefault(object value, bool includeEmpty, IEnumerable items = null)
+        public static ICollection GetCollection(object value, bool includeEmpty, IEnumerable items = null)
         {
             var parser = GetParser(value.GetType());
 
             return parser.GetCollection(value, includeEmpty, items);
         }
 
-        public static ICollection<ValueItem> GetCollectionWithDefault(Type type, object value, bool includeEmpty, IEnumerable items = null)
+        public static ICollection GetCollection(Type type, object value, bool includeEmpty, IEnumerable items = null)
         {
             var parser = GetParser(type);
 
             return parser.GetCollection(value, includeEmpty, items);
+        }
+
+        public static ICollection<ValueItem> GetValueItems(object target, ICollection items, Type type = null)
+        {
+            var parser = GetParser(type ?? target.GetType());
+
+            return parser.GetValueItems(target, items);
         }
 
         /// <summary>

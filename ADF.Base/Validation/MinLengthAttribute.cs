@@ -34,7 +34,9 @@ namespace Adf.Base.Validation
 		{
             if (value == null) return ValidationResult.Success;
 
-            return value.ToString().HasMinLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMinLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
+		    return (value.ToString().HasMinLength(length))
+                ? ValidationResult.Success
+		        : ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMinLengthInvalid", propertyToValidate.Name, length);
 		}
 	    
         /// <summary>

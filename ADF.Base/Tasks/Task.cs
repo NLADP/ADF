@@ -111,23 +111,7 @@ namespace Adf.Base.Tasks
         /// <param name="p">The array of tasks, which will be executed.</param>
         public void Run(params object[] p)
         {
-            TaskResult returns = ValidatePreconditions(p);
-
-            if (returns == TaskResult.ValidateTrue)
-            {
-                Type[] types = p.Select(param => param == null ? typeof(object) : param.GetType()).ToArray();
-                MethodInfo method = GetType().GetMethod("Init", types);
-
-                if (method == null && GetType().GetMethods().Any(m => m.Name == "Init"))
-                    throw new InvalidOperationException(string.Format("Could not find any matching Init method on {0} with parameter types {1}",
-                                                                      GetType().Name,
-                                                                      string.Join(",", types.Select(t => t.Name))));
-
-                using (new TracingScope("Start " + GetType().Name))
-                {
-                    if (method == null) { Start(p); } else { method.Invoke(this, p); }
-                }
-            }
+            // Now handled
         }
 
         /// <summary>
@@ -203,6 +187,15 @@ namespace Adf.Base.Tasks
             this.DeactivateView();
 
             TaskManager.Return(this, returntype, p);
+        }
+
+        #endregion
+
+        #region Default event handling
+
+        public virtual void HandleBackEvent()
+        {
+            Cancel();
         }
 
         #endregion

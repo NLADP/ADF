@@ -28,5 +28,10 @@ namespace Adf.Web
                 StateManager.Personal[Key] = validationResults;
             }
         }
+
+        public static ValidationResultCollection GetValidationResults()
+        {
+            return StateManager.Personal[Key] as ValidationResultCollection;
+        }
     }
 }

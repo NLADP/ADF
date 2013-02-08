@@ -52,7 +52,7 @@ namespace Adf.Web.Binding
             
             var includeEmpty = !pi.IsNonEmpty();
 
-            foreach (var item in PropertyHelper.GetCollectionWithDefault(pi.PropertyType, value, includeEmpty))
+            foreach (var item in PropertyHelper.GetValueItems(value, PropertyHelper.GetCollection(pi.PropertyType, value, includeEmpty), pi.PropertyType))
             {
                 var listitem = new ListItem(item.Text, item.Value.ToString()) {Selected = item.Selected};
 

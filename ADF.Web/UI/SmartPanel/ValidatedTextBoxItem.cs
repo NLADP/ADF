@@ -39,9 +39,9 @@ namespace Adf.Web.UI
         /// <param name="mandatory">Add an asterix with item label if <see cref="Adf.Web.UI.TextBoxItem"/> is mandatory; else none.</param>
         /// <param name="height">Height (0 = singleline</param>
         /// <returns>A new instance of the <see cref="Adf.Web.UI.ValidatedTextBoxItem"/> class.</returns>
-        public static ValidatedTextBoxItem Create(string label, string name, int width, bool enabled, bool mandatory, int height = 0, string infoText = null)
+        public static ValidatedTextBoxItem Create(string label, string name, int width, bool enabled, bool mandatory, int height = 0, string infoText = null, TextBoxMode textBoxMode = TextBoxMode.SingleLine)
         {
-            return new ValidatedTextBoxItem(TextBoxItem.Create(label, name, width, enabled, height, infoText: infoText), name, mandatory);
+            return new ValidatedTextBoxItem(TextBoxItem.Create(label, name, width, enabled, height, infoText: infoText, textBoxMode: textBoxMode), name, mandatory);
         }
 
         public static ValidatedTextBoxItem Create<T>(Expression<Func<T, object>> property, int width, bool enabled = true, bool mandatory = true, int height = 0, string infoText = null)

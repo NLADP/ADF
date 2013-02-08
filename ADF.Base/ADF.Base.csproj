@@ -14,6 +14,10 @@
     <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +57,7 @@
     <Compile Include="Data\DomainCompositeState.cs" />
     <Compile Include="Data\InternalStateExtensions.cs" />
     <Compile Include="Data\InvalidColumnException.cs" />
+    <Compile Include="Data\ObjectState.cs" />
     <Compile Include="Data\QueryExtensions.cs" />
     <Compile Include="Domain\CompositionAttribute.cs" />
     <Compile Include="Domain\DefaultPropertyParser.cs" />
@@ -68,12 +73,15 @@
     <Compile Include="Domain\ListPropertyParser.cs" />
     <Compile Include="Domain\ListSorter.cs" />
     <Compile Include="Domain\Money.cs" />
+    <Compile Include="Domain\ObjectDtoMappingProvider.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
     <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Extensions\ValueObjectExtensions.cs" />
     <Compile Include="Formatting\FormatHelper.cs" />
     <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Grids\GridControlExtensions.cs" />
+    <Compile Include="Grids\GridItemExtensions.cs" />
     <Compile Include="Identity\GuidProvider.cs" />
     <Compile Include="Identity\IntIdProvider.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
@@ -81,8 +89,10 @@
     <Compile Include="Messaging\MessagingException.cs" />
     <Compile Include="Messaging\MessagingExtensions.cs" />
     <Compile Include="Objects\CompiledLambdaObjectProvider.cs" />
+    <Compile Include="Objects\NullObjectProvider.cs" />
     <Compile Include="Panels\PanelExtensions.cs" />
     <Compile Include="Panels\PanelItemExtensions.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\AdfQuery.cs" />
     <Compile Include="Query\Expression.cs" />
@@ -109,11 +119,15 @@
     <Compile Include="Resources\StateResourceProvider.cs" />
     <Compile Include="State\NullStateProvider.cs" />
     <Compile Include="State\SimpleStateProvider.cs" />
+    <Compile Include="State\ThreadStateProvider.cs" />
+    <Compile Include="Tasks\ISearchableTask.cs" />
     <Compile Include="Tasks\Task.cs" />
     <Compile Include="Tasks\TaskExecutionExtensions.cs" />
     <Compile Include="Tasks\TaskNotFoundException.cs" />
     <Compile Include="Tasks\TaskProvider.cs" />
     <Compile Include="Tasks\TaskViewExtensions.cs" />
+    <Compile Include="Types\DomainObjectTypeConverter.cs" />
+    <Compile Include="Types\InternalStateTypeConverter.cs" />
     <Compile Include="Types\EnumTypeConverter.cs" />
     <Compile Include="Types\ValueObjectTypeConverter.cs" />
     <Compile Include="Validation\AttributeValidationPolicy.cs" />
@@ -130,13 +144,14 @@
     <Compile Include="Validation\NotInPastAttribute.cs" />
     <Compile Include="Validation\PropertyInfoExtensions.cs" />
     <Compile Include="Validation\RegexAttribute.cs" />
+    <Compile Include="Validation\ValidationException.cs" />
     <Compile Include="Validation\ValidationResultExtensions.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+    <ProjectReference Include="..\ADF.Core\Adf.Core.csproj">
       <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
-      <Name>ADF.Core</Name>
+      <Name>Adf.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

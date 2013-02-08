@@ -14,6 +14,10 @@
     <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,13 +60,13 @@
     <Compile Include="ValueObject\ValueObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
+    <ProjectReference Include="..\ADF.Base\Adf.Base.csproj">
       <Project>{e7f721b6-7250-4254-927a-a4f1ad3e6dfe}</Project>
-      <Name>ADF.Base</Name>
+      <Name>Adf.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
+    <ProjectReference Include="..\ADF.Core\Adf.Core.csproj">
       <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
-      <Name>ADF.Core</Name>
+      <Name>Adf.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

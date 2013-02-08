@@ -105,9 +105,9 @@ namespace Adf.Objects.Unity
             return unityContainer.ResolveAll<T>();
         }
 
-        public void Register<TInterface, TImplementation>(string instanceName = null)
+        public void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface
         {
-            throw new NotImplementedException();
+            unityContainer.RegisterType<TInterface, TImplementation>(instanceName, new InjectionConstructor());
         }
 
         #region Implementation of IDisposable

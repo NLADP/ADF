@@ -8,7 +8,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Adf.Base")]
-[assembly: AssemblyDescription("Core assembly of the Accelerated Delivery Framework")]
+[assembly: AssemblyDescription("Base assembly of the Accelerated Delivery Framework")]
 [assembly: AssemblyConfiguration("")]
 
 [assembly: AssemblyCompany(Framework.Company)]

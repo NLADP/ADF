@@ -3,16 +3,17 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.Styling;
 using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
-    public class CheckBoxListRenderer : BaseRenderer, IPanelItemRenderer
+    public class CheckBoxListRenderer : BaseRenderer, IItemRenderer
     {
-        public bool CanRender(PanelItemType type)
+        public bool CanRender(RenderItemType type)
         {
-            return type.IsIn(PanelItemType.CheckBoxList);
+            return type.IsIn(RenderItemType.CheckBoxList);
         }
 
         public IEnumerable<object> Render(PanelItem panelItem)

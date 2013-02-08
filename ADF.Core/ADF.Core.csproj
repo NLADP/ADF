@@ -14,6 +14,10 @@
     <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,11 +72,13 @@
     <Compile Include="Data\TableGateway.cs" />
     <Compile Include="DescriptionAttribute.cs" />
     <Compile Include="Descriptor.cs" />
+    <Compile Include="Domain\DomainMapper.cs" />
     <Compile Include="Domain\IDomainCollection.cs" />
     <Compile Include="Domain\IDomainHierarchy.cs" />
     <Compile Include="Domain\IDomainObject.cs" />
     <Compile Include="Domain\IImageProvider.cs" />
     <Compile Include="Domain\InternalStatus.cs" />
+    <Compile Include="Domain\IObjectMappingProvider.cs" />
     <Compile Include="Domain\IPropertyParser.cs" />
     <Compile Include="Domain\ISmartReference.cs" />
     <Compile Include="Domain\IValueObject.cs" />
@@ -97,6 +103,12 @@
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="FrameworkVersion.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Grids\GridControl.cs" />
+    <Compile Include="Grids\GridItem.cs" />
+    <Compile Include="Grids\GridItemType.cs" />
+    <Compile Include="Grids\GridManager.cs" />
+    <Compile Include="Grids\IGridItemRenderer.cs" />
+    <Compile Include="Grids\IGridRenderer.cs" />
     <Compile Include="Identity\ID.cs" />
     <Compile Include="Identity\IdManager.cs" />
     <Compile Include="Identity\IIdProvider.cs" />
@@ -118,15 +130,13 @@
     <Compile Include="Messaging\RecordDefinition.cs" />
     <Compile Include="Objects\IObjectProvider.cs" />
     <Compile Include="Objects\ObjectFactory.cs" />
+    <Compile Include="Objects\ObjectLifeTime.cs" />
     <Compile Include="Objects\ObjectManager.cs" />
+    <Compile Include="Objects\ObjectProviderExtensions.cs" />
     <Compile Include="Objects\ObjectScope.cs" />
-    <Compile Include="Panels\AdfPanel.cs" />
-    <Compile Include="Panels\IPanelItemRenderer.cs" />
-    <Compile Include="Panels\IPanelRenderer.cs" />
+    <Compile Include="Panels\PanelObject.cs" />
     <Compile Include="Panels\PanelItem.cs" />
     <Compile Include="Panels\PanelItemExtensions.cs" />
-    <Compile Include="Panels\PanelItemType.cs" />
-    <Compile Include="Panels\PanelManager.cs" />
     <Compile Include="Panels\PanelRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\ExpressionType.cs" />
@@ -144,6 +154,11 @@
     <Compile Include="Query\PredicateType.cs" />
     <Compile Include="Query\QueryManager.cs" />
     <Compile Include="Query\QueryType.cs" />
+    <Compile Include="Rendering\IItemRenderer.cs" />
+    <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\RenderItemType.cs" />
+    <Compile Include="Rendering\RenderManager.cs" />
+    <Compile Include="Rendering\RenderType.cs" />
     <Compile Include="Resources\IResourceProvider.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="SerializableAttribute.cs" />
@@ -155,6 +170,8 @@
     <Compile Include="Tasks\ApplicationTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\ITaskProvider.cs" />
+    <Compile Include="Tasks\TaskEvent.cs" />
+    <Compile Include="Tasks\TaskExtensions.cs" />
     <Compile Include="Tasks\TaskManager.cs" />
     <Compile Include="Tasks\TaskResult.cs" />
     <Compile Include="Test\ITestProvider.cs" />
@@ -183,6 +200,7 @@
     <Compile Include="Views\IViewProvider.cs" />
     <Compile Include="Views\ViewManager.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,6 +6,7 @@ using Adf.Base.Formatting;
 using Adf.Core.Binding;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.UI;
 
 namespace Adf.Web.Binding
@@ -17,7 +18,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class LabelBinder : IControlBinder
     {
-        private readonly string[] types = { PanelItemType.Label.Prefix };
+        private readonly string[] types = { RenderItemType.Label.Prefix };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.Label"/> id prefixes that 

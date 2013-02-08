@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Adf.Core.Authorization;
 using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
+using Adf.Core.Query;
 using Adf.Core.State;
 using Adf.Core.Tasks;
 
@@ -18,30 +18,24 @@ namespace Adf.Base.Tasks
     /// </summary>
     public class TaskProvider : ITaskProvider
     {
-        private ITask main;
-        private readonly Dictionary<string, Type> _alltasks = new Dictionary<string, Type>();
+        private ITask _main;
+        private Dictionary<string, Type> _alltasks;
  
         private ITask Get(ApplicationTask name, ITask origin)
         {
             var taskname = string.Format("{0}Task", name);
-            var type = _alltasks[taskname];
+            var type = AllTasks[taskname];
 
             object[] parms = { name, origin ?? Main };
 
             return type.New<ITask>(parms);
         }
 
-        /// <summary>
-        /// Gets the object builder for task handling of <see cref="System.Collections.Hashtable"/>.
-        /// </summary>
-        /// <returns>The expected object builder.</returns>
-        private static Dictionary<Guid, ITask> tasks
+        private static Dictionary<Guid, ITask> Tasks
         {
-            get
-            {
-                return StateManager.Personal.GetOrCreate<Dictionary<Guid, ITask>>("TaskProvider.Tasks");
-            }
+            get { return StateManager.Personal.GetOrCreate<Dictionary<Guid, ITask>>("TaskProvider.Tasks"); }
         }
+
         /// <summary>
         /// Gets the object builder for <see cref="ITask"/> to activate the service for task handling.
         /// </summary>
@@ -50,20 +44,30 @@ namespace Adf.Base.Tasks
         {
             get
             {
-                if (main == null)
+                if (_main == null)
                 {
-                    main = ObjectFactory.BuildUp<ITask>();
+                    _main = ObjectFactory.BuildUp<ITask>();
+                    Tasks[_main.Id] = _main;
+                }
+                return _main;
+            }
+        }
 
+        private Dictionary<string, Type> AllTasks
+        {
+            get
+            {
+                if (_alltasks == null)
+                {
+                    _alltasks = new Dictionary<string, Type>();
                     var tasktype = typeof (ITask);
 
-                    foreach (var type in main.GetType().Assembly.GetTypes().Where(t => tasktype.IsAssignableFrom(t)))
+                    foreach (var type in Main.GetType().Assembly.GetTypes().Where(tasktype.IsAssignableFrom).Where(type => !_alltasks.ContainsKey(type.Name)))
                     {
-                        if (!_alltasks.ContainsKey(type.Name))
-                            _alltasks.Add(type.Name, type);
+                        _alltasks.Add(type.Name, type);
                     }
                 }
-                tasks[main.Id] = main;      // always set the main task in task list, tasks are stored in session
-                return main;
+                return _alltasks;
             }
         }
 
@@ -84,11 +88,23 @@ namespace Adf.Base.Tasks
             var task = Get(name, origin);
             if (task == null) return;
 
-            tasks[task.Id] = task;
+            Tasks[task.Id] = task;
 
-            Debug.WriteLine("Starting task: " + task.Name);
+            LogManager.Log(LogLevel.Debug, "Starting task: " + task.Name);
 
-            task.Run(p);
+            if (task.ValidatePreconditions(p) != TaskResult.ValidateTrue) return;
+
+            MethodInfo method = task.FindMethod("Init", p);
+
+            if (method == null && task.GetType().GetMethods().Any(m => m.Name == "Init"))
+                throw new InvalidOperationException(string.Format("Could not find any matching Init method on {0} with parameters {1}",
+                                                                  task.GetType().Name,
+                                                                  string.Join(",", p.Select(t => t.GetType()))));
+
+            using (new TracingScope("Start " + task.GetType().Name))
+            {
+                if (method == null) { task.Start(p); } else { method.Invoke(task, p); }
+            }
         }
 
         /// <summary>
@@ -104,35 +120,30 @@ namespace Adf.Base.Tasks
             // This only occurs when a task is started with Task.Empty as origin, that is, the starting task
             if (finishedtask.Origin == Task.Empty) finishedtask.Continue(finishedtask.Name, returns, p);
 
-            tasks.Remove(finishedtask.Id);
+            Tasks.Remove(finishedtask.Id);
 
-            MethodInfo continuedirectmethod = finishedtask.Origin.GetType().GetMethod(string.Format("Continue{0}From{1}", returns.Name, finishedtask.Name), p.Select(param => param == null ? typeof(object) : param.GetType()).ToArray());
+            MethodInfo method = finishedtask.Origin.FindMethod(string.Format("Continue{0}From{1}", returns.Name, finishedtask.Name), p);
 
-            if (continuedirectmethod == null)
+            if (method == null)
             {
                 finishedtask.Origin.Continue(finishedtask.Name, returns, p);
             }
             else
             {
-                continuedirectmethod.Invoke(finishedtask.Origin, p);
+                method.Invoke(finishedtask.Origin, p);
             }
 
         }
 
-        /// <summary>
-        /// Find a task by a specified identifier from the <see cref="System.Collections.Hashtable"/> of tasks.
-        /// </summary>
-        /// <param name="id">The identifier of the task.</param>
-        /// <returns>The task description if task founde in <see cref="System.Collections.Hashtable"/> of tasks; otherwise, an empty task.</returns>
         public ITask FindTaskById(Guid id)
         {
             ITask task;
 
-            if (!tasks.TryGetValue(id, out task))
+            if (!Tasks.TryGetValue(id, out task))
             {
-                if (id == Guid.Empty || tasks.Count == 0)
+                if (id == Guid.Empty || Tasks.Count == 0)
                 {
-                    main = null;
+                    _main = null;
                     Home();
                 }
                 throw new TaskNotFoundException();
@@ -143,7 +154,7 @@ namespace Adf.Base.Tasks
 
         public void Home(params object[] p)
         {
-            Main.Run(p);
+            Run(Main, ApplicationTask.Main, p);
         }
     }
 }

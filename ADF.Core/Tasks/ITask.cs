@@ -29,12 +29,6 @@ namespace Adf.Core.Tasks
         bool IsEmpty { get; }
 
         /// <summary>
-        /// Provide a method to run or execute one or more tasks.
-        /// </summary>
-        /// <param name="p">The array of tasks, which will be executed.</param>
-        void Run(params object[] p);
-
-        /// <summary>
         /// Provide method to validate the coditions of tasks.
         /// </summary>
         /// <param name="p">The array of tasks, which will be executed.</param>

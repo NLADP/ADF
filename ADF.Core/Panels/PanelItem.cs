@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Adf.Core.Rendering;
 
 namespace Adf.Core.Panels
 {
@@ -8,7 +9,7 @@ namespace Adf.Core.Panels
         private readonly List<PanelItem> attacheditems = new List<PanelItem>();
 
         public PanelRow Row { get; set; }
-        public PanelItemType Type { get; set; }
+        public RenderItemType Type { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int MaxLength { get; set; }
@@ -35,7 +36,7 @@ namespace Adf.Core.Panels
         public PanelItem(PanelRow row)
         {
             Row = row;
-            Type = PanelItemType.EditableText;
+            Type = RenderItemType.EditableText;
             Width = Row.Panel.DefaultWidth;
             Height = 0;
             MaxLength = 0;

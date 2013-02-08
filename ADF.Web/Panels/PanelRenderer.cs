@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using Adf.Core.Extensions;
 using Adf.Core.Objects;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Core.Resources;
 using Adf.Web.Styling;
 using Adf.Web.UI;
@@ -12,17 +13,17 @@ using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
-    public class PanelRenderer : BaseRenderer, IPanelRenderer
+    public class PanelRenderer : BaseRenderer, IRenderer
     {
-        private static IEnumerable<IPanelItemRenderer> _renderers;
+        private static IEnumerable<IItemRenderer> _renderers;
         private static readonly object _lock = new object();
 
-        private static IEnumerable<IPanelItemRenderer> Renderers
+        private static IEnumerable<IItemRenderer> Renderers
         {
-            get { lock (_lock) return _renderers ?? (_renderers = ObjectFactory.BuildAll<IPanelItemRenderer>().ToList()); }
+            get { lock (_lock) return _renderers ?? (_renderers = ObjectFactory.BuildAll<IItemRenderer>().ToList()); }
         }
 
-        public object Render(AdfPanel panel)
+        public object Render(PanelObject panel)
         {
             short index = 0;
             var table = new Table { CssClass = PanelStyle};

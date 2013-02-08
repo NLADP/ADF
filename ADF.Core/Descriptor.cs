@@ -24,7 +24,7 @@ namespace Adf.Core
         }
 
         [Exclude]
-        private static readonly Dictionary<Type, IEnumerable<Descriptor>> values = new Dictionary<Type, IEnumerable<Descriptor>>();
+        private static readonly Dictionary<Type, IEnumerable<Descriptor>> Values = new Dictionary<Type, IEnumerable<Descriptor>>();
 
         private readonly string _name;
 
@@ -149,11 +149,11 @@ namespace Adf.Core
         {
             if (type == null) throw new ArgumentNullException("type");
 
-            if (values.ContainsKey(type)) return values[type];
+            if (Values.ContainsKey(type)) return Values[type];
 
             Type descriptorType = typeof(Descriptor);
 
-            return (values[type] =
+            return (Values[type] =
                     (from fi in type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
                      where !fi.IsExcluded() && descriptorType.IsAssignableFrom(fi.FieldType)
                      select (Descriptor)fi.GetValue(type)));

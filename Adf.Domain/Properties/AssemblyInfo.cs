@@ -6,8 +6,8 @@ using Adf.Core;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Adf.Business")]
-[assembly: AssemblyDescription("Business assembly of the Accelerated Delivery Framework")]
+[assembly: AssemblyTitle("Adf.Domain")]
+[assembly: AssemblyDescription("Domain assembly of the Accelerated Delivery Framework")]
 [assembly: AssemblyConfiguration("")]
 
 [assembly: AssemblyCompany(Framework.Company)]

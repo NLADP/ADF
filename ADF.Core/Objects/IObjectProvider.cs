@@ -30,12 +30,12 @@ namespace Adf.Core.Objects
         /// from the default configuration source.
         /// </summary>
         /// <param name="serviceType">The type to build.</param>
-        /// <param name="inherited">Also search subtypes.</param>
+        /// <param name="inherited"> </param>
         /// <returns>A list of instance of <paramref name="serviceType"/> or any of it subtypes.</returns>
         IEnumerable<object> BuildAll(Type serviceType, bool inherited);
 
         IEnumerable<T> BuildAll<T>();
 
-        void Register<TInterface, TImplementation>(string instanceName = null);
+        void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface;
     }
 }

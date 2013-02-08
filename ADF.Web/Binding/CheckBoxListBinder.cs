@@ -58,11 +58,11 @@ namespace Adf.Web.Binding
 
             if (value == null)
             {
-                list = PropertyHelper.GetCollectionWithDefault(pi.PropertyType, false, items);
+                list = PropertyHelper.GetValueItems(null, PropertyHelper.GetCollection(pi.PropertyType, false, items), pi.PropertyType);
             }
             else
             {
-                list = PropertyHelper.GetCollectionWithDefault(value, false, items);
+                list = PropertyHelper.GetValueItems(value, PropertyHelper.GetCollection(value, false, items));
             }
 
             foreach (ValueItem item in list)

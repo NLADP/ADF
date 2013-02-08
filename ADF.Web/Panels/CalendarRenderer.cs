@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.Styling;
 using Adf.Web.UI;
 using Adf.Web.UI.Extensions;
@@ -10,11 +11,11 @@ using AjaxControlToolkit;
 
 namespace Adf.Web.Panels
 {
-    public class CalendarRenderer : BaseRenderer, IPanelItemRenderer
+    public class CalendarRenderer : BaseRenderer, IItemRenderer
     {
-        public bool CanRender(PanelItemType type)
+        public bool CanRender(RenderItemType type)
         {
-            return type.IsIn(PanelItemType.Calendar);
+            return type.IsIn(RenderItemType.Calendar);
         }
 
         public IEnumerable<object> Render(PanelItem panelItem)

@@ -12,7 +12,7 @@ namespace Adf.Base.Domain
     /// <summary>    
     /// This class represents parsing operations for properties of DomainObjects.
     /// </summary>
-    class DomainObjectPropertyParser : IPropertyParser
+    public class DomainObjectPropertyParser : IPropertyParser
     {
       
         #region IPropertyParser Members
@@ -46,26 +46,14 @@ namespace Adf.Base.Domain
         /// <param name="items">The list of items to use, or null to get the list from the domainobject.</param>
         /// <returns>Collection of values for type of property, using the value on the target object 
         /// for this property as default value.</returns>
-        protected virtual List<ValueItem> GetCollection(object target, IEnumerable items = null)
+        protected virtual List<IDomainObject> GetCollection(object target, IEnumerable items = null)
         {
-            var collection = new List<ValueItem>();
-
             var domainobject = target as IDomainObject;
-            if (domainobject == null) return collection;
+            if (domainobject == null) return new List<IDomainObject>();
 
-            var list = items ?? domainobject.GetAll();
-            if (list == null) return collection;
+            if(items == null) return new List<IDomainObject>();
 
-            collection.AddRange(from IDomainObject o in list
-                                select ValueItem.New(o.ToString(), o.Id, o.Equals(domainobject)));
-
-            // if current value is not in list, add it
-            if (!domainobject.IsEmpty && !collection.Any(vi => vi.Selected))
-            {
-                collection.Insert(0, ValueItem.New(string.Format("<{0}>", domainobject), domainobject.Id, true));
-            }
-
-            return collection;
+            return items.Cast<IDomainObject>().ToList();
         }
 
         /// <summary>
@@ -76,7 +64,7 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>Returns a ValueCollection of instances of the type of the target having an empty ValueItem.</returns>
-        public virtual ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public virtual ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
             var collection = GetCollection(target, items);
 
@@ -85,17 +73,26 @@ namespace Adf.Base.Domain
                 var domainobject = target as IDomainObject;
                 if (domainobject == null) return collection;
 
-                var empty = domainobject.Empty();                
+                var empty = domainobject.Empty();
 
-                collection.Insert(0, ValueItem.New(empty.ToString(), empty.Id, empty.Equals(target)));
+                collection.Insert(0, empty);
             }
 
             return collection;
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection(DomainObjectExtensions.Empty(targetType), includeEmpty, items);
+            var domainobject = target as IDomainObject;
+
+            var collection = (from o in items.Cast<IDomainObject>() select ValueItem.New(o.ToString(), o.Id, o.Equals(domainobject))).ToList();
+
+            // if current value is not in list, add it
+            if (!domainobject.IsEmpty && !collection.Any(vi => vi.Selected))
+            {
+                collection.Insert(0, ValueItem.New(string.Format("<{0}>", domainobject), domainobject.Id, true));
+            }
+            return collection;
         }
 
         /// <summary>

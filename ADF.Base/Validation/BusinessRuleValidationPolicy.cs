@@ -8,7 +8,7 @@ namespace Adf.Base.Validation
     /// Represents BusinessRuleValidationPolicy. This class does some sort of validations on a 
     /// validatable object.
     /// </summary>
-    class BusinessRuleValidationPolicy : IValidationPolicy
+    public class BusinessRuleValidationPolicy : IValidationPolicy
     {
         #region IValidationPolicy Members
 

@@ -12,7 +12,7 @@ namespace Adf.Base.Domain
     /// <summary>
     /// This class represents parsing operations for properties of type Descriptor.
     /// </summary>
-    class DescriptorPropertyParser : IPropertyParser
+    public class DescriptorPropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -39,27 +39,17 @@ namespace Adf.Base.Domain
         /// <param name="items"></param>
         /// <returns>Collection of values for type of property, using the value on the target object 
         /// for this property as default value.</returns>
-        private static IEnumerable<ValueItem> GetCollection(object target, IEnumerable items = null)
+        private static List<Descriptor> GetCollection(object target, IEnumerable items = null)
         {
             var item = target as Descriptor;
             if (item == null)
             {
-                return new List<ValueItem>();
+                return new List<Descriptor>();
             }
 
             var list = items == null ?  Descriptor.GetValues(target.GetType()) : items.Cast<Descriptor>();
 
-            var collection = new List<ValueItem>();
-
-            collection.AddRange(list.Select(d => ValueItem.New(d.Name, d.Name, d == item)));
-
-            // if current value is not in list, add it
-            if (!item.IsEmpty && !collection.Any(vi => vi.Selected))
-            {
-                collection.Insert(0, ValueItem.New(string.Format("<{0}>", item.Name), item.Name, true));
-            }
-
-            return collection;
+            return list.ToList();
         }
 
         /// <summary>
@@ -70,24 +60,38 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The collection.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
-            List<ValueItem> col = GetCollection(target, items).ToList();
+            var col = GetCollection(target, items);
 
             if (includeEmpty)
             {
-                Descriptor empty = Descriptor.Empty;
-
-                col.Insert(0, ValueItem.New(string.Empty, empty.Name, (Descriptor)target == empty));
+                col.Insert(0, Descriptor.Empty);
             }
 
             return col;
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection(Descriptor.GetValues(targetType).First(), includeEmpty, items);
+            var item = target as Descriptor;
+            var list = items.Cast<Descriptor>().ToList();
+
+            var collection = list.Select(d => ValueItem.New(d.Name, d.Name, d == item)).ToList();
+
+
+            // if current value is not in list, add it
+            if (!item.IsEmpty && !collection.Any(vi => vi.Selected))
+            {
+                collection.Insert(0, ValueItem.New(string.Format("<{0}>", item.Name), item.Name, true));
+            }
+            return collection;
         }
+
+//        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+//        {
+//            return GetCollection(Descriptor.GetValues(targetType).First(), includeEmpty, items);
+//        }
 
         /// <summary>
         /// Checks whether the specified object is empty or not.

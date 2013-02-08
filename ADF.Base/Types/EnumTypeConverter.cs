@@ -4,7 +4,7 @@ using Adf.Core.Types;
 
 namespace Adf.Base.Types
 {
-    class EnumTypeConverter : ITypeConverter
+    public class EnumTypeConverter : ITypeConverter
     {
         /// <summary>
         /// Decides whether a specific converter can convert this type.
@@ -25,6 +25,8 @@ namespace Adf.Base.Types
         public T To<T>(object value)
         {
             // TODO: check 
+            if (value == null) return default(T);
+
             return (T)Enum.Parse(typeof(T), value.ToString(), false);
         }
 

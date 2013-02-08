@@ -19,7 +19,7 @@ namespace Adf.Core.Types
         {
             Type type = typeof(T);
 
-            if (value != null && type.IsAssignableFrom(value.GetType())) return (T) value;
+            if (value != null && type.IsInstanceOfType(value)) return (T) value;
 
             var converter = Converters.FirstOrDefault(c => c.CanConvert(type));
 

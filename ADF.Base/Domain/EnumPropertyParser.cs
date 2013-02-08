@@ -12,7 +12,7 @@ namespace Adf.Base.Domain
     /// <summary>
     /// Represents Enum property parsing operations.
     /// </summary>
-    class EnumPropertyParser : IPropertyParser
+    public class EnumPropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -48,42 +48,34 @@ namespace Adf.Base.Domain
         /// <param name="items">The list of items to use, or null to get the list from the domainobject.</param>
         /// <returns>Collection of values for type of property, using the value on the target object 
         /// for this property as default value.</returns>
-        public List<ValueItem> GetCollection(object target, IEnumerable items = null)
+        public List<Enum> GetCollection(object target, IEnumerable items = null)
         {
             var enumValue = target as Enum;
             if (enumValue == null)
             {
-                return new List<ValueItem>();
+                return new List<Enum>();
             }
 
             var values = items ?? enumValue.GetValues();
 
-            var collection = new List<ValueItem>();
+            var collection = new List<Enum>();
 
             // Note: do not convert the foreach to a Linq expression, the list will not be ordered as defined anymore.
             foreach (Enum value in values)
             {
                 if (!value.IsExcluded())
                 {
-                    var item = ValueItem.New(value.GetDescription(), value.ToString(), IsEqual(value, enumValue));
 
                     // Always insert empty item at index 0
                     if(IsEmpty(value))
-                        collection.Insert(0,item);
+                        collection.Insert(0, value);
                     else
-                        collection.Add(item);
+                        collection.Add(value);
                 }
-            }
-
-            // if current value is not in list, add it
-            if (!IsEmpty(enumValue) && !collection.Any(vi => vi.Selected))
-            {
-                collection.Insert(0, ValueItem.New(string.Format("<{0}>", enumValue.GetDescription()), enumValue.ToString(), true));
             }
 
             return collection;
         }
-
         
 
         /// <summary>
@@ -94,15 +86,15 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The collection.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
-            List<ValueItem> collection = GetCollection(target, items).ToList();
+            var collection = GetCollection(target, items);
 
             if (!includeEmpty)
             {
-                foreach (ValueItem item in collection)
+                foreach (Enum item in collection)
                 {
-                    if (IsEmpty(item.Value))
+                    if (IsEmpty(item))
                     {
                         collection.Remove(item);
                         // assume theres only one empty item
@@ -114,10 +106,25 @@ namespace Adf.Base.Domain
             return collection;
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection(Enum.ToObject(targetType, 0), includeEmpty, items);
+            var enumValue = target as Enum;
+            if (enumValue == null) throw new ArgumentException("is not an Enum", "target");
+
+            var collection = (from Enum value in items select ValueItem.New(value.GetDescription(), value.ToString(), IsEqual(value, enumValue))).ToList();
+
+            // if current value is not in list, add it
+            if (!IsEmpty(enumValue) && !collection.Any(vi => vi.Selected))
+            {
+                collection.Insert(0, ValueItem.New(string.Format("<{0}>", enumValue.GetDescription()), enumValue.ToString(), true));
+            }
+            return collection;
         }
+
+//        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+//        {
+//            return GetCollection(Enum.ToObject(targetType, 0), includeEmpty, items);
+//        }
 
         /// <summary>
         /// Checks whether the supplied object is empty or not.

@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using Adf.Base.Panels;
 using Adf.Core.Extensions;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Core.Resources;
 using Adf.Web.Styling;
 using Adf.Web.UI;
@@ -12,18 +13,18 @@ using Adf.Web.UI.Extensions;
 
 namespace Adf.Web.Panels
 {
-    public class ImageRenderer : BaseRenderer, IPanelItemRenderer
+    public class ImageRenderer : BaseRenderer, IItemRenderer
     {
-        public bool CanRender(PanelItemType type)
+        public bool CanRender(RenderItemType type)
         {
-            var types = new[] { PanelItemType.Image, PanelItemType.InfoIcon };
+            var types = new[] { RenderItemType.Image, RenderItemType.InfoIcon };
 
             return types.Contains(type);
         }
 
         public IEnumerable<object> Render(PanelItem panelItem)
         {
-            if (panelItem.Type == PanelItemType.Image)
+            if (panelItem.Type == RenderItemType.Image)
             {
                 var image = new Image { ID = panelItem.GetId(), Enabled = false, Width = new Unit(panelItem.Width, UnitType.Pixel), Visible = panelItem.Visible };
 
@@ -35,7 +36,7 @@ namespace Adf.Web.Panels
 
                 return new List<Control> { image, PanelValidator.Create(panelItem) };
             }
-            if (panelItem.Type == PanelItemType.InfoIcon)
+            if (panelItem.Type == RenderItemType.InfoIcon)
             {
                 var image = new Image
                 {

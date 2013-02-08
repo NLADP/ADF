@@ -64,7 +64,7 @@ namespace Adf.Base.Objects
             return from type in _types where type.Key.Type == serviceType select type.Value.New<object>();
         }
 
-        public void Register<TInterface, TImplementation>(string instanceName = null)
+        public void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface
         {
             _types.Add(new TypeKey(typeof(TInterface), instanceName), typeof(TImplementation));
         }

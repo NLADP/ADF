@@ -4,12 +4,14 @@ namespace Adf.Core.Panels
 {
     public class PanelRow 
     {
-        private readonly List<PanelItem> items = new List<PanelItem>();
+        private readonly List<PanelItem> _items = new List<PanelItem>();
 
-        public AdfPanel Panel { get; set; }
-        public List<PanelItem> Items { get { return items; } } 
+        public PanelObject Panel { get; set; }
+        public List<PanelItem> Items { get { return _items; } } 
 
-        public PanelRow(AdfPanel panel)
+        public PanelRow() { }
+
+        public PanelRow(PanelObject panel)
         {
             Panel = panel;
         }
@@ -17,7 +19,7 @@ namespace Adf.Core.Panels
         public void Add(PanelItem item)
         {
             item.Row = this;
-            items.Add(item);
+            _items.Add(item);
         }
     }
 }

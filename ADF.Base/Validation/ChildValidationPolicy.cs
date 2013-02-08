@@ -8,7 +8,7 @@ namespace Adf.Base.Validation
     /// <summary>
     /// Represents an ChildValidationPolicy. Provides methods to validate child business entities found against a DomainObject.
     /// </summary>
-    class ChildValidationPolicy : IValidationPolicy
+    public class ChildValidationPolicy : IValidationPolicy
     {
         #region IValidationPolicy Members
 

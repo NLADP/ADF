@@ -6,6 +6,7 @@ using Adf.Base.Formatting;
 using Adf.Base.Validation;
 using Adf.Core.Binding;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.UI;
 
 namespace Adf.Web.Binding
@@ -17,7 +18,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class TextBoxBinder : IControlBinder
     {
-        private readonly string[] types = { PanelItemType.EditableText.Prefix };
+        private readonly string[] types = { RenderItemType.EditableText.Prefix };
 
         /// <summary>
         /// Gets the array of <see cref="System.Web.UI.WebControls.TextBox"/> id prefixes that 

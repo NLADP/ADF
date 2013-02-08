@@ -6,7 +6,7 @@ using Adf.Core.Types;
 
 namespace Adf.Base.Types
 {
-    class ValueObjectTypeConverter : ITypeConverter
+    public class ValueObjectTypeConverter : ITypeConverter
     {
         /// <summary>
         /// Decides whether a specific converter can convert this type.

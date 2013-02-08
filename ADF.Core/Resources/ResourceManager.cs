@@ -31,17 +31,16 @@ namespace Adf.Core.Resources
             }
         }
 
-        private static readonly string resourceNotFoundFormat = GetResourceNotFoundFormat();
+        private static string _resourceNotFoundFormat;
 
-        private static string GetResourceNotFoundFormat()
+        private static string ResourceNotFoundFormat
         {
-            try
+            get
             {
-                return StateManager.Settings.Has("ResourceNotFoundFormat") ? StateManager.Settings["ResourceNotFoundFormat"].ToString() : "{0}";
-            }
-            catch (Exception)
-            {
-                return "{0}";
+                return _resourceNotFoundFormat ?? (_resourceNotFoundFormat =
+                                                   StateManager.Settings.Has("ResourceNotFoundFormat")
+                                                       ? StateManager.Settings["ResourceNotFoundFormat"].ToString()
+                                                       : "{0}");
             }
         }
 
@@ -66,7 +65,7 @@ namespace Adf.Core.Resources
                 if (value != null) break;
             }
 
-            return value ?? string.Format(resourceNotFoundFormat, key);
+            return value ?? string.Format(ResourceNotFoundFormat, key);
         }
 
         /// <summary>

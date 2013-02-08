@@ -1,5 +1,6 @@
 ﻿using System;
-using Adf.Base.Data;
+using System.ComponentModel;
+using Adf.Base.Annotations;
 using Adf.Core;
 using Adf.Core.Data;
 using Adf.Core.Domain;
@@ -191,11 +192,19 @@ namespace Adf.Base.Domain
             return Converter.To<T>(state.Get<T>(column));
         }
 
-        public void Set<T>(IColumn column, T value)
+        public virtual void Set<T>(IColumn column, T value)
         {
-            if (!PropertyHelper.IsEqual(Get<T>(column), value)) state.Set(column, Converter.ToPrimitive(value));
+            if (!PropertyHelper.IsEqual(Get<T>(column), value))
+            {
+                state.Set(column, Converter.ToPrimitive(value));
+
+                OnPropertyChanged(column.Attribute);
+            }
         }
 
+        protected virtual void OnPropertyChanged(string propertyName = null) {}
+
         #endregion Get & Set
+
     }
 }

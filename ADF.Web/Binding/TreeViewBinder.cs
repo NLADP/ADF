@@ -5,6 +5,7 @@ using Adf.Base.Domain;
 using Adf.Core.Binding;
 using Adf.Core.Domain;
 using Adf.Core.Panels;
+using Adf.Core.Rendering;
 using Adf.Web.UI;
 
 namespace Adf.Web.Binding
@@ -16,7 +17,7 @@ namespace Adf.Web.Binding
     /// </summary>
     public class TreeViewBinder : IControlBinder
     {
-        private readonly string[] types = {PanelItemType.TreeView.Prefix};
+        private readonly string[] types = { RenderItemType.TreeView.Prefix };
 
         public IEnumerable Types { get { return types; }}
 

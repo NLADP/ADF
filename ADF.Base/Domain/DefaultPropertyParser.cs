@@ -12,7 +12,7 @@ namespace Adf.Base.Domain
     /// <summary>
     /// Represents default property parsing operation.    
     /// </summary>
-    class DefaultPropertyParser : IPropertyParser
+    public class DefaultPropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -40,7 +40,12 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">Not used.</param>
         /// <param name="items"></param>
         /// <returns>Returns a new instance of ValueCollection with no ValueItems.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        {
+            return new[] {items};
+        }
+
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
             var list = new List<ValueItem>();
 
@@ -50,11 +55,6 @@ namespace Adf.Base.Domain
             }
 
             return list;
-        }
-
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
-        {
-            return GetCollection((object) null, includeEmpty, items);
         }
 
         /// <summary>

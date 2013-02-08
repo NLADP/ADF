@@ -6,13 +6,14 @@ using System.Globalization;
 using System.Reflection;
 using Adf.Core.Domain;
 using Adf.Core.Validation;
+using System.Linq;
 
 namespace Adf.Base.Domain
 {
     /// <summary>
     /// Represents Nullable property parsing operations.
     /// </summary>
-    class NullablePropertyParser : IPropertyParser
+    public class NullablePropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -48,14 +49,14 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">The indicator to indicate whether empty will be included or not.</param>
         /// <param name="items"></param>
         /// <returns>The collection.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
-            return new List<ValueItem>();
+            return new[] {items};
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection((object) null, includeEmpty, items);
+            return (from object i in items select ValueItem.New(i)).ToArray();
         }
 
         /// <summary>

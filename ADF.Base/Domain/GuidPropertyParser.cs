@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
 
@@ -10,7 +11,7 @@ namespace Adf.Base.Domain
     /// <summary>
     /// Represents Guid property parsing operation.
     /// </summary>
-    class GuidPropertyParser : IPropertyParser
+    public class GuidPropertyParser : IPropertyParser
     {
         #region IPropertyParser Members
 
@@ -37,15 +38,22 @@ namespace Adf.Base.Domain
         /// <param name="includeEmpty">Not used</param>
         /// <param name="items"></param>
         /// <returns>Returns a new instance of ValueCollection with no ValueItems.</returns>
-        public ICollection<ValueItem> GetCollection(object target, bool includeEmpty, IEnumerable items = null)
+        public ICollection GetCollection(object target, bool includeEmpty, IEnumerable items = null)
         {
-            return new List<ValueItem>();
+            return new List<Guid>();
         }
 
-        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+        public ICollection<ValueItem> GetValueItems(object target, ICollection items)
         {
-            return GetCollection((object)null, includeEmpty, items);
+            var list = items.Cast<Guid>();
+
+            return (from i in list select ValueItem.New(i.ToString(), i, i.Equals(target))).ToList();
         }
+
+//        public ICollection<ValueItem> GetCollection(Type targetType, bool includeEmpty, IEnumerable items = null)
+//        {
+//            return GetCollection((object)null, includeEmpty, items);
+//        }
 
         /// <summary>
         /// Checks whether the specified object is empty or not.

@@ -72,7 +72,7 @@ namespace Adf.Core.Validation
         /// </returns>
         public static ValidationResult Success
         {
-            get { return _successObject; }
+            get { return new ValidationResult(ValidationResultSeverity.Success, string.Empty, null); }
         }
 
         /// <summary>
