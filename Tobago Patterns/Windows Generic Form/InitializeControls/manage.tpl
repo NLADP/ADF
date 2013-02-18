@@ -1,0 +1,10 @@
+            this.btnSelect$Attribute.Name$ = new System.Windows.Forms.Button();
+            this.btnRemove$Attribute.Name$ = new System.Windows.Forms.Button();
+            this.btnSave$Attribute.Name$ = new System.Windows.Forms.Button();
+            this.panel$Attribute.Type$ = new BaseProject.Win.Panels.Panel$Attribute.Type$();
+            this.gp$Attribute.Type$ = new System.Windows.Forms.GroupBox();
+            this.gp$Attribute.Type$.SuspendLayout();
+            this.tlMain = new System.Windows.Forms.TableLayoutPanel();
+            this.tlButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.tlMain.SuspendLayout();
+            this.tlButtons.SuspendLayout();

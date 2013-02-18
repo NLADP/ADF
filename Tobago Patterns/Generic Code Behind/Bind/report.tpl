@@ -1,0 +1,1 @@
+﻿		report$Attribute.Name.Pascal$.Report = new $Attribute.Name.Pascal$Report { DataSource = MyTask.$Attribute.Name.Pascal.Plural$ };

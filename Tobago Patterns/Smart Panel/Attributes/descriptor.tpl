@@ -1,0 +1,1 @@
+			Add(ValidatedRadioButtonListItem.Create<$Attribute.Owner.Name.Pascal$>("$Attribute.Name.Pascal$", o => o.$Attribute.Name$, Editable, RepeatDirection.Horizontal));

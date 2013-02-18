@@ -1,0 +1,1 @@
+			$Attribute.Owner.Name.Camel$.$Attribute.Name.Pascal$ = SmartReferenceFactory.GetAll<$Attribute.Name.Pascal$>().PickOne();<Tobago.If($Attribute.IsNullable$,"", " // $Attribute.Name.Pascal$ is a mandatory property.")>

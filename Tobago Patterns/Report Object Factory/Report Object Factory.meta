@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Report Object Factory" language="C#" platform="Adf.Net" layer="Business" stereotypes="reportobject" fileformat="{0}Factory.cs" type="Class" />

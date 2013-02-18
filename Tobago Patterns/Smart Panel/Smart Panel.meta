@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" language="C#" platform="Adf.Net" layer="Presentation - Web" stereotypes="businessclass" fileformat="Panel{0}.cs" type="Class" />

@@ -1,0 +1,2 @@
+            Add(CalendarItem.Create<$Attribute.Owner.Name.Pascal$SearchObject>("$Attribute.Name$ is after", o => o.$Attribute.Name.Pascal$LiesAfter, enabled: Editable<Tobago.If($Attribute.IsNullable$, ", mandatory: Optional", "")>));
+            Add(CalendarItem.Create<$Attribute.Owner.Name.Pascal$SearchObject>("$Attribute.Name$ is before", o => o.$Attribute.Name.Pascal$LiesBefore, enabled: Editable<Tobago.If($Attribute.IsNullable$, ", mandatory: Optional", "")>));

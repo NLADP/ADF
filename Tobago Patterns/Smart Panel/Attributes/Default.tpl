@@ -1,0 +1,1 @@
+            Add(ValidatedTextBoxItem.Create<$Attribute.Owner.Name.Pascal$>("$Attribute.Name$", o => o.$Attribute.Name.Pascal$, <Tobago.Tag(MaxLength, 50)>, Editable<Tobago.If($Attribute.IsNullable$, ", Optional", "")>));

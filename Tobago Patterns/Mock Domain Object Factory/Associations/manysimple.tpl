@@ -1,0 +1,1 @@
+			$Association.MyEnd.Target.Name.Camel$.$Association.OtherEnd.Role.Pascal$ = $Association.OtherEnd.Target.Name.Pascal$MockFactory.PickOne();<Tobago.If($Attribute.IsNullable$,"", " // $Association.OtherEnd.Role.Pascal$ is a mandatory property.")>

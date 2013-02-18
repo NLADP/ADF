@@ -1,0 +1,1 @@
+<Tobago.Loop(Class.Attributes, SmartReferences)>

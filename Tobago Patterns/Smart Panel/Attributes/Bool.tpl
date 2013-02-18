@@ -1,0 +1,1 @@
+			Add(ValidatedCheckBoxItem.Create<$Attribute.Owner.Name.Pascal$>("$Attribute.Name$", o => o.$Attribute.Name.Pascal$, Editable<Tobago.If($Attribute.IsNullable$, ", Optional", "")>));

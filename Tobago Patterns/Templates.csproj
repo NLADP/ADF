@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AE9C7160-6754-48D5-9036-A2BDB4C259E7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Templates</RootNamespace>
+    <AssemblyName>Templates</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DebugSymbols>true</DebugSymbols>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="Business Describer\Associations\manymany.tpl" />
+    <None Include="Business Describer\Associations\manysimple.tpl" />
+    <None Include="Business Describer\Associations\simplemany.tpl" />
+    <None Include="Business Describer\Associations\simplesimple.tpl" />
+    <None Include="Business Describer\Attributes\default.tpl" />
+    <None Include="Business Describer\Business Describer.meta" />
+    <None Include="Business Describer\Business Describer.tpl" />
+    <None Include="Cached Domain Object Factory\Associations\manymany.tpl" />
+    <None Include="Cached Domain Object Factory\Associations\manysimple.tpl" />
+    <None Include="Cached Domain Object Factory\Associations\simplemany.tpl" />
+    <None Include="Cached Domain Object Factory\Associations\simplesimple.tpl" />
+    <None Include="Cached Domain Object Factory\Cached Domain Object Factory.meta" />
+    <None Include="Cached Domain Object Factory\Cached Domain Object Factory.tpl" />
+    <None Include="Domain Object\Operations\businessrule.tpl" />
+    <None Include="Generic Code Behind\Attributes\export.tpl" />
+    <None Include="Generic Code Behind\Bind\export.tpl" />
+    <None Include="Generic Code Behind\Events\export.tpl" />
+    <None Include="Generic Form\Controls\export.tpl" />
+    <None Include="Generic Form\GridColumns\bool.tpl" />
+    <None Include="Generic Form\GridColumns\DateTime.tpl" />
+    <None Include="Generic Form\GridColumns\decimal.tpl" />
+    <None Include="Generic Form\GridColumns\Money.tpl" />
+    <None Include="Generic Form\GridColumns\int.tpl" />
+    <None Include="Task\Actions\export.tpl" />
+    <None Include="Task\Members\Manage.tpl" />
+    <None Include="Task\Properties\export.tpl" />
+    <None Include="Task\Start\export.tpl" />
+    <None Include="View Model\View Model.meta" />
+    <None Include="View Model\View Model.tpl" />
+    <None Include="Mock Domain Object Factory\Associations\manymany.tpl" />
+    <None Include="Mock Domain Object Factory\Associations\manysimple.tpl" />
+    <None Include="Mock Domain Object Factory\Associations\simplemany.tpl" />
+    <None Include="Mock Domain Object Factory\Associations\simplesimple.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\businessclass.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\DateTime.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\Default.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\derived.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\descriptor.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\enumeration.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\smartreference.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\string.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\valueobject.tpl" />
+    <None Include="Mock Domain Object Factory\Attributes\valuetype.tpl" />
+    <None Include="Mock Domain Object Factory\Mock Domain Object Factory.meta" />
+    <None Include="Mock Domain Object Factory\Mock Domain Object Factory.tpl" />
+    <None Include="Domain Object Custom\Attributes\Default.tpl" />
+    <None Include="Domain Object Custom\Attributes\derived.tpl" />
+    <None Include="Domain Object\Attributes\derived.tpl" />
+    <None Include="Generic Code Behind\Attributes\report.tpl" />
+    <None Include="Generic Code Behind\Authorization\define.tpl" />
+    <None Include="Generic Code Behind\Authorization\detail.tpl" />
+    <None Include="Generic Code Behind\Authorization\listdetail.tpl" />
+    <None Include="Generic Code Behind\Authorization\manage.tpl" />
+    <None Include="Generic Code Behind\Authorization\multiselect.tpl" />
+    <None Include="Generic Code Behind\Authorization\search.tpl" />
+    <None Include="Generic Code Behind\Authorization\select.tpl" />
+    <None Include="Generic Code Behind\Authorization\view.tpl" />
+    <None Include="Generic Code Behind\Bind\report.tpl" />
+    <None Include="Generic Form\Controls\report.tpl" />
+    <None Include="Report Object\Associations\manymany.tpl" />
+    <None Include="Report Object\Associations\manysimple.tpl" />
+    <None Include="Report Object\Associations\simplemany.tpl" />
+    <None Include="Report Object\Associations\simplesimple.tpl" />
+    <None Include="Report Object\Attributes\businessclass.tpl" />
+    <None Include="Report Object\Attributes\DateTime.tpl" />
+    <None Include="Report Object\Attributes\Default.tpl" />
+    <None Include="Report Object\Attributes\descriptor.tpl" />
+    <None Include="Report Object\Attributes\enumeration.tpl" />
+    <None Include="Report Object\Attributes\smartreference.tpl" />
+    <None Include="Report Object\Attributes\string.tpl" />
+    <None Include="Report Object\Attributes\valueobject.tpl" />
+    <None Include="Report Object\Attributes\valuetype.tpl" />
+    <None Include="Report Object\Report Object.meta" />
+    <None Include="Report Object\Report Object.tpl" />
+    <None Include="Report Object Factory\Report Object Factory.meta">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Report Object Factory\Report Object Factory.tpl" />
+    <None Include="Report Gateway\Report Gateway.meta" />
+    <None Include="Report Gateway\Report Gateway.tpl" />
+    <None Include="Data Transfer Object\Attributes\DateTime.tpl" />
+    <None Include="Data Transfer Object\Attributes\default.tpl" />
+    <None Include="Data Transfer Object\Data Transfer Object.meta" />
+    <None Include="Data Transfer Object\Data Transfer Object.tpl" />
+    <None Include="Database Create\Database Create.meta" />
+    <None Include="Database Create\Database Create.tpl" />
+    <None Include="Domain Object Custom\Domain Object Custom.meta" />
+    <None Include="Domain Object Custom\Domain Object Custom.tpl" />
+    <None Include="Domain Object Factory Custom\Domain Object Factory Custom.meta" />
+    <None Include="Domain Object Factory Custom\Domain Object Factory Custom.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\bool.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\datetime.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\Default.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\double.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\email.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\enumeration.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\int.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\isbn.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\postcode.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\smartreference.tpl" />
+    <None Include="Domain Object Unit Test\AttributesGet\string.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\bool.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\datetime.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\Default.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\double.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\email.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\enumeration.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\int.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\isbn.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\postcode.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\smartreference.tpl" />
+    <None Include="Domain Object Unit Test\Attributes\string.tpl" />
+    <None Include="Domain Object Unit Test\Domain Object Unit Test.meta" />
+    <None Include="Domain Object Unit Test\Domain Object Unit Test.tpl" />
+    <None Include="Domain Object\Associations\manymany.tpl" />
+    <None Include="Domain Object\Associations\manysimple.tpl" />
+    <None Include="Domain Object\Associations\simplemany.tpl" />
+    <None Include="Domain Object\Associations\simplesimple.tpl" />
+    <None Include="Domain Object\Attributes\businessclass.tpl" />
+    <None Include="Domain Object\Attributes\DateTime.tpl" />
+    <None Include="Domain Object\Attributes\smartreference.tpl" />
+    <None Include="Domain Object\Attributes\valuetype.tpl" />
+    <None Include="Domain Object\Attributes\string.tpl" />
+    <None Include="Domain Object\Attributes\descriptor.tpl" />
+    <None Include="Domain Object\Attributes\enumeration.tpl" />
+    <None Include="Domain Object\Attributes\default.tpl" />
+    <None Include="Domain Object\Attributes\valueobject.tpl" />
+    <None Include="Domain Object\Domain Object.meta" />
+    <None Include="Domain Object\Domain Object.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\bool.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\datetime.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\Default.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\double.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\email.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\enumeration.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\int.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\isbn.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\postcode.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\smartreference.tpl" />
+    <None Include="Domain Object Factory Unit Test\Attributes\string.tpl" />
+    <None Include="Domain Object Factory Unit Test\Domain Object Factory Unit Test.meta" />
+    <None Include="Domain Object Factory Unit Test\Domain Object Factory UnitTest.tpl" />
+    <None Include="Domain Object Factory\Associations\manymany.tpl" />
+    <None Include="Domain Object Factory\Associations\manysimple.tpl" />
+    <None Include="Domain Object Factory\Associations\simplemany.tpl" />
+    <None Include="Domain Object Factory\Associations\simplesimple.tpl" />
+    <None Include="Domain Object Factory\Domain Object Factory.meta" />
+    <None Include="Domain Object Factory\Domain Object Factory.tpl" />
+    <None Include="Generic Code Behind\Attributes\detail.tpl" />
+    <None Include="Generic Code Behind\Attributes\define.tpl" />
+    <None Include="Generic Code Behind\Attributes\select.tpl" />
+    <None Include="Generic Code Behind\Attributes\manage.tpl" />
+    <None Include="Generic Code Behind\Attributes\search.tpl" />
+    <None Include="Generic Code Behind\Attributes\view.tpl" />
+    <None Include="Generic Code Behind\Bind\detail.tpl" />
+    <None Include="Generic Code Behind\Bind\define.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\detail.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\define.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\search.tpl" />
+    <None Include="Generic Code Behind\Events\detail.tpl" />
+    <None Include="Generic Code Behind\Events\define.tpl" />
+    <None Include="Generic Code Behind\Events\search.tpl" />
+    <None Include="Generic Code Behind\Bind\search.tpl" />
+    <None Include="Generic Form\Associations\default.tpl" />
+    <None Include="Generic Form\Controls\detail.tpl" />
+    <None Include="Generic Form\Controls\define.tpl" />
+    <None Include="Generic Form\Controls\search.tpl" />
+    <None Include="Generic Form\Associations\manysimple.tpl" />
+    <None Include="Java Domain Object\Attributes\default.tpl" />
+    <None Include="Java Domain Object\Attributes\list.tpl" />
+    <None Include="Java Domain Object\Java Domain Object.meta" />
+    <None Include="Java Domain Object\Java Domain Object.tpl" />
+    <None Include="Java Domain Object\Properties\default.tpl" />
+    <None Include="Java Domain Object\Properties\list.tpl" />
+    <None Include="Menu Code Behind\Associations\default.tpl" />
+    <None Include="Menu Code Behind\Menu Code Behind.meta" />
+    <None Include="Menu Code Behind\Menu Code Behind.tpl" />
+    <None Include="Menu References Code Behind\Attributes\smartref.tpl" />
+    <None Include="Menu References Code Behind\Attributes\default.tpl" />
+    <None Include="Menu References Code Behind\Attributes\smartreference.tpl" />
+    <None Include="Menu References Code Behind\Classes\default.tpl" />
+    <None Include="Menu References Code Behind\Menu References Code Behind.meta" />
+    <None Include="Menu References Code Behind\Menu References Code Behind.tpl" />
+    <None Include="Menu References\Attributes\smartref.tpl" />
+    <None Include="Menu References\Attributes\default.tpl" />
+    <None Include="Menu References\Attributes\smartreference.tpl" />
+    <None Include="Menu References\Classes\default.tpl" />
+    <None Include="Menu References\Menu References.meta" />
+    <None Include="Menu References\Menu References.tpl" />
+    <None Include="Menu\Associations\default.tpl" />
+    <None Include="Menu\Menu.meta" />
+    <None Include="Menu\Menu.tpl" />
+    <None Include="Reference Types Default Data\Attributes\smartref.tpl" />
+    <None Include="Reference Types\Attributes\smartref.tpl" />
+    <None Include="Reference Types\Classes SmartReference\default.tpl" />
+    <None Include="Reference Types\SmartReferences\smartref.tpl" />
+    <None Include="Reference Types\SmartReferences\default.tpl" />
+    <None Include="Reference Types\SmartReferences\smartreference.tpl" />
+    <None Include="RIA Domain Service\RIA Domain Service.meta" />
+    <None Include="RIA Domain Service\RIA Domain Service.tpl" />
+    <None Include="RIA Services Gateway\RIA Services Gateway.tpl" />
+    <None Include="Search Object\Attributes\money.tpl" />
+    <None Include="Search Object\Attributes\Descriptor.tpl" />
+    <None Include="Search Object\Attributes\double.tpl" />
+    <None Include="Search Object\Attributes\decimal.tpl" />
+    <None Include="Search Object\Attributes\enumeration.tpl" />
+    <None Include="Search Object\Attributes\SmartReference.tpl" />
+    <None Include="Search Object\Associations\default.tpl" />
+    <None Include="Search Object\Associations\manysimple.tpl" />
+    <None Include="Search Object\Attributes\bool.tpl" />
+    <None Include="Search Object\Attributes\datetime.tpl" />
+    <None Include="Search Object\Attributes\int.tpl" />
+    <None Include="Search Object\Attributes\Default.tpl" />
+    <None Include="Search Object\Search Object.meta" />
+    <None Include="Search Object\Search Object.tpl" />
+    <None Include="Smart Panel - Search\Associations\default.tpl" />
+    <None Include="Smart Panel - Search\Associations\manysimple.tpl" />
+    <None Include="Smart Panel - Search\Associations\simplesimple.tpl" />
+    <None Include="Smart Panel - Search\Attributes\Bool.tpl" />
+    <None Include="Smart Panel - Search\Attributes\DateTime.tpl" />
+    <None Include="Smart Panel - Search\Attributes\Decimal.tpl" />
+    <None Include="Smart Panel - Search\Attributes\Default.tpl" />
+    <None Include="Smart Panel - Search\Attributes\descriptor.tpl" />
+    <None Include="Smart Panel - Search\Attributes\Double.tpl" />
+    <None Include="Smart Panel - Search\Attributes\enumeration.tpl" />
+    <None Include="Smart Panel - Search\Attributes\Int.tpl" />
+    <None Include="Smart Panel - Search\Attributes\money.tpl" />
+    <None Include="Smart Panel - Search\Attributes\SmartRef.tpl" />
+    <None Include="Smart Panel - Search\Attributes\SmartReference.tpl" />
+    <None Include="Smart Panel - Search\Smart Panel - Search.meta" />
+    <None Include="Smart Panel - Search\Smart Panel - Search.tpl" />
+    <None Include="Smart Panel\Associations\default.tpl" />
+    <None Include="Smart Panel\Associations\manysimple.tpl" />
+    <None Include="Smart Panel\Associations\simplesimple.tpl" />
+    <None Include="Smart Panel\Attributes\Bool.tpl" />
+    <None Include="Smart Panel\Attributes\DateTime.tpl" />
+    <None Include="Smart Panel\Attributes\Default.tpl" />
+    <None Include="Smart Panel\Attributes\descriptor.tpl" />
+    <None Include="Smart Panel\Attributes\enumeration.tpl" />
+    <None Include="Smart Panel\Attributes\SmartRef.tpl" />
+    <None Include="Smart Panel\Attributes\SmartReference.tpl" />
+    <None Include="Smart Panel\Smart Panel.meta" />
+    <None Include="Smart Panel\Smart Panel.tpl" />
+    <None Include="Table Create\Attributes\businessclass.tpl" />
+    <None Include="Table Create\Attributes\Money.tpl" />
+    <None Include="Table Create\Relations\default.tpl" />
+    <None Include="Table Create\Relations\manysimple.tpl" />
+    <None Include="Table Create\Relations\simplesimple.tpl" />
+    <None Include="Table Foreign Keys\Attributes\businessclass.tpl" />
+    <None Include="Table Foreign Keys\Attributes\Default.tpl" />
+    <None Include="Table Foreign Keys\Attributes\SmartReference.tpl" />
+    <None Include="Table Foreign Keys\Relations\default.tpl" />
+    <None Include="Table Foreign Keys\Relations\manysimple.tpl" />
+    <None Include="Table Foreign Keys\Relations\simplesimple.tpl" />
+    <None Include="Table Foreign Keys\Table Foreign Keys.meta" />
+    <None Include="Table Foreign Keys\Table Foreign Keys.tpl" />
+    <None Include="Table Gateway Custom\Table Gateway Custom.meta" />
+    <None Include="Table Gateway Custom\Table Gateway Custom.tpl" />
+    <None Include="Tasks\Properties\default.tpl" />
+    <None Include="Task\Actions\Detail.tpl" />
+    <None Include="Task\Actions\Define.tpl" />
+    <None Include="Task\Actions\ListDetail.tpl" />
+    <None Include="Task\Actions\MultiSelect.tpl" />
+    <None Include="Task\Actions\Master.tpl" />
+    <None Include="Task\Actions\Search.tpl" />
+    <None Include="Task\Actions\View.tpl" />
+    <None Include="Task\Continue\Detail.tpl" />
+    <None Include="Task\Continue\Default.tpl" />
+    <None Include="Task\Continue\Master.tpl" />
+    <None Include="Task\Members\Default.tpl" />
+    <None Include="Task\Members\Master.tpl" />
+    <None Include="Task\Properties\ListDetail.tpl" />
+    <None Include="Task\Properties\Report.tpl" />
+    <None Include="Task\Properties\Detail.tpl" />
+    <None Include="Task\Properties\Define.tpl" />
+    <None Include="Task\Properties\MultiSelect.tpl" />
+    <None Include="Task\Properties\Master.tpl" />
+    <None Include="Task\Properties\Search.tpl" />
+    <None Include="Task\Start\ListDetail.tpl" />
+    <None Include="Task\Start\Report.tpl" />
+    <None Include="Task\Properties\View.tpl" />
+    <None Include="Task\Start\Detail.tpl" />
+    <None Include="Task\Start\Define.tpl" />
+    <None Include="Task\Start\MultiSelect.tpl" />
+    <None Include="Task\Start\Master.tpl" />
+    <None Include="Task\Start\Search.tpl" />
+    <None Include="Task\Start\View.tpl" />
+    <None Include="Use Case Template\Use Case Template.meta" />
+    <None Include="Use Case Template\Use Case Template.tpl" />
+    <None Include="Use Case Test\Associations\manymany.tpl" />
+    <None Include="Use Case Test\Associations\manysimple.tpl" />
+    <None Include="Use Case Test\Associations\simplemany.tpl" />
+    <None Include="Use Case Test\Associations\simplesimple.tpl" />
+    <None Include="Use Case Test\Attributes\businessclass.tpl" />
+    <None Include="Use Case Test\Attributes\bool.tpl" />
+    <None Include="Use Case Test\Attributes\int.tpl" />
+    <None Include="Use Case Test\Attributes\decimal.tpl" />
+    <None Include="Use Case Test\Attributes\DateTime.tpl" />
+    <None Include="Use Case Test\Attributes\Default.tpl" />
+    <None Include="Use Case Test\Attributes\descriptor.tpl" />
+    <None Include="Use Case Test\Attributes\enumeration.tpl" />
+    <None Include="Use Case Test\Attributes\smartreference.tpl" />
+    <None Include="Use Case Test\Attributes\string.tpl" />
+    <None Include="Use Case Test\Attributes\valueobject.tpl" />
+    <None Include="Use Case Test\Attributes\valuetype.tpl" />
+    <None Include="Use Case Test\Tests\detail.tpl" />
+    <None Include="Use Case Test\Tests\Default.tpl" />
+    <None Include="Use Case Test\Tests\listdetail.tpl" />
+    <None Include="Use Case Test\Tests\select.tpl" />
+    <None Include="Use Case Test\Tests\search.tpl" />
+    <None Include="Use Case Test\Tests\manage.tpl" />
+    <None Include="Use Case Test\Use Case Test.meta" />
+    <None Include="Use Case Test\Use Case Test.tpl" />
+    <None Include="Value Object UnitTest\Value Object UnitTest.meta" />
+    <None Include="Value Object UnitTest\Value Object UnitTest.tpl" />
+    <None Include="Descriptor\Attributes\default.tpl" />
+    <None Include="Descriptor\Descriptor.meta" />
+    <None Include="Descriptor\Descriptor.tpl" />
+    <None Include="Enumeration\Attributes\Default.tpl" />
+    <None Include="Enumeration\Enumeration.meta" />
+    <None Include="Enumeration\Enumeration.tpl" />
+    <None Include="Estimation\Estimation.meta" />
+    <None Include="Estimation\Estimation.tpl" />
+    <None Include="Estimation\UseCases\Default.tpl" />
+    <None Include="Generic Code Behind\Attributes\default.tpl" />
+    <None Include="Generic Code Behind\Attributes\listdetail.tpl" />
+    <None Include="Generic Code Behind\Attributes\multiselect.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\listdetail.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\manage.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\multiselect.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\select.tpl" />
+    <None Include="Generic Code Behind\EventHandlers\view.tpl" />
+    <None Include="Generic Code Behind\Events\listdetail.tpl" />
+    <None Include="Generic Code Behind\Events\manage.tpl" />
+    <None Include="Generic Code Behind\Events\multiselect.tpl" />
+    <None Include="Generic Code Behind\Events\select.tpl" />
+    <None Include="Generic Code Behind\Events\view.tpl" />
+    <None Include="Generic Code Behind\Bind\listdetail.tpl" />
+    <None Include="Generic Code Behind\Bind\manage.tpl" />
+    <None Include="Generic Code Behind\Bind\multiselect.tpl" />
+    <None Include="Generic Code Behind\Bind\select.tpl" />
+    <None Include="Generic Code Behind\Bind\view.tpl" />
+    <None Include="Generic Code Behind\Generic Code Behind.meta" />
+    <None Include="Generic Code Behind\Generic Code Behind.tpl" />
+    <None Include="Generic Form\Controls\listdetail.tpl" />
+    <None Include="Generic Form\Controls\manage.tpl" />
+    <None Include="Generic Form\Controls\multiselect.tpl" />
+    <None Include="Generic Form\Controls\select.tpl" />
+    <None Include="Generic Form\Controls\view.tpl" />
+    <None Include="Generic Form\Generic Form.meta" />
+    <None Include="Generic Form\Generic Form.tpl" />
+    <None Include="Generic Form\GridColumns\default.tpl" />
+    <None Include="Hibernate Mapping\Associations\manymany.tpl" />
+    <None Include="Hibernate Mapping\Associations\manysimple.tpl" />
+    <None Include="Hibernate Mapping\Associations\simplemany.tpl" />
+    <None Include="Hibernate Mapping\Associations\simplesimple.tpl" />
+    <None Include="Hibernate Mapping\Attributes\Copy of Default.tpl" />
+    <None Include="Hibernate Mapping\Attributes\Default.tpl" />
+    <None Include="Hibernate Mapping\Hibernate Mapping.meta" />
+    <None Include="Hibernate Mapping\Hibernate Mapping.tpl" />
+    <None Include="Reference Types Default Data\Attributes\default.tpl" />
+    <None Include="Reference Types Default Data\Attributes\smartreference.tpl" />
+    <None Include="Reference Types Default Data\Classes\default.tpl" />
+    <None Include="Reference Types Default Data\Reference Types Default Data.meta" />
+    <None Include="Reference Types Default Data\Reference Types Default Data.tpl" />
+    <None Include="Reference Types\Attributes\default.tpl" />
+    <None Include="Reference Types\Attributes\smartreference.tpl" />
+    <None Include="Reference Types\Classes\default.tpl" />
+    <None Include="Reference Types\Reference Types.meta" />
+    <None Include="Reference Types\Reference Types.tpl" />
+    <None Include="Table Create\Associations\default.tpl" />
+    <None Include="Table Create\Associations\manysimple.tpl" />
+    <None Include="Table Create\Associations\simplesimple.tpl" />
+    <None Include="Table Create\Attributes\Bool.tpl" />
+    <None Include="Table Create\Attributes\DateTime.tpl" />
+    <None Include="Table Create\Attributes\Decimal.tpl" />
+    <None Include="Table Create\Attributes\Default.tpl" />
+    <None Include="Table Create\Attributes\Double.tpl" />
+    <None Include="Table Create\Attributes\Int.tpl" />
+    <None Include="Table Create\Attributes\Long.tpl" />
+    <None Include="Table Create\Attributes\SmartReference.tpl" />
+    <None Include="Table Create\Table Create.meta" />
+    <None Include="Table Create\Table Create.tpl" />
+    <None Include="Table Gateway\Associations\manymany.tpl" />
+    <None Include="Table Gateway\Associations\manysimple.tpl" />
+    <None Include="Table Gateway\Associations\simplemany.tpl" />
+    <None Include="Table Gateway\Associations\simplesimple.tpl" />
+    <None Include="Table Gateway\Table Gateway.meta" />
+    <None Include="Table Gateway\Table Gateway.tpl" />
+    <None Include="Tasks\Tasks.meta" />
+    <None Include="Tasks\Tasks.tpl" />
+    <None Include="Task\Actions\Manage.tpl" />
+    <None Include="Task\Actions\Select.tpl" />
+    <None Include="Task\Properties\Manage.tpl" />
+    <None Include="Task\Properties\Select.tpl" />
+    <None Include="Task\Start\Manage.tpl" />
+    <None Include="Task\Start\Select.tpl" />
+    <None Include="Task\Continue\Manage.tpl" />
+    <None Include="Task\Task.meta" />
+    <None Include="Task\Task.tpl" />
+    <None Include="Test Script\Attributes\default.tpl" />
+    <None Include="Test Script\Attribute\default.tpl" />
+    <None Include="Test Script\Classes\default.tpl" />
+    <None Include="Test Script\Properties\default.tpl" />
+    <None Include="Test Script\Property\default.tpl" />
+    <None Include="Test Script\Test Script.meta" />
+    <None Include="Test Script\Test Script.tpl" />
+    <None Include="Test Script\UseCases\manage.tpl" />
+    <None Include="Test Script\UseCases\select.tpl" />
+    <None Include="Use Case Checklist\Use Case Checklist.meta" />
+    <None Include="Use Case Checklist\Use Case Checklist.tpl" />
+    <None Include="Use Case Specification\Use Case Specification.tpl" />
+    <None Include="Use Case Specification\Use Case Specification.meta" />
+    <None Include="Use Case Specification\Property\bool.tpl" />
+    <None Include="Use Case Specification\Property\default.tpl" />
+    <None Include="Use Case Specification\Property\SmartReference.tpl" />
+    <None Include="Use Case Specification\Property\DateTime.tpl" />
+    <None Include="Use Case Specification\Property\enumeration.tpl" />
+    <None Include="Use Case Specification\Properties\default.tpl" />
+    <None Include="Use Case Specification\Classifiers\default.tpl" />
+    <None Include="Value Object\Value Object.meta" />
+    <None Include="Value Object\Value Object.tpl" />
+    <None Include="Windows Generic Code Behind\Bindings\default.tpl" />
+    <None Include="Windows Generic Code Behind\Bindings\manage.tpl" />
+    <None Include="Windows Generic Code Behind\Bindings\select.tpl" />
+    <None Include="Windows Generic Code Behind\Constructor\default.tpl" />
+    <None Include="Windows Generic Code Behind\Constructor\manage.tpl" />
+    <None Include="Windows Generic Code Behind\Constructor\select.tpl" />
+    <None Include="Windows Generic Code Behind\Events\default.tpl" />
+    <None Include="Windows Generic Code Behind\Events\manage.tpl" />
+    <None Include="Windows Generic Code Behind\Events\select.tpl" />
+    <None Include="Windows Generic Code Behind\Windows Generic Code Behind.tpl" />
+    <None Include="Windows Generic Code Behind\Windows Generic Code Behind.meta" />
+    <None Include="Windows Generic Form\AddGridColumns\default.tpl" />
+    <None Include="Windows Generic Form\DeclareControls\manage.tpl" />
+    <None Include="Windows Generic Form\DeclareControls\select.tpl" />
+    <None Include="Windows Generic Form\DeclareGridColumns\default.tpl" />
+    <None Include="Windows Generic Form\DesignerGeneratedCode\FinalizeControls\manage.tpl" />
+    <None Include="Windows Generic Form\DesignerGeneratedCode\InitializeControls\manage.tpl" />
+    <None Include="Windows Generic Form\DesignerGeneratedCode\select.tpl" />
+    <None Include="Windows Generic Form\DesignerGeneratedCode\manage.tpl" />
+    <None Include="Windows Generic Form\FinalizeControls\select.tpl" />
+    <None Include="Windows Generic Form\InitializeControls\select.tpl" />
+    <None Include="Windows Generic Form\InitializeGridColumns\default.tpl" />
+    <None Include="Windows Generic Form\SetControls\manage.tpl" />
+    <None Include="Windows Generic Form\InitializeControls\manage.tpl" />
+    <None Include="Windows Generic Form\SetControls\select.tpl" />
+    <None Include="Windows Generic Form\SetGridColumns\default.tpl" />
+    <None Include="Windows Generic Form\Windows Generic Form.tpl" />
+    <None Include="Windows Generic Form\Windows Generic Form.meta" />
+    <None Include="Windows Panel\Associations\default.tpl" />
+    <None Include="Windows Panel\Associations\manysimple.tpl" />
+    <None Include="Windows Panel\Associations\simplesimple.tpl" />
+    <None Include="Windows Panel\Attributes\Bool.tpl" />
+    <None Include="Windows Panel\Attributes\DateTime.tpl" />
+    <None Include="Windows Panel\Attributes\Decimal.tpl" />
+    <None Include="Windows Panel\Attributes\Default.tpl" />
+    <None Include="Windows Panel\Attributes\Double.tpl" />
+    <None Include="Windows Panel\Attributes\enumeration.tpl" />
+    <None Include="Windows Panel\Attributes\Int.tpl" />
+    <None Include="Windows Panel\Attributes\SmartReference.tpl" />
+    <None Include="Windows Panel\Windows Panel.meta" />
+    <None Include="Windows Panel\Windows Panel.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\ADF\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows Generic Form\DesignerGeneratedCode\InitializeControls\InitializeControls\" />
+    <Folder Include="Windows Generic Form\FinalizeControls\FinalizeControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+</Project>

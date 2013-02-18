@@ -1,0 +1,2 @@
+            Add(ValidatedTextBoxItem.Create<$Attribute.Owner.Name.Pascal$SearchObject>("$Attribute.Name$ is more than", o => o.$Attribute.Name.Pascal$IsLargerThan, <Tobago.Tag(MaxLength, 10)>, Editable<Tobago.If($Attribute.IsNullable$, ", Optional", "")>));
+            Add(ValidatedTextBoxItem.Create<$Attribute.Owner.Name.Pascal$SearchObject>("$Attribute.Name$ is less than", o => o.$Attribute.Name.Pascal$IsSmallerThan, <Tobago.Tag(MaxLength, 10)>, Editable<Tobago.If($Attribute.IsNullable$, ", Optional", "")>));

@@ -1,0 +1,1 @@
+			BindManager.Bind(panel$Attribute.Type$,MyTask.$Attribute.Name$);
