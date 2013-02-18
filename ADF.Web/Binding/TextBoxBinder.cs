@@ -46,11 +46,10 @@ namespace Adf.Web.Binding
 
             if (t == null) return;
 
-            if (pi != null && pi.PropertyType == typeof(string))
+            if (pi != null)
             {
                 var attributes = (MaxLengthAttribute[])pi.GetCustomAttributes(typeof(MaxLengthAttribute), false);
-                var exactLengthAttributes =
-                    (ExactLengthAttribute[])pi.GetCustomAttributes(typeof(ExactLengthAttribute), false);
+                var exactLengthAttributes = (ExactLengthAttribute[])pi.GetCustomAttributes(typeof(ExactLengthAttribute), false);
 
                 if (attributes.Length > 0)
                     t.MaxLength = attributes[0].Length;

@@ -121,7 +121,7 @@ namespace Adf.Base.Data
 
             var table = query.Tables[0];
 
-            if (query.Selects.Count == 0 && query.Tables.Count == 1)
+            if (query.Selects.Count == 0 && query.Tables.Count == 1 && query.QueryType != QueryType.StoredProcedure)
             {
                 Dictionary<ITable, Dictionary<string, ColumnDescriber>> datasource;
                 if (_cachedDescribers.TryGetValue(table.DataSource, out datasource))
@@ -143,7 +143,7 @@ namespace Adf.Base.Data
 
             var schema = reader.GetSchemaTable();
 
-            if (schema == null) throw new InvalidOperationException("could not load schema");
+            if (schema == null) return describers; //throw new InvalidOperationException("could not load schema");
 
             for (int i = 0; i < reader.VisibleFieldCount; i++)
             {

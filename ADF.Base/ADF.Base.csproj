@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
@@ -155,6 +156,7 @@
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
+    <Compile Include="Validation\MaxDataLengthAttribute.cs" />
     <Compile Include="Validation\MaxLengthAttribute.cs" />
     <Compile Include="Validation\MinLengthAttribute.cs" />
     <Compile Include="Validation\NonEmptyAttribute.cs" />
