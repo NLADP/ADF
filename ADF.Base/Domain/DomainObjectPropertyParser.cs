@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Adf.Core.Binding;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
 
@@ -33,9 +34,19 @@ namespace Adf.Base.Domain
             if (pi.PropertyType.FullName == null) throw new ArgumentException("pi.PropertyType.FullName cannot be null.");
             if (pi.PropertyType.AssemblyQualifiedName == null) throw new ArgumentException("pi.PropertyType.AssemblyQualifiedName cannot be null.");
 
+            var domainObject = newvalue as IDomainObject;
+
+            if (domainObject != null)
+            {
+                pi.SetValue(instance, domainObject, null);
+                return;
+            }
+
+            ID id = IdManager.New(newvalue);
+
             var type = Type.GetType(pi.PropertyType.AssemblyQualifiedName.Replace(pi.PropertyType.FullName, pi.PropertyType.FullName + "Factory"));
             var method = type.GetMethod("Get", BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(ID) }, null);
-            var domainobject = method.Invoke(null, new object[] { IdManager.New(newvalue) });
+            var domainobject = method.Invoke(null, new object[] { id });
 
             pi.SetValue(instance, domainobject, null);
         }

@@ -46,11 +46,16 @@ namespace Adf.Web.Binding
 
             if (t == null) return;
 
-            if (pi != null)
+            if (pi != null && pi.PropertyType == typeof(string))
             {
-                var attributes = (MaxLengthAttribute[]) pi.GetCustomAttributes(typeof (MaxLengthAttribute), false);
+                var attributes = (MaxLengthAttribute[])pi.GetCustomAttributes(typeof(MaxLengthAttribute), false);
+                var exactLengthAttributes =
+                    (ExactLengthAttribute[])pi.GetCustomAttributes(typeof(ExactLengthAttribute), false);
+
                 if (attributes.Length > 0)
                     t.MaxLength = attributes[0].Length;
+                if (exactLengthAttributes.Length > 0)
+                    t.MaxLength = exactLengthAttributes[0].Length;
             }
 
             t.Text = FormatHelper.ToString(value);

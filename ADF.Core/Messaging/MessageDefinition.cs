@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Adf.Core.Messaging
 {
@@ -9,11 +10,13 @@ namespace Adf.Core.Messaging
         public string FileName { get; set; }
         public string RecordSeparator { get; set; }
         public bool HasHeader { get; set; }
+        public Encoding Encoding { get; set; }
         public List<RecordDefinition> Records { get; set; }
 
         public MessageDefinition()
         {
             Records = new List<RecordDefinition>();
+            Encoding = Encoding.UTF8;
         }
 
         public override string ToString()

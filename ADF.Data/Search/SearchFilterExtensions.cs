@@ -26,7 +26,7 @@ namespace Adf.Data.Search
                 {
                     Column = column,
                     Operator = parameter.OperatorType,
-                    Parameter = new Parameter(parameter.Value, parameter.ParameterType),
+                    Parameter = new Parameter(parameter.Value, parameter.ParameterType) { Name = column.ColumnName },
                     Collation = parameter.Collation
                 };
 

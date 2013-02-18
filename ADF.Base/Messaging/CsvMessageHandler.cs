@@ -21,9 +21,9 @@ namespace Adf.Base.Messaging
 
             var stream = (Stream)p[0];
 
-            var reader = new StreamReader(stream);
-
             MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xml, messagename);
+
+            var reader = new StreamReader(stream, definition.Encoding);
 
             return BreakIntoRecords(definition, reader).Select(record => record.State);
         }
@@ -157,7 +157,7 @@ namespace Adf.Base.Messaging
             if (internalStates != null)
                 lines.AddRange(internalStates.Select(state => CreateLine(definition.Records[0], state)));
 
-            return Encoding.UTF8.GetBytes(string.Join("\r\n", lines));
+            return definition.Encoding.GetBytes(string.Join("\r\n", lines));
         }
 
         private static string CreateLine(RecordDefinition recordDefinition, IInternalState state)

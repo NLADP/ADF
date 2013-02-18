@@ -6,7 +6,7 @@ namespace Adf.Web.UI
 {
     public class PanelControl : WebControl, INamingContainer
     {
-        public AdfPanel Panel = new AdfPanel();
+        public readonly AdfPanel Panel = new AdfPanel();
 
         public override ControlCollection Controls
         {
@@ -29,11 +29,10 @@ namespace Adf.Web.UI
             if (table != null) Controls.Add(table);
         }
 
-        protected T GetTarget<T>(PanelItem item)
+        protected T GetTarget<T>(PanelItem panelItem)
         {
-            Render();
-
-            return (T)item.Target;
+            EnsureChildControls();
+            return (T)panelItem.Target;
         }
     }
 }

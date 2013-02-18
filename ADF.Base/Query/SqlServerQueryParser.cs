@@ -320,11 +320,25 @@ namespace Adf.Base.Query
                 if (@where.Parameter.Name.IsNullOrEmpty()) continue;
 
                 var parValue = @where.Parameter.Value;
-                string value = parValue == null ? "null"
-                                   : (parValue is IEnumerable && !(parValue is string) ? string.Join(",", ((IEnumerable)parValue).Cast<object>().Select(o => o.ToString()))
-                                   : parValue is DateTime ? string.Format("'{0}'", ((DateTime)parValue).ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"))
-                                   : string.Format("'{0}'", parValue));
-                querystring.Replace("@" + @where.Parameter.Name, value);
+//                string value;
+
+                if (parValue == null) querystring.Replace("@" + @where.Parameter.Name, "null");
+                else 
+                if (parValue is IEnumerable && !(parValue is string))
+                {
+                    var enumerable = ((IEnumerable) parValue).Cast<object>();
+                    var values = string.Join(",", enumerable.Select(o => string.Format("'{0}'", o.ToString())));
+                    var parnames = string.Join(",", enumerable.Select((o, i) => string.Format("@{0}_v{1}", @where.Parameter.Name, i)));
+                    if (!parnames.IsNullOrEmpty())
+                    {
+                        querystring.Replace(parnames, values);
+                    }
+                }
+                else
+                    querystring.Replace("@" + @where.Parameter.Name, parValue is DateTime
+                                ? string.Format("'{0}'", ((DateTime)parValue).ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"))
+                                : string.Format("'{0}'", parValue));
+                
             }
             return querystring.ToString();
         }
@@ -346,7 +360,7 @@ namespace Adf.Base.Query
         {
             var column = expression.Column.FullName();
 
-            if (expression.Type == ExpressionType.Column) return column;
+            if (expression.Type == ExpressionType.Column) return column + expression.Alias;
 
             if (expression.Type == ExpressionType.Table)
                 return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", expression.Column.Table.EscapeFunction(), expression.Column.ColumnName);

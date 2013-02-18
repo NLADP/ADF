@@ -8,17 +8,7 @@ namespace Adf.Base.Tasks
     {
         public static bool Execute(this ITask task, params Action[] actions)
         {
-            foreach (var action in actions)
-            {
-                action.Invoke();
-
-                if (ValidationManager.IsSucceeded) continue;
-                
-                ValidationManager.Handle();
-                return false;
-            }
-
-            return true;
+            return ValidationManager.Execute(actions);
         }
 
         public static void ExecuteAndOk(this ITask task, params Action[] actions)
