@@ -132,6 +132,7 @@
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
@@ -161,6 +162,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\TaskExtensions.cs" />
     <Compile Include="Binding\BindOnPostbackAttribute.cs" />
     <Compile Include="Binding\CheckBoxListBinder.cs" />
     <Compile Include="Binding\CheckBoxListPersister.cs" />
@@ -175,6 +177,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Panels\BaseRenderer.cs" />
+    <Compile Include="Panels\BlankItemRenderer.cs" />
     <Compile Include="Panels\CalendarRenderer.cs" />
     <Compile Include="Panels\CheckBoxRenderer.cs" />
     <Compile Include="Panels\CheckBoxListRenderer.cs" />

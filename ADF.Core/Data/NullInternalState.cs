@@ -31,11 +31,11 @@ namespace Adf.Core.Data
         public static readonly IEnumerable<IInternalState> NullList = Enumerable.Empty<NullInternalState>();
 
         /// <summary>
-        /// Get the data of specified <see cref="ColumnDescriber"/>.
+        /// Get the data of specified <see cref="IColumn"/>.
         /// Used only for Adf.Core.IValueObject object.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>An instance of specified type.</returns>
         public T GetValue<T>(IColumn property) where T : IValueObject
         {
@@ -47,7 +47,7 @@ namespace Adf.Core.Data
         /// Returns null value.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>Null value.</returns>
         public T? GetNullable<T>(IColumn property) where T : struct
         {
@@ -58,7 +58,7 @@ namespace Adf.Core.Data
         /// Get the default data of specified type.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>Converts the specified type into default value.</returns>
         public T Get<T>(IColumn property)
         {
@@ -112,7 +112,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void Set<T>(IColumn property, T value)
         {
@@ -123,7 +123,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void SetNullable<T>(IColumn property, T? value) where T : struct
         {
@@ -134,7 +134,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void SetValue<T>(IColumn property, T value) where T : IValueObject
         {

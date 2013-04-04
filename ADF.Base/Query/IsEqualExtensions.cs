@@ -76,5 +76,10 @@ namespace Adf.Base.Query
         {
             return query.CompleteLast(Operation, true);
         }
+
+        public static Q IsTrueOrNull<Q>(this Q query) where Q : IAdfQuery
+        {
+            return query.IsNotEqualOrNull(false);
+        }
     }
 }

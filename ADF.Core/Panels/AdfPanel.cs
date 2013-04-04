@@ -9,6 +9,7 @@ namespace Adf.Core.Panels
         public int DefaultWidth { get; set;  }
         public int ItemsPerRow { get; set; }
         public bool AutoGenerateLabels { get; set; }
+        public bool AutoGenerateRows { get; set; }
 
         public AdfPanel()
         {

@@ -7,6 +7,13 @@ namespace Adf.Base.Query
     [Serializable]
     public class Where : IWhere
     {
+        public Where() {}
+
+        public Where(IColumn column)
+        {
+            Column = new Expression(column);
+        }
+
         protected PredicateType _predicate = PredicateType.And;
         protected OperatorType _operator = OperatorType.IsEqual;
         public int OpenBracket { get; set; }
@@ -14,7 +21,7 @@ namespace Adf.Base.Query
 
         public CollationType Collation { get; set; }
 
-        public IColumn Column { get; set; }
+        public IExpression Column { get; set; }
         public OperatorType Operator  { get { return _operator;  } set { _operator = value;  } }
         public Parameter Parameter  { get; set; }
         public PredicateType Predicate { get { return _predicate; } set { _predicate = value; } }

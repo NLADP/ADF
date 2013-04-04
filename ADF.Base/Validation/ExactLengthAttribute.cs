@@ -32,7 +32,7 @@ namespace Adf.Base.Validation
 		/// </returns>
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
 		{
-            if (value == null || value.ToString() == string.Empty) return ValidationResult.Success;
+            if (value == null || string.IsNullOrEmpty(value.ToString())) return ValidationResult.Success;
 		    
             return !value.ToString().HasExactLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeExactLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
 		}

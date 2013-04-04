@@ -61,6 +61,8 @@
     <Compile Include="Authorization\NoAuthorizationProvider.cs" />
     <Compile Include="Configuration\AssemblyQualifiedTypeNameConverter.cs" />
     <Compile Include="Configuration\ObjectFactoryConfigurationSection.cs" />
+    <Compile Include="Data\BusinessDescriber.cs" />
+    <Compile Include="Data\ColumnDescriber.cs" />
     <Compile Include="Data\CompositeState.cs" />
     <Compile Include="Data\DictionaryQueryHandler.cs" />
     <Compile Include="Data\DictionaryState.cs" />
@@ -95,7 +97,7 @@
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\EventLogProvider.cs" />
     <Compile Include="Logging\FlatFileLogProvider.cs" />
-    <Compile Include="Mail\DummyMailProvider.cs" />
+    <Compile Include="Mail\FileSystemMailProvider.cs" />
     <Compile Include="Mail\SmtpMailProvider.cs" />
     <Compile Include="Messaging\CsvMessageHandler.cs" />
     <Compile Include="Messaging\FixedLengthMessageHandler.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="State\NullStateProvider.cs" />
     <Compile Include="State\SimpleStateProvider.cs" />
     <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\AsyncTaskData.cs" />
     <Compile Include="Tasks\TaskExecutionExtensions.cs" />
     <Compile Include="Tasks\TaskNotFoundException.cs" />
     <Compile Include="Tasks\TaskViewExtensions.cs" />

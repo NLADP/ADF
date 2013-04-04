@@ -48,18 +48,17 @@ namespace Adf.Base.Data
 
             foreach (IWhere w in allWheres.Where(w => w.Parameter != null))
             {
-                if ((w.Parameter.Type == ParameterType.Value || w.Parameter.Type == ParameterType.QueryParameter) && 
-                    w.Parameter.Value != null)
+                if ((w.Parameter.Type == ParameterType.Value || w.Parameter.Type == ParameterType.QueryParameter) && w.Parameter.Value != null)
                 {
                     cmd.Parameters.Add(new SqlParameter(w.Parameter.Name, w.Parameter.Value));
                 }
 
-                if (w.Parameter.Type == ParameterType.ValueList)
+                if (w.Parameter.Type == ParameterType.ValueList && w.Parameter.Value != null)
                 {
                     int i = 0;
                     foreach (var v in ((IEnumerable) w.Parameter.Value))
                     {
-                        cmd.Parameters.AddWithValue(string.Format("{0}_v{1}", w.Parameter.Name, i++), v);
+                        cmd.Parameters.AddWithValue(string.Format("{0}_v{1}", w.Parameter.Name, i++), v ?? DBNull.Value);
                     }
                 }
             }

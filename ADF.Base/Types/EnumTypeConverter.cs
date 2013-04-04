@@ -24,7 +24,6 @@ namespace Adf.Base.Types
         /// <returns>Object converted to rich type.</returns>
         public T To<T>(object value)
         {
-            // TODO: check 
             return (T)Enum.Parse(typeof(T), value.ToString());
         }
 

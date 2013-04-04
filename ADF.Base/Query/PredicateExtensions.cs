@@ -8,14 +8,28 @@ namespace Adf.Base.Query
     {
         public static Q And<Q>(this Q query, IColumn column) where Q : IAdfQuery
         {
-            query.Wheres.Add(new Where { Column = column, Predicate = PredicateType.And });
+            query.Wheres.Add(new Where(column) { Predicate = PredicateType.And });
+
+            return query;
+        }
+
+        public static Q And<Q>(this Q query, IExpression expression) where Q : IAdfQuery
+        {
+            query.Wheres.Add(new Where { Column = expression, Predicate = PredicateType.And });
 
             return query;
         }
 
         public static Q Or<Q>(this Q query, IColumn column) where Q : IAdfQuery
         {
-            query.Wheres.Add(new Where { Column = column, Predicate = PredicateType.Or });
+            query.Wheres.Add(new Where(column) { Predicate = PredicateType.Or });
+
+            return query;
+        }
+
+        public static Q Or<Q>(this Q query, IExpression expression) where Q : IAdfQuery
+        {
+            query.Wheres.Add(new Where { Column = expression, Predicate = PredicateType.Or });
 
             return query;
         }
@@ -37,6 +51,11 @@ namespace Adf.Base.Query
         public static Q Where<Q>(this Q query, IColumn column) where Q : IAdfQuery
         {
             return query.And(column);
+        }
+
+        public static Q Where<Q>(this Q query, IExpression expression) where Q : IAdfQuery
+        {
+            return query.And(expression);
         }
 
         public static Q OpenBracket<Q>(this Q query, int count = 1) where Q : IAdfQuery
@@ -73,6 +92,16 @@ namespace Adf.Base.Query
 
             w.Collation = collation;
 
+            return query;
+        }
+
+        public static Q Parameter<Q>(this Q query, IColumn column, object value) where Q : IAdfQuery
+        {
+            query.Wheres.Add(new Where(column)
+                {
+                    Operator = OperatorType.IsEqual, 
+                    Parameter = new Parameter(value, ParameterType.QueryParameter) {Name = column.ColumnName}
+                });
             return query;
         }
     }

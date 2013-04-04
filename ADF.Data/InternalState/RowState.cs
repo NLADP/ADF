@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using Adf.Base.Data;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Adf.Base.Query;
 using Adf.Core.Data;
@@ -82,12 +81,12 @@ namespace Adf.Base.Data
                 foreach (var paramName in parameters)
                 {
                     newTableName = newTableName.Replace(paramName, paramName + paramExtension);
-                    var where = query.Wheres.FirstOrDefault(w => (!w.Parameter.Name.IsNullOrEmpty() ? w.Parameter.Name : w.Column.ColumnName)
+                    var where = query.Wheres.FirstOrDefault(w => (!w.Parameter.Name.IsNullOrEmpty() ? w.Parameter.Name : w.Column.Column.ColumnName)
                                                                  == paramName.Substring(1)); // Compare without @ in front
 
                     if (where != null) where.Parameter.Name = (!where.Parameter.Name.IsNullOrEmpty()
                                                                        ? where.Parameter.Name
-                                                                       : where.Column.ColumnName) + paramExtension;
+                                                                       : where.Column.Column.ColumnName) + paramExtension;
                 }
 
                 query.Tables.Insert(i, new TableDescriber(newTableName, table.DataSource));
@@ -108,12 +107,12 @@ namespace Adf.Base.Data
                 foreach(var paramName in parameters)
                 {
                     newTableName = newTableName.Replace(paramName, paramName + paramExtension);
-                    var where = query.Wheres.FirstOrDefault(w => (!w.Parameter.Name.IsNullOrEmpty() ? w.Parameter.Name : w.Column.ColumnName)
+                    var where = query.Wheres.FirstOrDefault(w => (!w.Parameter.Name.IsNullOrEmpty() ? w.Parameter.Name : w.Column.Column.ColumnName)
                                                                  == paramName.Substring(1)); // Compare without @ in front
 
                     if (where != null) where.Parameter.Name = (!where.Parameter.Name.IsNullOrEmpty()
                                                                         ? where.Parameter.Name
-                                                                        : where.Column.ColumnName) + paramExtension;
+                                                                        : where.Column.Column.ColumnName) + paramExtension;
                 }
 
                 join.JoinColumn = new ColumnDescriber(join.JoinColumn.Attribute,

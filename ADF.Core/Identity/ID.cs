@@ -36,6 +36,8 @@ namespace Adf.Core.Identity
             value = newValue;
 
             hashCode = value == null || value.ToString().Length == 0 ? 0 : value.ToString().ToUpperInvariant().GetHashCode();
+
+            if (hashCode == 0) value = null;    // is empty
         }
 
         #endregion Constructors        

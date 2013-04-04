@@ -181,7 +181,9 @@ namespace Adf.Base.Data
             {
                 ColumnDescriber column;
 
-                if (!describers.TryGetValue(reader.GetName(i), out column)) throw new InvalidOperationException("column not found: " + reader.GetName(i));
+                if (!describers.TryGetValue(reader.GetName(i), out column)) 
+                    // dont throw exception. this could be due to an added column to the database while the application is running 
+                    continue; // throw new InvalidOperationException("column not found: " + reader.GetName(i));
 
                 if (reader.HasRows)
                 {
@@ -408,7 +410,7 @@ namespace Adf.Base.Data
                 if (state.IsNew && col.Value == null) continue;         // dont specify null values when new to allow default values
 
                 q.Selects.Add(new Expression { Column = col.Key, Type = ExpressionType.Column });
-                q.Wheres.Add(new Where { Column = col.Key, Parameter = new Parameter(col.Value, ParameterType.QueryParameter) });
+                q.Wheres.Add(new Where(col.Key) { Parameter = new Parameter(col.Value, ParameterType.QueryParameter) });
             }
 
             if (!state.IsNew)

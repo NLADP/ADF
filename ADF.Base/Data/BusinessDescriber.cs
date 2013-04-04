@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Reflection;
+using Adf.Core;
 
-namespace Adf.Core.Data
+namespace Adf.Base.Data
 {
     /// <summary>
     /// Provides functionality to examine types and create <see cref="ColumnDescriber"/> 
@@ -22,7 +23,7 @@ namespace Adf.Core.Data
         /// <returns>The expected <see cref="ColumnDescriber"/>.</returns>
         /// <exception cref="System.ArgumentNullException">Name is null.</exception>
         /// <exception cref="System.Reflection.TargetException">The object does not match the target type, or a property is an instance property but obj is null.</exception>
-        public static IColumn GetColumn(Type type, string name)
+        public static ColumnDescriber GetColumn(Type type, string name)
         {
             if (type == null) return null;
 
@@ -32,7 +33,7 @@ namespace Adf.Core.Data
             if (ExcludeAttribute.IsExcluded(mi)) return null;
 
             var propertyInfo = mi as PropertyInfo;
-            if (propertyInfo != null) return propertyInfo.GetValue(null, null) as IColumn;
+            if (propertyInfo != null) return propertyInfo.GetValue(null, null) as ColumnDescriber;
 
             var fieldInfo = mi as FieldInfo;
             if (fieldInfo != null) return fieldInfo.GetValue(null) as ColumnDescriber;

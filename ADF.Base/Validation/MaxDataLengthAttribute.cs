@@ -36,7 +36,7 @@ namespace Adf.Base.Validation
         /// </returns>
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
         {
-            if (value == null || value.ToString() == string.Empty) return ValidationResult.Success;
+            if (value == null || string.IsNullOrEmpty(value.ToString())) return ValidationResult.Success;
 
             return !HasMaxDataLength(value, precision, scale)
                  ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMaxDataLengthInvalid", propertyToValidate.Name, precision, scale)

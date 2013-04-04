@@ -93,5 +93,13 @@ namespace Adf.Base.Domain
         {
             return new DomainCollection<T>(enumerable);
         }
+
+        public static void Split<T>(this IEnumerable<T> collection, Func<T, bool> predicate, out DomainCollection<T> trueList, out DomainCollection<T> falseList) where T : class, IDomainObject
+        {
+            var groups = collection.GroupBy(predicate).ToList();
+
+            trueList = new DomainCollection<T>(groups.FirstOrDefault(item => item.Key == true) ?? Enumerable.Empty<T>());
+            falseList = new DomainCollection<T>(groups.FirstOrDefault(item => item.Key == false) ?? Enumerable.Empty<T>());
+        }
     }
 }

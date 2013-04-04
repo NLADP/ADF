@@ -16,7 +16,16 @@ namespace Adf.Base.Panels
 
         private static void AddPanelItem<P>(this P panel, bool editable = true, bool optional = false, bool visible = true) where P : AdfPanel
         {
-            var row = panel.Rows.Last();
+            if (panel.AutoGenerateRows) panel.InRow();
+
+            var row = panel.Rows.LastOrDefault();
+
+            if (row == null)
+            {
+                panel.AutoGenerateRows = true;
+                panel.InRow();
+                row = panel.Rows.LastOrDefault();
+            }
 
             var panelItem = new PanelItem(row) {Editable = editable, Optional = optional, Visible = visible};
 
@@ -41,6 +50,15 @@ namespace Adf.Base.Panels
         public static P AsLabel<P>(this P panel) where P : AdfPanel
         {
             panel.LastItem().Type = PanelItemType.Label;
+
+            return panel;
+        }
+
+        public static AdfPanel ShowBlank(this AdfPanel panel)
+        {
+            panel.AddPanelItem();
+
+            panel.LastItem().Type = PanelItemType.BlankItem;
 
             return panel;
         }
@@ -81,9 +99,10 @@ namespace Adf.Base.Panels
             return panel;
         }
 
-        public static AdfPanel ShowInfoIcon<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 16, bool? mandatory = false, bool? editable = false)
+        public static AdfPanel ShowInfoIcon<TDomainObject>(this AdfPanel panel, Expression<Func<TDomainObject, object>> property, string text = null, int? width = 16, bool? mandatory = false, bool? editable = false)
         {
-            panel.CreateItem(PanelItemType.InfoIcon, property, label, width, mandatory, editable);
+            panel.CreateItem(PanelItemType.InfoIcon, property, string.Empty, width, mandatory, editable);
+            panel.LastItem().Text = text;
 
             return panel;
         }

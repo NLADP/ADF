@@ -2,8 +2,6 @@
 
 namespace Adf.Core.Domain
 {
-    // todo: make IDomainCollection generic <IDomainObject>
-
     /// <summary>
     /// Defines methods that a value type or class implements to save, sort the the collection of 
     /// DomainObjects.

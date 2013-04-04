@@ -212,5 +212,15 @@ namespace Adf.Core.Extensions
 
             return returnCols.ToArray();
         }
+
+        public static bool IsIn(this string value, StringComparison comparison, params string[] values)
+        {
+            return !value.IsNullOrEmpty() && values.Any(val => value.Equals(val, comparison));
+        }
+
+        public static bool IsIn(this string value, params string[] values)
+        {
+            return value.IsIn(StringComparison.OrdinalIgnoreCase, values);
+        }
 	}
 }
