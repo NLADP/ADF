@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Adf.Core.Tests
 {
-    [TestClass]
+    [TestClass] 
     public class StringExtensionsTest
     {
         [TestMethod]
