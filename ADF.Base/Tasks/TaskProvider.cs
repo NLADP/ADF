@@ -154,7 +154,7 @@ namespace Adf.Base.Tasks
 
         public void Home(params object[] p)
         {
-            Run(Main, ApplicationTask.Main, p);
+            Run(Main, Main.Name, p);
         }
     }
 }

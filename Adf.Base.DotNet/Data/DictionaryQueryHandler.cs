@@ -181,7 +181,9 @@ namespace Adf.Base.Data
             {
                 ColumnDescriber column;
 
-                if (!describers.TryGetValue(reader.GetName(i), out column)) throw new InvalidOperationException("column not found: " + reader.GetName(i));
+                if (!describers.TryGetValue(reader.GetName(i), out column))
+                    // dont throw exception. this could be due to an added column to the database while the application is running 
+                    continue; // throw new InvalidOperationException("column not found: " + reader.GetName(i));
 
                 if (reader.HasRows)
                 {

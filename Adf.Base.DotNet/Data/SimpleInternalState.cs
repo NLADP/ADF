@@ -107,6 +107,16 @@ namespace Adf.Base.Data
         }
 
         /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>The column value as it is.</returns>
+        public object Get(IColumn property)
+        {
+            return data[property.ColumnName];
+        }
+
+        /// <summary>
         /// Set the specified value to the key of <see cref="System.Collections.Hashtable"/>. 
         /// Here the key is specified <see cref="IColumn"/>.
         /// </summary>

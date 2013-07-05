@@ -52,6 +52,16 @@ namespace Adf.Core.Data
         }
 
         /// <summary>
+        /// Get null for the specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>Always returns null.</returns>
+        public object Get(IColumn property)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Gets or sets the new instance of <see cref="Core.Identity.ID"/> structure with empty value.
         /// </summary>
         /// <returns>An instance of <see cref="Core.Identity.ID"/> structure with empty value.</returns>

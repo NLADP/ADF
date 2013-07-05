@@ -1,4 +1,5 @@
 ﻿using Adf.Core.Test;
+using Adf.Core.Transactions;
 using Adf.Core.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -6,6 +7,8 @@ namespace Adf.Test
 {
     public abstract class BaseTest 
     {
+        private ITransactionScope _transaction;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -16,17 +19,19 @@ namespace Adf.Test
         {
             TestManager.Clear();
             ValidationManager.Clear();
+
+            _transaction = TransactionManager.New();
         }
 
         [TestCleanup]
         public void CleanupTest()
         {
-            OnCleanup();
+            OnCleanUp();
         }
 
-        protected virtual void OnCleanup()
+        protected virtual void OnCleanUp()
         {
-            
+            _transaction.Dispose();
         }
     }
 }

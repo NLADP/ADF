@@ -10,6 +10,7 @@ namespace Adf.Core.Panels
 
         public PanelRow Row { get; set; }
         public RenderItemType Type { get; set; }
+        public short Tab { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int MaxLength { get; set; }
@@ -43,6 +44,7 @@ namespace Adf.Core.Panels
             Editable = true;
             Visible = true;
             Optional = false;
+            Tab = 0;
             Label = string.Empty;
             Text = string.Empty;
             RequiresValidation = true;

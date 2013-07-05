@@ -25,14 +25,18 @@ namespace Adf.Web.Panels
 
         public object Render(PanelObject panel)
         {
-            short index = 0;
-            var table = new Table { CssClass = PanelStyle};
+            short index = panel.TabStart;
+
+            var table = new Table();
+            table.AddStyle(CssClass.Panel);
 
             int cellsperrow = panel.GetMaxItemsPerRow() * 2;
 
             foreach (var panelrow in panel.Rows)
             {
-                var row = new TableRow { CssClass = RowStyle };
+                var row = new TableRow();
+                row.AddStyle(CssClass.Row); 
+                
                 var itemcell = new TableCell();
 
                 for (int i = 0; i < panelrow.Items.Count(); i++)
@@ -42,19 +46,22 @@ namespace Adf.Web.Panels
                     var labels = RenderLabel(item);
                     var items = RenderItem(item);
 
-                    item.SetTabIndex(index += 3);
+                    item.SetTabIndex(item.Tab > 0 ? item.Tab : index += panel.TabIncrement);
+                    if (item.Tab > 0) index += panel.TabIncrement;
 
                     if (!item.AttachToPrevious)
                     {
                         if (!item.Label.IsNullOrEmpty())
                         {
                             var labelcell = new TableCell();
+                            labelcell.AddStyle(CssClass.Cell);
 
                             labelcell.Controls.AddRange(labels);
                             row.Controls.Add(labelcell);
                         }
 
                         itemcell = new TableCell();
+                        itemcell.AddStyle(CssClass.Cell);
                     }
 
                     itemcell.Controls.AddRange(items);

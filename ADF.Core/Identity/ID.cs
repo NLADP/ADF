@@ -36,10 +36,12 @@ namespace Adf.Core.Identity
             value = newValue;
 
             hashCode = value == null || value.ToString().Length == 0 ? 0 : value.ToString().ToUpperInvariant().GetHashCode();
+
+            if (hashCode == 0) value = null;    // is empty
         }
 
-        #endregion Constructors        
-        
+        #endregion Constructors
+
         #region Operators
 
         /// <summary>
@@ -52,18 +54,10 @@ namespace Adf.Core.Identity
         /// </returns>
         public static bool operator ==(ID x, ID y)
         {
-            // If both are null, or both are same instance, return true.
-//            if (ReferenceEquals(x, y))
-//                return true;
-            if (x.Value == null && y.Value == null)
-                return true;
-
-            // If one is null, but not both, return false.
-            if ((x.Value == null) || ( y.Value == null))
-                return false;
-
-            return  x.hashCode == y.hashCode &&  // performance & memory optimization
-                    x.Value.ToString().Equals(y.Value.ToString(), StringComparison.OrdinalIgnoreCase);  // equal hashes could also be a hash collision, so be sure that those are equal
+            // performance & memory optimization
+            return x.hashCode == y.hashCode &&
+                   (x.hashCode == 0 ||
+                    x.value.ToString().Equals(y.value.ToString(), StringComparison.OrdinalIgnoreCase));  // equal hashes could also be a hash collision, so be sure that those are equal
         }
 
         /// <summary>
@@ -92,7 +86,7 @@ namespace Adf.Core.Identity
             if (obj == null || !(obj is ID))
                 return false;
 
-            return (this == (ID) obj);
+            return (this == (ID)obj);
         }
 
         /// <summary>

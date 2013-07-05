@@ -8,22 +8,17 @@ namespace Adf.Base.Validation
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
     public sealed class EmptySelectItemAttribute : Attribute
     {
-        private readonly string emptySelectItem;
-
         public EmptySelectItemAttribute()
         {
-            emptySelectItem = null;
+            EmptySelectItem = null;
         }
 
         public EmptySelectItemAttribute(string emptySelectItem)
         {
-            this.emptySelectItem = emptySelectItem;
+            EmptySelectItem = emptySelectItem;
         }
 
-        public string EmptySelectItem
-        {
-            get { return emptySelectItem; }
-        }
+        public string EmptySelectItem { get; private set; }
     }
 }
 

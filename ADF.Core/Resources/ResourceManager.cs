@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Adf.Core.Objects;
+using Adf.Core.Extensions;
 using Adf.Core.State;
 
 namespace Adf.Core.Resources
@@ -78,6 +79,14 @@ namespace Adf.Core.Resources
         public static string GetString(string key)
         {
             return GetString(key, CultureInfo.CurrentUICulture);
+        }
+    }
+
+    public static class ResourceExtensions
+    {
+        public static string GetString(this string key)
+        {
+            return key.IsNullOrEmpty() ? key : ResourceManager.GetString(key);
         }
     }
 }

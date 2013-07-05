@@ -30,8 +30,8 @@ namespace Adf.Core.Extensions
                 return longWord;
 
             //Check for words longer than maxWordWidh characters
-            StringBuilder myWords = new StringBuilder();
-            foreach (string word in longWord.Split(' '))
+            var myWords = new StringBuilder();
+            foreach (var word in longWord.Split(' '))
             {
                 if (myWords.Length > 0)
                     myWords.Append(" ");
@@ -57,7 +57,7 @@ namespace Adf.Core.Extensions
             if (value.Length <= maximumWidth)
                 return value;
 
-            StringBuilder newString = new StringBuilder();
+            var newString = new StringBuilder();
 
             newString.Append(value.Substring(0, maximumWidth));
             newString.Append(" ");
@@ -141,11 +141,14 @@ namespace Adf.Core.Extensions
             if (value.IsNullOrEmpty()) return value;
 
             var values = value.Split(' ');
-            
-            return values.Aggregate(string.Empty, (current, word) => current + (word.Substring(0, 1).ToUpper() + word.Substring(1) + " ")).TrimEnd();
-        }    
-	
-		public static string Left(this string origin, int length)
+
+            return
+                values.Aggregate(string.Empty,
+                                 (current, word) => current + (word.Substring(0, 1).ToUpper() + word.Substring(1) + " "))
+                      .TrimEnd();
+        }
+
+        public static string Left(this string origin, int length)
         {
             return (origin.Length <= length) ? origin : origin.Substring(0, length);
         }
@@ -155,8 +158,8 @@ namespace Adf.Core.Extensions
             if (origin.IsNullOrEmpty()) return origin;
 
             if (origin.Length > 1 &&
-               origin.StartsWith(surroundingChar.ToString()) &&
-               origin.EndsWith(surroundingChar.ToString()))
+                origin.StartsWith(surroundingChar.ToString()) &&
+                origin.EndsWith(surroundingChar.ToString()))
                 return origin.Substring(1, origin.Length - 2);
 
             return origin;
@@ -167,7 +170,7 @@ namespace Adf.Core.Extensions
             if (line.IsNullOrEmpty()) return new string[0];
 
             var returnCols = new List<string>();
-            var columns = line.Split(new [] { separator }, StringSplitOptions.None);
+            var columns = line.Split(new[] {separator}, StringSplitOptions.None);
 
             string currentColumn = string.Empty;
 
@@ -197,7 +200,8 @@ namespace Adf.Core.Extensions
 
             return returnCols.ToArray();
         }
-      public static bool IsIn(this string value, params string[] p)
+
+        public static bool IsIn(this string value, params string[] p)
         {
             if (p == null || p.Length == 0) return false;
 
@@ -225,5 +229,21 @@ namespace Adf.Core.Extensions
             return origin.Contains(toggle) ? origin.Replace(toggle, "") : string.Format(format, origin, toggle);
         }
 
-	}
+        public static bool ContainsOneOf(this string value, params string[] toCheck)
+        {
+            if (value.IsNullOrEmpty() || toCheck == null) return false;
+
+            return toCheck.Any(value.Contains);
+        }
+
+        public static string FormatAndJoin(this IEnumerable<string> elements, string format = "{0}", string separator = " ")
+        {
+            return String.Join(separator, elements.Select(e => string.Format(format, e)));
+        }
+
+        public static string FormatOrEmpty(this string format, params object[] parms)
+        {
+            return parms.Any(p => p == null || p.ToString() == string.Empty) ? string.Empty : string.Format(format, parms);
+        }
+    }
 }

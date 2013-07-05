@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -16,16 +15,10 @@ namespace Adf.Core.Validation
     /// warning or success, to get the affected property of the ValidationResult, to create error, 
     /// warning, informational ValidationResult with the specified message etc.
     /// </summary>
-    [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
-    [Serializable]
     public struct ValidationResult
     {
-        private static readonly ValidationResult _successObject = new ValidationResult(ValidationResultSeverity.Success, string.Empty, null);
-
-        private readonly ValidationResultSeverity _severity;
-        private readonly string _message;
+        private static readonly ValidationResult _success = new ValidationResult(ValidationResultSeverity.Success, string.Empty, null);
         private readonly object[] _args;
-        private readonly PropertyInfo _property;
 
         /// <summary>
         /// Initializes an instance of the <see cref="ValidationResult"/> class with the specified 
@@ -35,12 +28,17 @@ namespace Adf.Core.Validation
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="property">The property of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
-        private ValidationResult(ValidationResultSeverity severity, string message, PropertyInfo property, params object[] args)
+        private ValidationResult(ValidationResultSeverity severity, string message, PropertyInfo property, params object[] args) : this()
         {
-            _severity = severity;
-            _message = ResourceManager.GetString(StateManager.Settings[message].ToString(), CultureInfo.CurrentUICulture); 
-            _property = property;
+            Severity = severity;
+            Message = ResourceManager.GetString(StateManager.Settings[message].ToString(), CultureInfo.CurrentUICulture); 
+            AffectedProperty = property;
             _args = args;
+        }
+
+        static ValidationResult()
+        {
+            
         }
         
         /// <summary>
@@ -52,8 +50,7 @@ namespace Adf.Core.Validation
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentUICulture, _message, _args);
-//            return string.Format(CultureInfo.InvariantCulture, _message, _args);
+            return string.Format(CultureInfo.CurrentUICulture, Message, _args);
         }
 
         public string Title
@@ -61,7 +58,6 @@ namespace Adf.Core.Validation
             get { return ToString(); }
         }
 
-        
         /// <summary>
         /// Gets a <see cref="ValidationResult"/> with the <see cref="ValidationResultSeverity"/>
         /// as 'Success', empty message and no property.
@@ -70,19 +66,13 @@ namespace Adf.Core.Validation
         /// A <see cref="ValidationResult"/> with the <see cref="ValidationResultSeverity"/>
         /// as 'Success', empty message and no property.
         /// </returns>
-        public static ValidationResult Success
-        {
-            get { return new ValidationResult(ValidationResultSeverity.Success, string.Empty, null); }
-        }
+        public static ValidationResult Success { get { return _success; } }
 
         /// <summary>
         /// Gets the <see cref="ValidationResultSeverity"/> of the <see cref="ValidationResult"/>.
         /// </summary>
         /// <returns>The <see cref="ValidationResultSeverity"/> of the <see cref="ValidationResult"/>.</returns>
-        public ValidationResultSeverity Severity
-        {
-            get { return _severity; }
-        }
+        public ValidationResultSeverity Severity { get; private set; }
 
         /// <summary>
         /// Gets the massage of the <see cref="ValidationResult"/>.
@@ -90,10 +80,7 @@ namespace Adf.Core.Validation
         /// <returns>
         /// The massage of the <see cref="ValidationResult"/>.
         /// </returns>
-        public string Message
-        {
-            get { return _message; }
-        }
+        public string Message { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="ValidationResultSeverity"/> of the 
@@ -103,7 +90,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResult"/> is 'Error'; otherwise, false.</returns>
         public bool IsError
         {
-            get { return _severity == ValidationResultSeverity.Error; }
+            get { return Severity == ValidationResultSeverity.Error; }
         }
 
         /// <summary>
@@ -114,7 +101,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResult"/> is 'Warning'; otherwise, false.</returns>
         public bool IsWarning
         {
-            get { return _severity == ValidationResultSeverity.Warning; }
+            get { return Severity == ValidationResultSeverity.Warning; }
         }
 
         /// <summary>
@@ -136,7 +123,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResult"/> is 'Success'; otherwise, false.</returns>
         public bool IsSuccess
         {
-            get { return _severity == ValidationResultSeverity.Success; }
+            get { return Severity == ValidationResultSeverity.Success; }
         }
 
         /// <summary>
@@ -145,10 +132,7 @@ namespace Adf.Core.Validation
         /// <returns>
         /// The affected property of the <see cref="ValidationResult"/>.
         /// </returns>
-        public PropertyInfo AffectedProperty
-        {
-            get { return _property; }
-        }
+        public PropertyInfo AffectedProperty { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ValidationResult"/> with the 
@@ -197,6 +181,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
+        /// <param name="expression"></param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>
@@ -217,6 +202,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
+        /// <param name="expression"></param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>
@@ -237,6 +223,7 @@ namespace Adf.Core.Validation
         /// <see cref="ValidationResultSeverity"/> as 'Error' using the specified property, message 
         /// and arguments.
         /// </summary>
+        /// <param name="expression"></param>
         /// <param name="message">The message of the <see cref="ValidationResult"/>.</param>
         /// <param name="args">The arguments of the <see cref="ValidationResult"/>.</param>
         /// <returns>

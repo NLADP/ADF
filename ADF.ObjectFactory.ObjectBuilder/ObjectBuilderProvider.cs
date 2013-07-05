@@ -113,7 +113,7 @@ namespace Adf.ObjectFactory.ObjectBuilder
             return BuildAll<TServiceType>(false);
         }
 
-        public void Register<TInterface, TImplementation>(string instanceName = null)
+        public void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface
         {
             throw new NotSupportedException();
         }

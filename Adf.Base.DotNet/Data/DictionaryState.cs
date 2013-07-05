@@ -8,6 +8,7 @@ using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
 using Adf.Core.Identity;
+using Adf.Core.Types;
 
 namespace Adf.Base.Data
 {
@@ -115,9 +116,9 @@ namespace Adf.Base.Data
 
             if (typeof(T).IsNullable()) return (T)new NullableConverter(typeof(T)).ConvertFrom(value);
             if (typeof(T).IsValueObject()) return (T)Activator.CreateInstance(typeof(T), value);
-            if (value.GetType().IsValueObject()) value = ((IValueObject) value).Value;
+            if (value.GetType().IsValueObject()) value = ((IValueObject)value).Value;
 
-            if ((value is string && (!string.IsNullOrEmpty((string) value))) || typeof(T) == typeof(string))
+            if ((value is string && (!string.IsNullOrEmpty((string)value))) || typeof(T) == typeof(string))
             {
                 return (T)Convert.ChangeType(value, typeof(T));
             }
@@ -133,6 +134,20 @@ namespace Adf.Base.Data
         }
 
         /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>The column value as it is.</returns>
+        public object Get(IColumn property)
+        {
+            object value;
+
+            TryGetValue(property, out value);
+
+            return value;
+        }
+
+        /// <summary>
         /// Set the specified value to the key. 
         /// Here the key is specified <see cref="IColumn"/>.
         /// </summary>
@@ -143,7 +158,7 @@ namespace Adf.Base.Data
         {
             if (!ContainsKey(property) || !PropertyHelper.IsEqual(Get<T>(property), value))
             {
-                this[property] = (typeof(T).IsValueObject()) ? ((IValueObject)value).IsEmpty ? null : ((IValueObject)value).Value : value;
+                this[property] = Converter.ToPrimitive(value);
 
                 NotifyChange(property);
             }

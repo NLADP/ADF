@@ -167,5 +167,12 @@ namespace Adf.Base.State
 			throw new NotSupportedException();
 		}
 
+        /// <summary>
+        /// Removes all values from the state
+        /// </summary>
+        public void Clear()
+        {
+            throw new NotSupportedException();
+        }
 	}
 }

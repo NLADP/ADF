@@ -256,5 +256,28 @@ namespace Adf.Core.Validation
         }
 
         #endregion
+
+        public static bool Execute(params Action[] actions)
+        {
+            return Execute(true, actions);
+        }
+
+        public static bool Execute(bool handleErrors, params Action[] actions)
+        {
+            foreach (var action in actions)
+            {
+                action.Invoke();
+
+                if (IsSucceeded) continue;
+
+                if (handleErrors)
+                {
+                    Handle();
+                }
+                return false;
+            }
+
+            return true;
+        }
     }
 }

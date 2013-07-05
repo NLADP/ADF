@@ -173,11 +173,23 @@ namespace Adf.Base.Messaging
                     currentPosition++;
                 }
 
-                columns.Add(GetValueForField(fieldDefinition, state));
+                columns.Add(FormatFieldValue(GetValueForField(fieldDefinition, state), recordDefinition.FieldSeparator));
                 currentPosition++;
             }
 
             return string.Join(recordDefinition.FieldSeparator, columns);
+        }
+
+        private static string FormatFieldValue(string value, string separator)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+
+            value = value.Replace("\"", "\"\"");
+
+            if (value.ContainsOneOf("\n", "\"", separator) || value.StartsWith(" ") || value.EndsWith(" "))
+                return string.Format("\"{0}\"", value);
+
+            return value;
         }
 
         private static string GetValueForField(FieldDefinition fieldDefinition, IInternalState state)

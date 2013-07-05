@@ -133,5 +133,12 @@ namespace Adf.Base.State
 			throw new NotImplementedException();
 		}
 
+        /// <summary>
+        /// Removes all values from the state
+        /// </summary>
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
 	}
 }

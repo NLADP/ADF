@@ -247,6 +247,18 @@ namespace Adf.Data.InternalState
         }
 
         /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>The column value as it is.</returns>
+        public object Get(IColumn property)
+        {
+            object value = GetCell(property);
+
+            return value is DBNull ? null : value;
+        }
+
+        /// <summary>
         /// Set the specified value to the column of <see cref="System.Data.DataRow"/>.
         /// Here the column is specified <see cref="ColumnDescriber"/>.
         /// </summary>

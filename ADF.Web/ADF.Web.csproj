@@ -123,6 +123,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Bin\Reference\AjaxControlToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Bin\Reference\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -135,6 +138,7 @@
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
@@ -162,6 +166,8 @@
     <Compile Include="Binding\BindOnPostbackAttribute.cs" />
     <Compile Include="Binding\CheckBoxListBinder.cs" />
     <Compile Include="Binding\CheckBoxListPersister.cs" />
+    <Compile Include="Binding\ControlBindingExtensions.cs" />
+    <Compile Include="Binding\RepeaterBinder.cs" />
     <Compile Include="Binding\TreeViewPersister.cs" />
     <Compile Include="Binding\TreeViewBinder.cs" />
     <Compile Include="Binding\LinkButtonBinder.cs" />
@@ -172,10 +178,15 @@
     <Compile Include="Binding\RadioButtonListBinder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Download\DownloadManager.cs" />
+    <Compile Include="Download\IDownloadFile.cs" />
+    <Compile Include="Extensions\WebExtensions.cs" />
+    <Compile Include="MediaTypeNames.cs" />
     <Compile Include="Panels\BaseRenderer.cs" />
     <Compile Include="Panels\CalendarRenderer.cs" />
     <Compile Include="Panels\CheckBoxRenderer.cs" />
     <Compile Include="Panels\CheckBoxListRenderer.cs" />
+    <Compile Include="Panels\ColorRenderer.cs" />
     <Compile Include="Panels\PanelRenderExtension.cs" />
     <Compile Include="Panels\RadioButtonListRenderer.cs" />
     <Compile Include="Panels\DropDownRenderer.cs" />
@@ -236,6 +247,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="State\SerializableWebStateProvider.cs" />
     <Compile Include="State\WebStateProvider.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -244,15 +256,16 @@
     <Compile Include="Styling\NullStyler.cs" />
     <Compile Include="Styling\SmartPanelDefaultStyler.cs" />
     <Compile Include="Styling\SmartPanelErrorStyler.cs" />
-    <Compile Include="UI\Buttons\SmartButton.cs" />
     <Compile Include="UI\ControlExtensions.cs" />
     <Compile Include="UI\DropDownTreeView.cs" />
     <Compile Include="UI\Extensions\WebControlExtensions.cs" />
+    <Compile Include="UI\MenuRenderExtensions.cs" />
     <Compile Include="UI\MessageImageButton.cs" />
     <Compile Include="UI\GenericComparer.cs" />
     <Compile Include="UI\Minifier.cs" />
     <Compile Include="UI\PanelControl.cs" />
     <Compile Include="UI\RowSelectorColumn.cs" />
+    <Compile Include="UI\SmartButton.cs" />
     <Compile Include="UI\SmartPanel\BasePanelItem.cs" />
     <Compile Include="UI\SmartPanel\BlankItem.cs" />
     <Compile Include="UI\SmartPanel\CheckBoxItem.cs" />
@@ -286,6 +299,7 @@
     <Compile Include="UI\SmartView\AccountField.cs" />
     <Compile Include="UI\SmartView\BoolField.cs" />
     <Compile Include="UI\SmartView\CheckBoxField.cs" />
+    <Compile Include="UI\SmartView\TrueOnlyBoolField.cs" />
     <Compile Include="UI\SmartView\FormatEventArgs.cs" />
     <Compile Include="UI\SmartView\SmartViewFooter.cs" />
     <Compile Include="UI\SmartView\TextButton.cs" />
@@ -318,6 +332,7 @@
     <Compile Include="UI\SpecializedTextboxes\NumericTextBox.cs" />
     <Compile Include="UI\SpecializedTextboxes\SignedIntegerTextBox.cs" />
     <Compile Include="UI\SpecializedTextboxes\UnsignedIntegerTextBox.cs" />
+    <Compile Include="UI\SmartText.cs" />
     <Compile Include="UI\WebStyler.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -383,9 +398,7 @@
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -136,5 +136,12 @@ namespace Adf.Web.State
 				HttpContext.Current.Session.Remove(o.ToString());
 		}
 
+        /// <summary>
+        /// Removes all values from the state
+        /// </summary>
+        public void Clear()
+        {
+            HttpContext.Current.Session.Clear();
+        }
 	}
 }

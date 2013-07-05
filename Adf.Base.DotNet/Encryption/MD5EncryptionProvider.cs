@@ -6,7 +6,7 @@ namespace Adf.Base.Encryption
 {
     public class MD5EncryptionProvider : IEncryptionProvider
     {
-            public string Encrypt(string value)
+        public string Encrypt(string value, params object[] p)
             {
                 MD5 md5Hasher = MD5.Create();
                 byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(value));
@@ -19,5 +19,10 @@ namespace Adf.Base.Encryption
 
                 return sBuilder.ToString();
             }
+
+        public string Decrypt(string value, params object[] p)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

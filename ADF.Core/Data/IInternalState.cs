@@ -48,6 +48,13 @@ namespace Adf.Core.Data
         T Get<T>(IColumn property);
 
         /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns></returns>
+        object Get(IColumn property);
+
+        /// <summary>
         /// Set the specified value to the column.
         /// Here the column is specified <see cref="IColumn"/>.
         /// </summary>

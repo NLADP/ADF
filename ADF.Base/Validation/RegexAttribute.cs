@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Adf.Core;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
@@ -11,15 +12,13 @@ namespace Adf.Base.Validation
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
     public sealed class RegexAttribute : Attribute, IPropertyValidator
 	{
-		private string expression;
-
-		/// <summary>
+	    /// <summary>
         /// Creates a new <see cref="RegexAttribute"/> with the supplied expression.
 		/// </summary>
 		/// <param name="expression">The supplied expression.</param>
 		public RegexAttribute(string expression)
 		{
-			this.expression = expression;
+			this.Expression = expression;
 		}
 
 		/// <summary>
@@ -31,26 +30,18 @@ namespace Adf.Base.Validation
 		/// <returns>
         /// 	<c>true</c> if the specified value is valid; otherwise, <c>false</c>.
 		/// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "Adf.Core.ValidationResult.CreateError(System.String,System.Object[])")]
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
 		{
-            if (value == null) 
-//                return ValidationResult.CreateError(property, "Adf.Business.AttributeRegexNull", property.Name);
-                // this is not a NonEmpty attribute!
-                return ValidationResult.Success;
+            if (value == null) return ValidationResult.Success;
 
-            if (!Regex.IsMatch(value.ToString(), expression))
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeRegexInvalid", propertyToValidate.Name);
-		    
-		    return ValidationResult.Success;
+            return !Regex.IsMatch(value.ToString(), Expression) 
+                ? ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeRegexInvalid, propertyToValidate.Name) 
+                : ValidationResult.Success;
 		}
-	    
-        /// <summary>
-        /// Returns the regular expression.
-        /// </summary>
-	    public string Expression
-	    {
-	        get{return expression;}
-	    }
+
+	    /// <summary>
+	    /// Returns the regular expression.
+	    /// </summary>
+	    public string Expression { get; private set; }
 	}
 }

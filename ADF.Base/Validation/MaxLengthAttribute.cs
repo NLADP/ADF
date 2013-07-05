@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Extensions;
 using Adf.Core.Validation;
 
@@ -11,15 +12,13 @@ namespace Adf.Base.Validation
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
 	public sealed class MaxLengthAttribute : Attribute, IPropertyValidator
 	{
-		private readonly int length;
-
-		/// <summary>
+	    /// <summary>
 		/// Creates a new <see cref="MaxLengthAttribute"/> instance with the supplied length.
 		/// </summary>
 		/// <param name="length">The supplied length.</param>
 		public MaxLengthAttribute(int length)
 		{
-			this.length = length;
+			this.Length = length;
 		}
 
 		/// <summary>
@@ -34,15 +33,14 @@ namespace Adf.Base.Validation
 		{
             if (value == null) return ValidationResult.Success;
 		    
-            return !value.ToString().HasMaxLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMaxLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
+            return !value.ToString().HasMaxLength(Length) 
+                ? ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeMaxLengthInvalid, propertyToValidate.Name, Length) 
+                : ValidationResult.Success;
 		}
-	    
-        /// <summary>
-        /// Returns the maximum length.
-        /// </summary>
-	    public int Length
-	    {
-	        get{return (int)length;}
-	    }
+
+	    /// <summary>
+	    /// Returns the maximum length.
+	    /// </summary>
+	    public int Length { get; private set; }
 	}
 }

@@ -51,6 +51,16 @@ namespace Adf.Base.Data
             return Converter.To<T>(Infos[property.ColumnName].GetValue(this, null));
         }
 
+        /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>The column value as it is.</returns>
+        public object Get(IColumn property)
+        {
+            return Infos[property.ColumnName].GetValue(this, null);
+        }
+
         public void Set<T>(IColumn property, T value)
         {
             Infos[property.ColumnName].SetValue(this, Converter.ToPrimitive(value), null);

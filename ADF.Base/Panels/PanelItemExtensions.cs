@@ -89,9 +89,23 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static PanelObject ShowNonEditable<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null)
+        {
+            panel.CreateItem(RenderItemType.NonEditableText, property, label, width, false, false);
+
+            return panel;
+        }
+
         public static PanelObject ShowCheckBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.CheckBox, property, label, width, mandatory, editable);
+
+            return panel;
+        }
+
+        public static PanelObject ShowColorPicker<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(RenderItemType.ColorPicker, property, label, width, mandatory, editable);
 
             return panel;
         }
@@ -106,6 +120,7 @@ namespace Adf.Base.Panels
         public static PanelObject ShowInfoIcon<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 16, bool? mandatory = false, bool? editable = false)
         {
             panel.CreateItem(RenderItemType.InfoIcon, property, label, width, mandatory, editable);
+            panel.WithPrevious();
 
             return panel;
         }
@@ -328,5 +343,27 @@ namespace Adf.Base.Panels
 
             return panel;
         }
+
+        public static P Tab<P>(this P panel, short tabindex) where P : PanelObject
+        {
+            panel.LastItem().Tab = tabindex;
+
+            return panel;
+        }
+
+
+        public static PanelObject WithTab(this PanelObject panel, short tabstart)
+        {
+            return panel.WithTab(tabstart, panel.TabIncrement);
+        }
+
+        public static PanelObject WithTab(this PanelObject panel, short tabstart, short tabincrement)
+        {
+            panel.TabStart = tabstart;
+            panel.TabIncrement = tabincrement;
+
+            return panel;
+        }
+
     }
 }

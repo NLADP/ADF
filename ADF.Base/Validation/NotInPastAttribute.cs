@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
@@ -18,14 +19,13 @@ namespace Adf.Base.Validation
         /// <returns>
         /// 	<c>true</c> if the specified value is valid; otherwise, <c>false</c>.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Convert.ToDateTime(System.String)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "Adf.Core.ValidationResult.CreateError(System.String,System.Object[])")]
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
 		{
 
             if (!(value is DateTime)) throw new ArgumentException("value for NotInPastAttribute is not a DateTime");
 
             return !(Convert.ToDateTime(value.ToString()) >= DateTime.Now) 
-                ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeNotInPastInvalid", propertyToValidate.Name) 
+                ? ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeNotInPastInvalid, propertyToValidate.Name) 
                 : ValidationResult.Success;
 		}
 	}

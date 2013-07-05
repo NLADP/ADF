@@ -47,5 +47,10 @@ namespace Adf.Core.State
 
             return value == null || key == value as string ? defaultValue : (T)Convert.ChangeType(value, typeof(T), null);
         }
+
+        public static string Format(this IStateProvider provider, string key, params object[] p)
+        {
+            return string.Format(provider[key].ToString(), p);
+        }
     }
 }

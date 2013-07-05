@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Adf.Base.Query;
+using Adf.Core;
 using Adf.Core.Data;
 using Adf.Core.Logging;
 using Adf.Core.Query;
@@ -20,6 +21,10 @@ namespace Adf.Base.Data
     /// </summary>
     public class SqlProvider : IDataProvider
     {
+        private const string SourceTable = "Table";
+        private const string ConnectionSqlserver = "Connection.SqlServer";
+        private const string Transaction = "Transaction";
+
         /// <summary>
         /// Gets the Sql Server data source type of <see cref="DataSourceType"/>.
         /// </summary>
@@ -106,7 +111,7 @@ namespace Adf.Base.Data
         /// <param name="connection">The connection to set.</param>
         protected static void SetConnection(DataSources dataSource, IDbConnection connection)
         {
-            StateManager.Personal[dataSource, "Connection.SqlServer"] = connection;
+            StateManager.Personal[dataSource, ConnectionSqlserver] = connection;
         }
 
         /// <summary>
@@ -147,7 +152,7 @@ namespace Adf.Base.Data
 
             if (query != null)
             {
-                da.TableMappings.Add("Table", query.LeadTable());
+                da.TableMappings.Add(SourceTable, query.LeadTable());
 
                 var selectCommand = (SqlCommand) GetCommand(datasource, connection, query);
                 
@@ -180,17 +185,17 @@ namespace Adf.Base.Data
 
             if (exception is DBConcurrencyException)
             {
-                ValidationManager.AddError("Adf.Data.UnderlyingDataChanged", query.LeadTable());
+                ValidationManager.AddError(Config.Data.UnderlyingDataChanged, query.LeadTable());
             }
             else if (exception is SqlException)
             {
                 switch ((exception as SqlException).Number)
                 {
                     case 547: 
-                        ValidationManager.AddError("Adf.Data.ForeignKeyConstraintsViolated", query.LeadTable());
+                        ValidationManager.AddError(Config.Data.ForeignKeyConstraintsViolated, query.LeadTable());
                         break;
                     case -2:
-                        ValidationManager.AddError("Adf.Data.Timeout", query.LeadTable());
+                        ValidationManager.AddError(Config.Data.Timeout, query.LeadTable());
                         break;
                     default:
                         throw new DataException(exception.Message, exception);
@@ -212,7 +217,7 @@ namespace Adf.Base.Data
         {
             var sqlAdapter = adapter as SqlDataAdapter;
             
-            if (sqlAdapter == null) throw new InvalidOperationException("Not a SqlDataAdapter");
+            if (sqlAdapter == null) throw new InvalidOperationException(Config.Data.NotASqlAdatper);
 
             return sqlAdapter.Update(dataRows);
         }
@@ -226,7 +231,7 @@ namespace Adf.Base.Data
         /// <returns>The <see cref="System.Data.IDbTransaction"/> object for the currently executing transaction.</returns>
         public virtual IDbTransaction GetTransaction(DataSources source)
         {
-            return StateManager.Personal[source, "Transaction"] as IDbTransaction;
+            return StateManager.Personal[source, Transaction] as IDbTransaction;
         }
 
         /// <summary>
@@ -236,7 +241,7 @@ namespace Adf.Base.Data
         /// <param name="transaction">The <see cref="System.Data.IDbTransaction"/> represents a transaction to be performed at a data source.</param>
         public static void SetTransaction(DataSources source, IDbTransaction transaction)
         {
-            StateManager.Personal[source, "Transaction"] = transaction;
+            StateManager.Personal[source, Transaction] = transaction;
         }
 
         /// <summary>
@@ -245,7 +250,7 @@ namespace Adf.Base.Data
         /// <param name="source">The <see cref="DataSources"/> used to get the data source name.</param>
         public static void ResetTransaction(DataSources source)
         {
-            StateManager.Personal[source, "Transaction"] = null;
+            StateManager.Personal[source, Transaction] = null;
         }
 
         /// <summary>

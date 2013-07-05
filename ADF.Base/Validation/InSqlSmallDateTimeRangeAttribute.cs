@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
@@ -11,10 +12,13 @@ namespace Adf.Base.Validation
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
 	public sealed class InSqlSmallDateTimeRangeAttribute : Attribute, IPropertyValidator
 	{
-        private readonly DateTime min = new DateTime(1900, 1, 1);
-        private readonly DateTime max = new DateTime(2079, 6, 6);
+	    public InSqlSmallDateTimeRangeAttribute()
+	    {
+	        Min = new DateTime(1900, 1, 1);
+	        Max = new DateTime(2079, 6, 6);
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Determines whether the specified value is valid for the supplied property. 
         /// </summary>
         /// <param name="propertyToValidate">The supplied property.</param>
@@ -31,33 +35,27 @@ namespace Adf.Base.Validation
 
             if (!(value is DateTime))
             {
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeInRangeInvalid", propertyToValidate.Name);
+                return ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeInRangeInvalid, propertyToValidate.Name);
             }
 
             var newValue = (DateTime) value;
 
-            if (min > newValue || max < newValue)
+            if (Min > newValue || Max < newValue)
             {
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeInRangeInvalidRange", propertyToValidate.Name, min, max);
+                return ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeInRangeInvalidRange, propertyToValidate.Name, Min, Max);
             }
             
             return ValidationResult.Success;
         }
 
-        /// <summary>
-        /// Returns the maximum value.
-        /// </summary>
-        public DateTime Max
-	    {
-            get { return max; }
-	    }
+	    /// <summary>
+	    /// Returns the maximum value.
+	    /// </summary>
+	    public DateTime Max { get; private set; }
 
-        /// <summary>
-        /// Returns the minimum value.
-        /// </summary>
-        public DateTime Min
-	    {
-            get { return min; }
-	    }
+	    /// <summary>
+	    /// Returns the minimum value.
+	    /// </summary>
+	    public DateTime Min { get; private set; }
 	}
 }

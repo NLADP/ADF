@@ -80,12 +80,12 @@ namespace Adf.Web.Panels
             }
             if (panelItem.Type == RenderItemType.Label)
             {
-                var text = new Label { ID = panelItem.GetId(), Enabled = panelItem.Editable, Width = new Unit(panelItem.Width, UnitType.Ex), Text = (!panelItem.Text.IsNullOrEmpty() ? panelItem.Text : string.Empty), Visible = panelItem.Visible };
+                var text = new Label { ID = panelItem.GetId(), Enabled = false, Width = new Unit(panelItem.Width, UnitType.Ex), Text = (!panelItem.Text.IsNullOrEmpty() ? panelItem.Text : string.Empty), Visible = panelItem.Visible };
 
                 text
                     .AddStyle(CssClass.Item)
-                    .AttachToolTip(panelItem)
-                    .ToggleStyle(panelItem.Editable, CssClass.Editable, CssClass.ReadOnly);
+                    .AddStyle(CssClass.ReadOnly)
+                    .AttachToolTip(panelItem);
 
                 panelItem.Target = text;
 

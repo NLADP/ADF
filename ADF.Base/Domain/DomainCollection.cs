@@ -16,7 +16,8 @@ namespace Adf.Base.Domain
     /// <typeparam name="T">The Type of <see cref="DomainObject"/>s.</typeparam>
     [Serializable]
     public class DomainCollection<T> : KeyedCollection<ID, T>, IDomainCollection<T> where T : class, IDomainObject
-    {
+    { 
+
         #region Constructors
 
         public DomainCollection(IEnumerable<T> items = null)
@@ -223,5 +224,6 @@ namespace Adf.Base.Domain
         }
 
         #endregion Sorting
+
     }
 }

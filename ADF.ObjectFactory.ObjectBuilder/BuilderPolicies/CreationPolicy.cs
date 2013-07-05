@@ -33,7 +33,7 @@ namespace Adf.ObjectFactory.ObjectBuilder.BuilderPolicies
                     Type fullType = genericList.MakeGenericType(parms[i].ParameterType.GetGenericArguments()[0]);
                     parmsValueArray[i] = Activator.CreateInstance(fullType);
 
-                    foreach (object o in Core.Objects.ObjectFactory.BuildAll(parms[i].ParameterType.GetGenericArguments()[0]))
+                    foreach (object o in Core.Objects.ObjectFactory.BuildAll(parms[i].ParameterType.GetGenericArguments()[0], true))
                     {
                         ((IList)parmsValueArray[i]).Add(o);
                     }

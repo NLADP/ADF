@@ -7,7 +7,7 @@ using Adf.Core.Validation;
 
 namespace Adf.Base.Mail
 {
-    class DummyMailProvider : IMailProvider
+    public class DummyMailProvider : IMailProvider
     {
         /// <summary>
         /// Send a message to the 'MailDumpLocation', which indicates the PickupDirectory
@@ -21,7 +21,7 @@ namespace Adf.Base.Mail
                 var client = new SmtpClient
                 {
                     DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-                    PickupDirectoryLocation = StateManager.Settings["MailDumpLocation"].ToString()
+                    PickupDirectoryLocation = StateManager.Settings["Mail.DumpLocation"].ToString()
                 };
 
                 client.Send(message);

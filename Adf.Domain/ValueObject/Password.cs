@@ -228,7 +228,7 @@ namespace Adf.Business.ValueObject
 
         public Password Encrypt()
         {
-            return new Password(EncryptionManager.Encrypt(EncryptionType.SHA512, this));
+            return new Password(this.Encrypt(EncryptionType.Passwords));
         }
 
         #endregion CodeGuard(Custom)

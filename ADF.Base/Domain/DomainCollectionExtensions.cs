@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
+using Adf.Core.Identity;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Domain
@@ -40,6 +41,13 @@ namespace Adf.Base.Domain
             }
 
             return collection;
+        }
+
+        public static DomainCollection<T> InitOrReturn<T>(this DomainCollection<T> collection, Func<DomainCollection<T>> expression) where T : class, IDomainObject
+        {
+            if (collection == null) collection = new DomainCollection<T>();
+
+            return collection.IsInitialised ? collection : collection.Add(expression.Invoke());
         }
 
         /// <summary>
@@ -93,5 +101,21 @@ namespace Adf.Base.Domain
         {
             return new DomainCollection<T>(enumerable);
         }
+
+        public static T Find<T>(this IEnumerable<T> collection, ID id) where T : class, IDomainObject
+        {
+            return collection.FirstOrDefault(item => item.Id == id);
+        }
+
+        public static T Find<T>(this IEnumerable<T> collection, string id) where T : class, IDomainObject
+        {
+            return collection.Find(new ID(id));
+        }
+
+        public static T Find<T>(this IEnumerable<T> collection, object id) where T : class, IDomainObject
+        {
+            return collection.Find(new ID(id.ToString()));
+        }
+
     }
 }

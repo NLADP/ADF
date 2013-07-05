@@ -42,7 +42,7 @@ namespace Adf.Web.Panels
                 {
                     ID = panelItem.GetId(),
                     ImageUrl = @"../images/help.png",
-                    ToolTip = ResourceManager.GetString(panelItem.Text.IsNullOrEmpty() ? panelItem.GetPropertyName() + "Info" : panelItem.Text),
+                    ToolTip = ResourceManager.GetString(panelItem.Label.IsNullOrEmpty() ? panelItem.GetPropertyName() + "Info" : panelItem.Label),
                     Enabled = false,
                     Width = new Unit(panelItem.Width, UnitType.Pixel),
                     Visible = panelItem.Visible
@@ -50,6 +50,7 @@ namespace Adf.Web.Panels
 
                 image
                     .AddStyle(CssClass.Item)
+                    .AddStyle(CssClass.HelpIcon)
                     .AttachToolTip(panelItem);
                 
                 panelItem.Target = image;

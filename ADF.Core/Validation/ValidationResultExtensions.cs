@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Adf.Core.Extensions;
 
@@ -6,7 +7,7 @@ namespace Adf.Core.Validation
 {
     public static class ValidationResultExtensions
     {
-        public static bool HasResults(this ValidationResultCollection collection)
+        public static bool HasResults(this IEnumerable<ValidationResult> collection)
         {
             return collection.IsNullOrEmpty();
         }

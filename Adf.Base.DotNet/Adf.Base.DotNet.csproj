@@ -61,6 +61,7 @@
     <Compile Include="Data\SimpleInternalState.cs" />
     <Compile Include="Data\SqlProvider.cs" />
     <Compile Include="Domain\NullablePropertyParser.cs" />
+    <Compile Include="Encryption\AesEncryptionProvider.cs" />
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
     <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
     <Compile Include="Extensions\MoneyExtensions.cs" />

@@ -25,5 +25,7 @@ namespace Adf.Core.Rendering
         public static readonly RenderItemType FileUpload = new RenderItemType("upl", "FileUpload");
         public static readonly RenderItemType RadioButtonList = new RenderItemType("rbl", "RadioButtonList");
         public static readonly RenderItemType CheckBoxList = new RenderItemType("cbl", "CheckBoxList");
+        public static readonly RenderItemType ColorPicker = new RenderItemType("txt", "ColorPicker");
+
     }
 }

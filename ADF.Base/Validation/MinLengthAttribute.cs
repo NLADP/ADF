@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Extensions;
 using Adf.Core.Validation;
 
@@ -11,15 +12,13 @@ namespace Adf.Base.Validation
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
 	public sealed class MinLengthAttribute : Attribute, IPropertyValidator
 	{
-		private readonly int length;
-
-		/// <summary>
+	    /// <summary>
 		/// Creates a new <see cref="MinLengthAttribute"/> instance with the supplied length.
 		/// </summary>
         /// <param name="length">The supplied length.</param>
 		public MinLengthAttribute(int length)
 		{
-			this.length = length;
+			this.Length = length;
 		}
 
 		/// <summary>
@@ -34,20 +33,14 @@ namespace Adf.Base.Validation
 		{
             if (value == null) return ValidationResult.Success;
 
-		    return (value.ToString().HasMinLength(length))
+		    return (value.ToString().HasMinLength(Length))
                 ? ValidationResult.Success
-		        : ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMinLengthInvalid", propertyToValidate.Name, length);
+		        : ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeMinLengthInvalid, propertyToValidate.Name, Length);
 		}
-	    
-        /// <summary>
-        /// Returns the minimum length.
-        /// </summary>
-	    public int Length
-	    {
-	        get
-	        {
-	            return length;
-	        }
-	    }
+
+	    /// <summary>
+	    /// Returns the minimum length.
+	    /// </summary>
+	    public int Length { get; private set; }
 	}
 }

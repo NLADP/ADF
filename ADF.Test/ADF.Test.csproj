@@ -67,11 +67,14 @@
     <Compile Include="Extensions\AssertExtensions.cs" />
     <Compile Include="Extensions\AssertValidationExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Mail\AssertMailExtensions.cs" />
+    <Compile Include="Mail\TestMailProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\AssertTaskExtensions.cs" />
     <Compile Include="Tasks\TaskTest.cs" />
     <Compile Include="Tasks\TestTaskProvider.cs" />
     <Compile Include="TestProvider.cs" />
+    <Compile Include="Validation\AssertValidationResultExtensions.cs" />
     <Compile Include="Validation\TestExceptionValidationHandler.cs" />
     <Compile Include="Validation\TestValidationHandler.cs" />
     <Compile Include="Validation\ValidationFailedException.cs" />
@@ -81,6 +84,10 @@
     <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
       <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
       <Name>ADF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adf.Core.DotNet\Adf.Core.DotNet.csproj">
+      <Project>{03A1C360-4FA6-4148-A988-CE634B29F247}</Project>
+      <Name>Adf.Core.DotNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>

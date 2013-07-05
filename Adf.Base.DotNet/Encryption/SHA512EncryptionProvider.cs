@@ -6,7 +6,7 @@ namespace Adf.Base.Encryption
 {
     public class SHA512EncryptionProvider : IEncryptionProvider
     {
-            public string Encrypt(string value)
+            public string Encrypt(string value, params object[] p)
             {
                 SHA512 sha512 = new SHA512Managed();
 
@@ -25,5 +25,10 @@ namespace Adf.Base.Encryption
 
                 return sha512Str;
             }
+
+        public string Decrypt(string value, params object[] p)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

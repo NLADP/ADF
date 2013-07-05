@@ -94,6 +94,11 @@ namespace Adf.Base.State
             if (o != null) State.Remove(o);
         }
 
+        public void Clear()
+        {
+            AllState.Clear();
+        }
+
         #endregion
     }
 }

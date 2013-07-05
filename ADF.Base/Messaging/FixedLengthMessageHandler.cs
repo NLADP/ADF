@@ -20,7 +20,7 @@ namespace Adf.Base.Messaging
 
             if (reader == null) return new List<Record>();
 
-            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.XSD, messagename);
+            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xsd, messagename);
 
             // Fixedlength means no seperator indicators
             // This means that all data is in the messagedefinition:
@@ -96,7 +96,7 @@ namespace Adf.Base.Messaging
 
         public object Commit(string messagename, params object[] p)
         {
-            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.XSD, messagename);
+            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xsd, messagename);
 
             return new List<Record>();
         }

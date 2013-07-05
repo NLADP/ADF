@@ -55,7 +55,6 @@
     <Compile Include="Authorization\NoAuthorizationProvider.cs" />
     <Compile Include="Data\CompositeState.cs" />
     <Compile Include="Data\DomainCompositeState.cs" />
-    <Compile Include="Data\InternalStateExtensions.cs" />
     <Compile Include="Data\InvalidColumnException.cs" />
     <Compile Include="Data\ObjectState.cs" />
     <Compile Include="Data\QueryExtensions.cs" />
@@ -75,11 +74,14 @@
     <Compile Include="Domain\Money.cs" />
     <Compile Include="Domain\ObjectDtoMappingProvider.cs" />
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
-    <Compile Include="Encryption\EncryptionExtensions.cs" />
     <Compile Include="Extensions\ValueObjectExtensions.cs" />
     <Compile Include="Formatting\FormatHelper.cs" />
     <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Google\Chart\GoogleChart.cs" />
+    <Compile Include="Google\Chart\GoogleChartExtensions.cs" />
+    <Compile Include="Google\Chart\GoogleData.cs" />
+    <Compile Include="Google\Chart\GoogleDataExtensions.cs" />
     <Compile Include="Grids\GridControlExtensions.cs" />
     <Compile Include="Grids\GridItemExtensions.cs" />
     <Compile Include="Identity\GuidProvider.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Tasks\TaskNotFoundException.cs" />
     <Compile Include="Tasks\TaskProvider.cs" />
     <Compile Include="Tasks\TaskViewExtensions.cs" />
+    <Compile Include="Types\DescriptorTypeConverter.cs" />
     <Compile Include="Types\DomainObjectTypeConverter.cs" />
     <Compile Include="Types\InternalStateTypeConverter.cs" />
     <Compile Include="Types\EnumTypeConverter.cs" />
@@ -145,7 +148,6 @@
     <Compile Include="Validation\PropertyInfoExtensions.cs" />
     <Compile Include="Validation\RegexAttribute.cs" />
     <Compile Include="Validation\ValidationException.cs" />
-    <Compile Include="Validation\ValidationResultExtensions.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +157,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Encryption\" />
     <Folder Include="Mail\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -43,7 +43,7 @@ namespace Adf.Web.Binding
         /// <param name="p">The parameters used for binding. Currently not being used.</param>
         public virtual void Bind(object control, object value, PropertyInfo pi, params object[] p)
         {
-            TextBox t = control as TextBox;
+            var t = control as TextBox;
 
             if (t == null) return;
 

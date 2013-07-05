@@ -80,6 +80,11 @@
         /// </summary>
         /// <param name="o">The key object for which the corresponding value is to be removed.</param>
 		void Remove(object o);
+
+        /// <summary>
+        /// Removes all values from the state
+        /// </summary>
+	    void Clear();
 	}
 }
 

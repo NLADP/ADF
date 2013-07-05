@@ -187,19 +187,18 @@ namespace Adf.Base.Domain
 
         #region Get & Set
 
-        public T Get<T>(IColumn column)
+        protected T Get<T>(IColumn column)
         {
-            return Converter.To<T>(state.Get<T>(column));
+            return Converter.To<T>(state.Get(column));
         }
 
-        public virtual void Set<T>(IColumn column, T value)
+        protected virtual void Set<T>(IColumn column, T value)
         {
-            if (!PropertyHelper.IsEqual(Get<T>(column), value))
-            {
-                state.Set(column, Converter.ToPrimitive(value));
+            if (PropertyHelper.IsEqual(Get<T>(column), value)) return;
 
-                OnPropertyChanged(column.Attribute);
-            }
+            state.Set(column, Converter.ToPrimitive(value));
+
+            OnPropertyChanged(column.Attribute);
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null) {}

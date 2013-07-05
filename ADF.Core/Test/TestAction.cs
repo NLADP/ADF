@@ -7,6 +7,7 @@
         public static readonly TestAction TaskStarted = new TestAction("TaskStarted");
         public static readonly TestAction ValidationFailed = new TestAction("ValidationFailed");
         public static readonly TestAction ValidationSucceeded = new TestAction("ValidationSucceeded");
+        public static readonly TestAction MailSent = new TestAction("MailSent");
 
         public TestAction(string name) : base(name)
         {

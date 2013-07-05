@@ -1,5 +1,4 @@
 ﻿using System;
-using Adf.Base.Validation;
 using Adf.Core.Tasks;
 using Adf.Core.Validation;
 
@@ -9,21 +8,12 @@ namespace Adf.Base.Tasks
     {
         public static bool Execute(this ITask task, params Action[] actions)
         {
-            foreach (var action in actions)
-            {
-                try
-                {
-                    action.Invoke();
-                }
-                catch (ValidationException) {}
+            return ValidationManager.Execute(actions);
+        }
 
-                if (ValidationManager.IsSucceeded) continue;
-                
-                ValidationManager.Handle();
-                return false;
-            }
-
-            return true;
+        public static bool Execute(this ITask task, bool handleErrors, params Action[] actions)
+        {
+            return ValidationManager.Execute(handleErrors, actions);
         }
 
         public static void ExecuteAndOk(this ITask task, params Action[] actions)

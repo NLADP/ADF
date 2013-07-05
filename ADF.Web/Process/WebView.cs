@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Adf.Core.Query;
 using Adf.Core.Tasks;
 using Adf.Core.Views;
@@ -115,6 +116,23 @@ namespace Adf.Web.Process
         private void InitializeComponent()
         {
             Load += Page_Load;
+        }
+
+        protected void CancelClick(object sender, EventArgs e)
+        {
+            Task.Cancel();
+        }
+
+        /// <summary>
+        /// Call SetAsDefault on OnPreRender for any linkbutton to set it as default button for the form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void SetAsDefault(object sender, EventArgs e)
+        {
+            var button = (LinkButton) sender;
+
+            if (button != null) Form.DefaultButton = button.UniqueID;
         }
     }
 }

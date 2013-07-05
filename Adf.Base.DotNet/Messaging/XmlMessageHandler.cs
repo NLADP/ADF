@@ -20,7 +20,7 @@ namespace Adf.Base.Messaging
 
             if (reader == null) return new List<Record>();
 
-            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.XSD, messagename);
+            MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xsd, messagename);
             XElement xmlMessage = XElement.Load(reader);
 
             return xmlMessage.Elements().Select(element => CreateRecord(definition, element)).ToList();

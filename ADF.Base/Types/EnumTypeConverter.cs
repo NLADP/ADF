@@ -27,7 +27,7 @@ namespace Adf.Base.Types
             // TODO: check 
             if (value == null) return default(T);
 
-            return (T)Enum.Parse(typeof(T), value.ToString(), false);
+            return (T)To(typeof(T), value);
         }
 
         public object To(Type type, object value)

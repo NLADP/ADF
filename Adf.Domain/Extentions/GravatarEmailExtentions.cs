@@ -1,7 +1,7 @@
 ﻿using Adf.Business.ValueObject;
 using Adf.Core.Encryption;
 
-namespace Adf.Business.Extentions
+namespace Adf.Domain.Extentions
 {
     public static class GravatarEmailExtentions
     {
@@ -14,8 +14,8 @@ namespace Adf.Business.Extentions
         {
             if (email.IsEmpty) return NotFound;
 
-            string input = email.ToString().ToLower().Trim();
-            string hash = EncryptionManager.Encrypt(EncryptionType.MD5, input);
+            var input = email.ToString().ToLower().Trim();
+            var hash = input.Encrypt(EncryptionType.Gravatar);
 
             return string.Format(GravatarUrlFormat, GravatarBase, hash);
         }
@@ -24,8 +24,8 @@ namespace Adf.Business.Extentions
         {
             if (email.IsEmpty) return NotFound;
 
-            string input = email.ToString().ToLower().Trim();
-            string hash = EncryptionManager.Encrypt(EncryptionType.MD5, input);
+            var input = email.ToString().ToLower().Trim();
+            var hash = input.Encrypt(EncryptionType.Gravatar);
 
             return string.Format(GravatarSizeUrlFormat, GravatarBase, hash, size);
         }

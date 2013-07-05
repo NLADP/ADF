@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Extensions;
 using Adf.Core.Validation;
 
@@ -12,10 +13,7 @@ namespace Adf.Base.Validation
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
 	public sealed class InRangeAttribute : Attribute, IPropertyValidator
 	{
-		private readonly double min; 
-        private readonly double max;
-
-		/// <summary>
+	    /// <summary>
 		/// Creates a new <see cref="InRangeAttribute"/> instance with the supplied minimum and maximum 
         /// value.
 		/// </summary>
@@ -23,8 +21,8 @@ namespace Adf.Base.Validation
 		/// <param name="max">The maximum value of the range.</param>
         public InRangeAttribute(double min, double max)
 		{
-			this.min = min;
-			this.max = max;
+			Min = min;
+			Max = max;
 		}
 
         /// <summary>
@@ -49,30 +47,24 @@ namespace Adf.Base.Validation
             }
             catch
             {
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeInRangeInvalid", propertyToValidate.Name);
+                return ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeInRangeInvalid, propertyToValidate.Name);
             }
             
-            if (!newValue.InRange(min, max))
-                return ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeInRangeInvalidRange", propertyToValidate.Name, min, max);
+            if (!newValue.InRange(Min, Max))
+                return ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeInRangeInvalidRange, propertyToValidate.Name, Min, Max);
             
             return ValidationResult.Success;
             
         }
 
-        /// <summary>
-        /// Returns the maximum value.
-        /// </summary>
-        public double Max
-	    {
-            get { return max; }
-	    }
+	    /// <summary>
+	    /// Returns the maximum value.
+	    /// </summary>
+	    public double Max { get; private set; }
 
-        /// <summary>
-        /// Returns the minimum value.
-        /// </summary>
-        public double Min
-	    {
-            get { return min; }
-	    }
+	    /// <summary>
+	    /// Returns the minimum value.
+	    /// </summary>
+	    public double Min { get; private set; }
 	}
 }

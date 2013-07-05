@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Adf.Base.Domain;
 using Adf.Core.Domain;
+using Adf.Data.Search;
 using Adf.Test.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,6 +19,15 @@ namespace Adf.Test.Extensions
 
             Assert.IsNotNull(property, "Domain object [{0}] is null, but should be empty.", property);
             Assert.IsTrue(property.IsEmpty, "Domain object [{0}] is filled, but should be empty.", property);
+
+            return target;
+        }
+
+        public static T IsEmpty<T>(this T target, Func<T, ISearchObject> func)
+        {
+            var property = func.Invoke(target);
+
+            Assert.IsNull(property, "Search object [{0}] is not null, while it was expected to be.", property);
 
             return target;
         }
@@ -47,6 +57,15 @@ namespace Adf.Test.Extensions
 
             Assert.IsNotNull(property, "Domain object [{0}] is null, but should exist.", property);
             Assert.IsFalse(property.IsEmpty, "Domain object [{0}] is empty, but should be filled.", property);
+
+            return target;
+        }
+
+        public static T IsNotEmpty<T>(this T target, Func<T, ISearchObject> func)
+        {
+            var property = func.Invoke(target);
+
+            Assert.IsNotNull(property, "Search object [{0}] is null, but should not be.", property);
 
             return target;
         }

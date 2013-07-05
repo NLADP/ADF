@@ -8,7 +8,9 @@ namespace Adf.Web.UI
     {
         [IDReferenceProperty]
         public string ControlToMinify { get; set; }
-            
+
+        public string ClassToMinify { get; set; }
+
         protected override string TagName
         {
             get { return "span"; }
@@ -20,7 +22,8 @@ namespace Adf.Web.UI
 
             CssClass="minifier minify";
 
-            Attributes.Add("minify", ControlToMinify);
+            Attributes.Add("minifyControl", ControlToMinify);
+            Attributes.Add("minifyClass", ClassToMinify);
         }
     }
 }

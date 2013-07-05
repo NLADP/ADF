@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Domain;
 using Adf.Core.Validation;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Adf.Base.Domain
             }
             catch (Exception)
             {
-                ValidationManager.AddError(pi, "Adf.Business.NotInstantiable", newvalue, pi.Name);
+                ValidationManager.AddError(pi, Config.Domain.NotInstantiable, newvalue, pi.Name);
                 return;
             }
 

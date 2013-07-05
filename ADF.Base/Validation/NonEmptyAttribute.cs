@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Adf.Core;
 using Adf.Core.Domain;
 using Adf.Core.Validation;
 
@@ -22,7 +23,7 @@ namespace Adf.Base.Validation
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
 		{
 		    return PropertyHelper.IsEmpty(value) 
-                ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeNonEmptyInvalid", propertyToValidate.Name) 
+                ? ValidationResult.CreateError(propertyToValidate, Config.Domain.AttributeNonEmptyInvalid, propertyToValidate.Name) 
                 : ValidationResult.Success;
 		}
 	}

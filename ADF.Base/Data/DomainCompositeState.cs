@@ -55,6 +55,16 @@ namespace Adf.Base.Data
             return states.ContainsKey(property.Table.Name) ? states[property.Table.Name].Get<T>(property) : default(T);
         }
 
+        /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// </summary>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>The column value as it is.</returns>
+        public object Get(IColumn property)
+        {
+            return states.ContainsKey(property.Table.Name) ? states[property.Table.Name].Get(property) : null;
+        }
+
         public void Set<T>(IColumn property, T value)
         {
             if (states.ContainsKey(property.Table.Name)) states[property.Table.Name].Set(property, value);

@@ -7,6 +7,8 @@ namespace Adf.Core.Panels
     {
         private readonly List<PanelRow> _rows = new List<PanelRow>();
         public int DefaultWidth { get; set;  }
+        public short TabStart { get; set; }
+        public short TabIncrement { get; set; }
         public int ItemsPerRow { get; set; }
         public bool AutoGenerateLabels { get; set; }
 
@@ -15,6 +17,8 @@ namespace Adf.Core.Panels
             AutoGenerateLabels = true;
             ItemsPerRow = 1;
             DefaultWidth = 50;
+            TabStart = 1;
+            TabIncrement = 3;
         }
 
         public List<PanelRow> Rows { get { return _rows; } }

@@ -142,7 +142,7 @@ namespace Adf.Business.SmartReferences
         /// <returns>An <see cref="ISmartReference"/>.</returns>
         public static ISmartReference Get(Type type, ID id)
         {
-            return GetAll(type).FirstOrDefault(sr => sr.Id == id) ?? Create(type);
+            return GetAll(type).Find(id) ?? Create(type);
         }
 
         /// <summary>
