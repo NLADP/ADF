@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Adf.Core.Extensions;
 using Adf.Core.Objects;
 
 namespace Adf.Core.Types

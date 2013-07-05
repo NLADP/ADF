@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Adf.Core.Extensions;
 
 namespace Adf.Core.Data
 {

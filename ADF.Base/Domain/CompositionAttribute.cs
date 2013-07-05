@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Adf.Base.Domain
@@ -22,7 +23,7 @@ namespace Adf.Base.Domain
             if (pi == null)
                 return false;
 
-            return (pi.GetCustomAttributes(typeof(CompositionAttribute), false).Length > 0);
+            return (pi.GetCustomAttributes(typeof(CompositionAttribute), false).Any());
         }
     }
 }

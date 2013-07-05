@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Adf.Core;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 
 namespace Adf.Base.Domain
 {

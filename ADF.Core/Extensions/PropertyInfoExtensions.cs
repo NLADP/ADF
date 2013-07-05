@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 
 namespace Adf.Core.Extensions
 {
@@ -9,7 +10,7 @@ namespace Adf.Core.Extensions
     {
         public static bool HasAttribute<T>(this PropertyInfo property)
         {
-            return property.GetCustomAttributes(typeof (T), false).Length > 0;
+            return property.GetCustomAttributes(typeof (T), false).Any();
         }
     }
 }

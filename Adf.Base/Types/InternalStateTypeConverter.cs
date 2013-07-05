@@ -20,7 +20,7 @@ namespace Adf.Base.Types
         {
             var ints = type.GetInterfaces();
             bool b = type.GetInterfaces().Any(i => i == typeof(IInternalState));
-            bool b2 = type.IsSubclassOf(typeof(IInternalState));
+            bool b2 = type.IsAssignableFrom(typeof(IInternalState));
             
             return b2;
         }

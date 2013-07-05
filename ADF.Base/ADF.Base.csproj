@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</ProjectGuid>
@@ -10,8 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Adf.Base</RootNamespace>
     <AssemblyName>Adf.Base</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile96</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -76,7 +76,6 @@
     <Compile Include="Domain\ValueObjectPropertyParser.cs" />
     <Compile Include="Extensions\ValueObjectExtensions.cs" />
     <Compile Include="Formatting\FormatHelper.cs" />
-    <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Google\Chart\GoogleChart.cs" />
     <Compile Include="Google\Chart\GoogleChartExtensions.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="Resources\StateResourceProvider.cs" />
     <Compile Include="State\NullStateProvider.cs" />
     <Compile Include="State\SimpleStateProvider.cs" />
-    <Compile Include="State\ThreadStateProvider.cs" />
     <Compile Include="Tasks\ISearchableTask.cs" />
     <Compile Include="Tasks\Task.cs" />
     <Compile Include="Tasks\TaskExecutionExtensions.cs" />

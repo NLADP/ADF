@@ -65,6 +65,7 @@
     <Compile Include="Encryption\MD5EncryptionProvider.cs" />
     <Compile Include="Encryption\SHA512EncryptionProvider.cs" />
     <Compile Include="Extensions\MoneyExtensions.cs" />
+    <Compile Include="Globalization\CultureScope.cs" />
     <Compile Include="Logging\EventLogProvider.cs" />
     <Compile Include="Logging\FlatFileLogProvider.cs" />
     <Compile Include="Mail\DummyMailProvider.cs" />
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="Resources\ResourcesFileResourceProvider.cs" />
     <Compile Include="State\ConfigStateProvider.cs" />
+    <Compile Include="State\ThreadStateProvider.cs" />
     <Compile Include="Transactions\TransactionScopeProvider.cs" />
     <Compile Include="Types\NullableTypeConverter.cs" />
   </ItemGroup>

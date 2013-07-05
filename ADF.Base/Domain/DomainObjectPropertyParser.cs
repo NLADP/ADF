@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Adf.Core.Domain;
+using Adf.Core.Extensions;
 using Adf.Core.Identity;
 
 namespace Adf.Base.Domain

@@ -19,12 +19,12 @@ namespace Adf.Base.Tasks
     public class TaskProvider : ITaskProvider
     {
         private ITask _main;
-        private Dictionary<string, Type> _alltasks;
- 
+        private Dictionary<string, TypeInfo> _alltasks;
+
         private ITask Get(ApplicationTask name, ITask origin)
         {
             var taskname = string.Format("{0}Task", name);
-            var type = AllTasks[taskname];
+            var type = AllTasks[taskname].GetType();
 
             object[] parms = { name, origin ?? Main };
 
@@ -53,21 +53,27 @@ namespace Adf.Base.Tasks
             }
         }
 
-        private Dictionary<string, Type> AllTasks
+        private object _lock = new object();
+
+        private Dictionary<string, TypeInfo> AllTasks
         {
             get
             {
-                if (_alltasks == null)
+                lock (_lock)
                 {
-                    _alltasks = new Dictionary<string, Type>();
-                    var tasktype = typeof (ITask);
-
-                    foreach (var type in Main.GetType().Assembly.GetTypes().Where(tasktype.IsAssignableFrom).Where(type => !_alltasks.ContainsKey(type.Name)))
+                    if (_alltasks == null)
                     {
-                        _alltasks.Add(type.Name, type);
+                        _alltasks = new Dictionary<string, TypeInfo>();
+                        var tasktype = typeof(ITask);
+
+                        foreach (var type in Main.GetType().GetTypeInfo().Assembly.DefinedTypes
+                            .Where(i => tasktype.GetTypeInfo().IsAssignableFrom(i)))
+                        {
+                            _alltasks.Add(type.Name, type);
+                        }
                     }
+                    return _alltasks;
                 }
-                return _alltasks;
             }
         }
 
@@ -96,7 +102,7 @@ namespace Adf.Base.Tasks
 
             MethodInfo method = task.FindMethod("Init", p);
 
-            if (method == null && task.GetType().GetMethods().Any(m => m.Name == "Init"))
+            if (method == null && task.GetType().GetMethods("Init").Any())
                 throw new InvalidOperationException(string.Format("Could not find any matching Init method on {0} with parameters {1}",
                                                                   task.GetType().Name,
                                                                   string.Join(",", p.Select(t => t.GetType()))));

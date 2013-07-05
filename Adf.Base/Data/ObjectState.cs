@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.Serialization;
 using Adf.Core.Data;
+using Adf.Core.Extensions;
 using Adf.Core.Identity;
 using Adf.Core.Types;
 

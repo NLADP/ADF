@@ -1,5 +1,6 @@
 ﻿using System;
 using Adf.Core;
+using Adf.Core.Extensions;
 using Adf.Core.Types;
 
 namespace Adf.Base.Types

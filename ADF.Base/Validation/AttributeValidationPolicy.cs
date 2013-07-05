@@ -1,5 +1,7 @@
+using System.Linq;
 using System.Reflection;
 using Adf.Base.Domain;
+using Adf.Core.Extensions;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
@@ -33,7 +35,7 @@ namespace Adf.Base.Validation
             var type = validatable.GetType();
 
             // Validate aggregated child BusinessEntities
-            var properties  = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var properties  = type.GetProperties();
 
             foreach (var property in properties)
             {
@@ -45,7 +47,7 @@ namespace Adf.Base.Validation
 
                     if (property.IsDefined(typeof (NonEmptyAttribute), false))
                     {
-                        var nonempty = property.GetCustomAttributes(typeof (NonEmptyAttribute), false)[0] as NonEmptyAttribute;
+                        var nonempty = property.GetCustomAttributes(typeof (NonEmptyAttribute), false).First() as NonEmptyAttribute;
 
                         if (nonempty != null)
                         {

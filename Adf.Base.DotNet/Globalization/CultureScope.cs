@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Threading;
 
-namespace Adf.Base.Globalization
+namespace Adf.Base.DotNet.Globalization
 {
     public sealed class CultureScope : IDisposable
     {

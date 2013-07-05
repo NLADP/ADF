@@ -166,7 +166,7 @@ namespace Adf.Base.Domain
         /// <returns>True if the specified <see cref="Type"/> is parsable, false otherwise.</returns>
         public bool IsParsable(Type type)
         {
-            return type.IsEnum;
+            return type.IsEnum();
         }
 
         #endregion

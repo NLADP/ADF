@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Linq;
+using Adf.Core.Extensions;
 
 namespace Adf.Core.Types
 {
@@ -73,8 +74,7 @@ namespace Adf.Core.Types
 
         private static ActivateObject<T> CreateActivator<T>(Type type, Type[] argTypes)
         {
-            var ctor = type.GetConstructor(argTypes)
-                       ?? FindConstructor(type, argTypes);
+            var ctor = FindConstructor(type, argTypes);
 
             if (ctor == null) throw new InvalidOperationException("Could not find corresponding constructor on Type");
 
@@ -109,7 +109,7 @@ namespace Adf.Core.Types
 
         private static ConstructorInfo FindConstructor(Type type, Type[] argTypes)
         {
-            return type.GetConstructors(BindingFlags.Instance | BindingFlags.Public)
+            return type.GetTypeInfo().DeclaredConstructors
                 .FirstOrDefault(c =>
                 {
                     var parameters = c.GetParameters();

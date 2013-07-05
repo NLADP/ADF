@@ -41,7 +41,7 @@ namespace Adf.Core.Extensions
         {
             var fi = value.GetType().GetField(value.ToString());
 
-            return !(fi == null) && (fi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0) ;
+            return !(fi == null) && (fi.GetCustomAttributes(typeof(ExcludeAttribute), false).Any()) ;
         }
 
         public static bool IsIn(this Enum value, params Enum[] values)

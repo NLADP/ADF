@@ -67,7 +67,7 @@ namespace Adf.Base.Domain
 
         public bool IsParsable(Type type)
         {
-            return type.IsGenericType && typeof(IList).IsAssignableFrom(type);
+            return type.IsGenericType() && typeof(IList).IsAssignableFrom(type);
         }
     }
 }

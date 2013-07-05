@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
@@ -35,7 +36,7 @@ namespace Adf.Base.Validation
             var type = validatable.GetType();
 
             //Validate This Business Entity
-            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var methods = type.GetMethods();
             
             foreach (var methodInfo in methods.Where(methodInfo => methodInfo.IsDefined(typeof (BusinessRuleAttribute), true)))
             {

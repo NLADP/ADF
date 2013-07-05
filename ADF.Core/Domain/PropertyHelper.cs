@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Adf.Core.Extensions;
 using Adf.Core.Logging;
 using Adf.Core.Objects;
 

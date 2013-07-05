@@ -23,7 +23,7 @@ namespace Adf.Core.Extensions
         /// </exception>
         public static bool IsExcluded(this MemberInfo mi)
         {
-            return (mi != null) && (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0);
+            return (mi != null) && (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Any());
         }
 
         public static PropertyInfo GetPropertyInfo<T>(this Expression<Func<T, object>> expression)

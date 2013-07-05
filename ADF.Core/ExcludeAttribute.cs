@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Adf.Core
@@ -26,7 +27,7 @@ namespace Adf.Core
 			if (mi == null)
 				return false;
         	
-			return (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Length > 0);
+			return (mi.GetCustomAttributes(typeof(ExcludeAttribute), false).Any());
 		}
 
 	}
