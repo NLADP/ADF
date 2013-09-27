@@ -6,6 +6,7 @@ using Adf.Base.Domain;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Extensions;
+using Adf.Core.TypeExtensions;
 using Adf.Core.Types;
 
 namespace Adf.Base.Types

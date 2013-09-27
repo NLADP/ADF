@@ -106,6 +106,11 @@ namespace Adf.Core.Extensions
             return string.IsNullOrEmpty(value);
         }
 
+        public static bool IsNullOrWhiteSpace(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
+
         public static bool IsNotEmpty(this string value)
         {
             return !string.IsNullOrEmpty(value);
@@ -147,9 +152,11 @@ namespace Adf.Core.Extensions
                                  (current, word) => current + (word.Substring(0, 1).ToUpper() + word.Substring(1) + " "))
                       .TrimEnd();
         }
+	
+		public static string Left(this string origin, int length)
+		{
+		    if (origin.IsNullOrEmpty()) return origin;
 
-        public static string Left(this string origin, int length)
-        {
             return (origin.Length <= length) ? origin : origin.Substring(0, length);
         }
 
@@ -169,36 +176,21 @@ namespace Adf.Core.Extensions
         {
             if (line.IsNullOrEmpty()) return new string[0];
 
-            var returnCols = new List<string>();
-            var columns = line.Split(new[] {separator}, StringSplitOptions.None);
+            var list = new List<string>();
 
-            string currentColumn = string.Empty;
+            var fields = line.Split(new[] { separator }, StringSplitOptions.None);
 
-            foreach (string col in columns)
+            for (var i = 0; i < fields.Length; i++)
             {
-                if (currentColumn.IsNullOrEmpty())
-                {
-                    if (col.StartsWith("\"") && !col.EndsWith("\""))
-                        currentColumn = col;
-                    else
-                        returnCols.Add(col.TrimSurroundingChars('"'));
-                }
-                else
-                {
-                    currentColumn += separator + col;
+                var field = fields[i];
 
-                    if (currentColumn.EndsWith("\""))
-                    {
-                        returnCols.Add(currentColumn.TrimSurroundingChars('"'));
-                        currentColumn = string.Empty;
-                    }
-                }
+                while (field.ToCharArray().Count(c => c == '"') % 2 != 0 && i < fields.Length)
+                    field += separator + fields[++i];
+
+                list.Add(field.TrimSurroundingChars('"').Replace("\"\"", "\""));
             }
 
-            if (!currentColumn.IsNullOrEmpty())
-                returnCols.Add(currentColumn.TrimSurroundingChars('"'));
-
-            return returnCols.ToArray();
+            return list.ToArray();
         }
 
         public static bool IsIn(this string value, params string[] p)
@@ -244,6 +236,11 @@ namespace Adf.Core.Extensions
         public static string FormatOrEmpty(this string format, params object[] parms)
         {
             return parms.Any(p => p == null || p.ToString() == string.Empty) ? string.Empty : string.Format(format, parms);
+        }
+
+        public static string Format(this string format, params object[] parms)
+        {
+            return format.IsNullOrEmpty() ? string.Empty : string.Format(format, parms);
         }
     }
 }

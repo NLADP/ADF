@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Adf.Core.Extensions;
+using Adf.Core.TypeExtensions;
 
 namespace Adf.Core.Data
 {
@@ -45,7 +47,7 @@ namespace Adf.Core.Data
             ColumnDescriber describer = ColumnDescriber.Empty;
 
             var memberInfos = type.GetMember(name, (BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy));
-            var mi = memberInfos.Length > 0 ? memberInfos[0] : null;
+            var mi = memberInfos.Any() ? memberInfos.First() : null;
 
             if (!ExcludeAttribute.IsExcluded(mi))
             {

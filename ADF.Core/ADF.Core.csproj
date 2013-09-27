@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CE90750E-9F30-4008-B113-321D2D3135CE}</ProjectGuid>
@@ -11,7 +11,7 @@
     <RootNamespace>Adf.Core</RootNamespace>
     <AssemblyName>Adf.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -72,7 +72,9 @@
     <Compile Include="Data\TableDescriber.cs" />
     <Compile Include="Data\TableGateway.cs" />
     <Compile Include="DescriptionAttribute.cs" />
-    <Compile Include="Descriptor.cs" />
+    <Compile Include="Descriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Domain\DomainMapper.cs" />
     <Compile Include="Domain\IDomainCollection.cs" />
     <Compile Include="Domain\IDomainHierarchy.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Encryption\EncryptionType.cs" />
     <Compile Include="Encryption\IEncryptionProvider.cs" />
     <Compile Include="ExcludeAttribute.cs" />
+    <Compile Include="Extensions\BindingFlags.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DescriptorExtensions.cs" />
@@ -202,7 +205,6 @@
     <Compile Include="Views\IViewProvider.cs" />
     <Compile Include="Views\ViewManager.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

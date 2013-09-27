@@ -62,7 +62,9 @@ namespace Adf.Base.Validation
 
                     if (nonEmptyResult.IsSuccess)
                     {
-                        foreach (IPropertyValidator validator in property.GetCustomAttributes(typeof (IPropertyValidator), false))
+                        var attributes = property.GetCustomAttributes().Where(att => att is IPropertyValidator);
+
+                        foreach (IPropertyValidator validator in attributes)
                         {
                             var result = validator.IsValid(property, property.GetValue(validatable, new object[] {}));
                             if (!result.IsSuccess)

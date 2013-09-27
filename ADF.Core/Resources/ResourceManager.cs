@@ -14,7 +14,7 @@ namespace Adf.Core.Resources
     /// </summary>
     public static class ResourceManager
     {
-        private static IEnumerable<IResourceProvider> _providers;
+        private static ICollection<IResourceProvider> _providers;
 
         private static readonly object _lock = new object();
 

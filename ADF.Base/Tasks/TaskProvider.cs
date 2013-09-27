@@ -19,12 +19,12 @@ namespace Adf.Base.Tasks
     public class TaskProvider : ITaskProvider
     {
         private ITask _main;
-        private Dictionary<string, TypeInfo> _alltasks;
+        private Dictionary<string, Type> _alltasks;
 
         private ITask Get(ApplicationTask name, ITask origin)
         {
             var taskname = string.Format("{0}Task", name);
-            var type = AllTasks[taskname].GetType();
+            var type = AllTasks[taskname];
 
             object[] parms = { name, origin ?? Main };
 
@@ -55,7 +55,7 @@ namespace Adf.Base.Tasks
 
         private object _lock = new object();
 
-        private Dictionary<string, TypeInfo> AllTasks
+        private Dictionary<string, Type> AllTasks
         {
             get
             {
@@ -63,13 +63,12 @@ namespace Adf.Base.Tasks
                 {
                     if (_alltasks == null)
                     {
-                        _alltasks = new Dictionary<string, TypeInfo>();
+                        _alltasks = new Dictionary<string, Type>();
                         var tasktype = typeof(ITask);
 
-                        foreach (var type in Main.GetType().GetTypeInfo().Assembly.DefinedTypes
-                            .Where(i => tasktype.GetTypeInfo().IsAssignableFrom(i)))
+                        foreach (var type in Main.GetType().GetTypeInfo().Assembly.DefinedTypes.Where(i => tasktype.GetTypeInfo().IsAssignableFrom(i)))
                         {
-                            _alltasks.Add(type.Name, type);
+                            _alltasks.Add(type.Name, type.AsType());
                         }
                     }
                     return _alltasks;

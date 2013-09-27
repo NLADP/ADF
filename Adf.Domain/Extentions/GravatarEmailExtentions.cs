@@ -1,5 +1,5 @@
-﻿using Adf.Business.ValueObject;
-using Adf.Core.Encryption;
+﻿using Adf.Core.Encryption;
+using Adf.Domain.ValueObject;
 
 namespace Adf.Domain.Extentions
 {

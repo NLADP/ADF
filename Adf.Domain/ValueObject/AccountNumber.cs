@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Adf.Core.Domain;
 
-namespace Adf.Business.ValueObject
+namespace Adf.Domain.ValueObject
 {
     /// <summary>
     /// Structure representing the value object AccountNumber (Dutch bank bankrekeningnummer).

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Adf.Core.Extensions;
+using Adf.Core.TypeExtensions;
 
 namespace Adf.Core
 {
@@ -24,7 +24,7 @@ namespace Adf.Core
         }
 
         [Exclude]
-        private static readonly Dictionary<Type, IEnumerable<Descriptor>> Values = new Dictionary<Type, IEnumerable<Descriptor>>();
+        private static readonly Dictionary<Type, ICollection<Descriptor>> Values = new Dictionary<Type, ICollection<Descriptor>>();
 
         private readonly string _name;
 
@@ -102,7 +102,7 @@ namespace Adf.Core
         /// </returns>
         public static T Get<T>(string name) where T : Descriptor
         {
-            return GetValues<T>().Where(descriptor => descriptor.Name == name).FirstOrDefault();
+            return GetValues<T>().FirstOrDefault(descriptor => descriptor.Name == name);
         }
 
         public static Descriptor Get(Type type, string name)
@@ -112,19 +112,19 @@ namespace Adf.Core
 
         public static T Parse<T>(string name) where T : Descriptor
         {
-            return GetValues<T>().Where(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase)).Single();
+            return GetValues<T>().Single(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool TryParse<T>(string name, out T value) where T : Descriptor
         {
-            value = GetValues<T>().Where(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+            value = GetValues<T>().SingleOrDefault(descriptor => name.Equals(descriptor.Name, StringComparison.OrdinalIgnoreCase));
 
             return value != null;
         }
 
         public static T GetDefault<T>() where T : Descriptor
         {
-            return GetValues<T>().Where(d => d.IsDefault).SingleOrDefault();
+            return GetValues<T>().SingleOrDefault(d => d.IsDefault);
         }
 
         public static IEnumerable<T> GetValues<T>() where T : Descriptor
@@ -153,12 +153,14 @@ namespace Adf.Core
 
             Type descriptorType = typeof(Descriptor);
 
-            return (Values[type] =
-                    (from fi in type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
+            var descriptors = (from fi in type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
                      where !fi.IsExcluded() && descriptorType.IsAssignableFrom(fi.FieldType)
-                     select (Descriptor)fi.GetValue(type)));
+                select (Descriptor)fi.GetValue(type)).ToList();
+
+            lock (_lock) return Values[type] = descriptors;
         }
 
+        private static readonly object _lock = new object();
 
         #endregion
 

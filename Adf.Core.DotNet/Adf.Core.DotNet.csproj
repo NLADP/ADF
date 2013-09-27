@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
-      <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
+      <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
       <Name>ADF.Core</Name>
     </ProjectReference>
   </ItemGroup>

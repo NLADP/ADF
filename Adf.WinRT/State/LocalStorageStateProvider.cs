@@ -65,5 +65,10 @@ namespace Adf.WinRT.State
         {
             throw new System.NotImplementedException();
         }
+
+        public void Clear()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

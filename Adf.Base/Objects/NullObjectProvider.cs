@@ -23,12 +23,12 @@ namespace Adf.Core.Objects
 
         public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
-            return Enumerable.Empty<object>();
+            return new List<object>();
         }
 
         public IEnumerable<T> BuildAll<T>()
         {
-            return Enumerable.Empty<T>();
+            return new List<T>();
         }
 
         public void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface

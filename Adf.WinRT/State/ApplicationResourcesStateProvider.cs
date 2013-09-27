@@ -149,6 +149,11 @@ namespace Adf.WinRT.State
             if (o != null) state.Remove(o);
         }
 
+        public void Clear()
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
     }
 }

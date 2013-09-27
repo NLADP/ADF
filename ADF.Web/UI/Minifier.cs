@@ -11,6 +11,19 @@ namespace Adf.Web.UI
 
         public string ClassToMinify { get; set; }
 
+        public string ImageClass { get; set; }
+
+        private bool _startMinified;
+        public bool StartMinified
+        {
+            get { return _startMinified; }
+            set
+            {
+                _startMinified = value;
+                SetCssClasses();
+            }
+        }
+
         protected override string TagName
         {
             get { return "span"; }
@@ -20,10 +33,19 @@ namespace Adf.Web.UI
         {
             base.OnInit(e);
 
-            CssClass="minifier minify";
+            SetCssClasses();
 
             Attributes.Add("minifyControl", ControlToMinify);
             Attributes.Add("minifyClass", ClassToMinify);
+            Attributes.Add("imageClass", ImageClass);
+        }
+
+        private void SetCssClasses()
+        {
+            CssClass = "minifier " + (StartMinified ? "maxify" : "minify");
+
+            if (!string.IsNullOrEmpty(ImageClass))
+                CssClass += "-" + ImageClass;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Adf.Base.Authorization
     /// </summary>
     public class AllAuthorizationProvider : IAuthorizationProvider
     {
+		private bool LoggedOn { get; set; }
+
         #region IAuthorizationProvider Members
 
         /// <summary>
@@ -17,6 +19,8 @@ namespace Adf.Base.Authorization
         /// <returns>It always returns false. It indicates login is always impossible.</returns>
         public LoginResult Login(string name, string password)
         {
+			LoggedOn = true;
+
             return LoginResult.Success;
         }
 
@@ -26,7 +30,7 @@ namespace Adf.Base.Authorization
         /// <returns>It always returns false.</returns>
         public bool IsLoggedOn
         {
-            get { return false; }
+            get { return LoggedOn; }
         }
 
         /// <summary>

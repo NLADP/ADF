@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Adf.Base.Data;
 using Adf.Base.Domain;
 using Adf.Core.Data;
@@ -15,20 +14,23 @@ namespace Adf.Base.Messaging
 {
     public class CsvMessageHandler : IMessageHandler
     {
-        public object Retrieve(string messagename, params object[] p)
+        protected string Delimiter { get; set; }
+
+        public virtual object Retrieve(string messagename, params object[] p)
         {
             if (p.Length == 0) throw new FileNotFoundException("File to read was not specified");
 
             var stream = (Stream)p[0];
+            if (p.Length > 1 && p[1] != null) Delimiter = p[1].ToString();
 
             var reader = new StreamReader(stream);
 
             MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xml, messagename);
 
-            return BreakIntoRecords(definition, reader).Select(record => record.State);
+            return BreakIntoRecords(definition, reader).Select(record => record.State).ToList();
         }
 
-        private IEnumerable<Record> BreakIntoRecords(MessageDefinition definition, StreamReader reader)
+        protected virtual IEnumerable<Record> BreakIntoRecords(MessageDefinition definition, StreamReader reader)
         {
             var currentLine = 1;
             var currentRecord = string.Empty;
@@ -39,21 +41,13 @@ namespace Adf.Base.Messaging
                 var recordDefinition = definition.Records[0];
                 var table = new TableDescriber(recordDefinition.Name, DataSources.NoSource);
 
-                var line = reader.ReadLine();
-                if (definition.HasHeader) line = reader.ReadLine();
+                if (Delimiter.IsNullOrEmpty()) Delimiter = recordDefinition.FieldSeparator;
 
-                string seperator = recordDefinition.FieldSeparator.Length == 1
-                                       ? string.Format(@"(?<=^(?:[^""]*""[^""]*"")*[^""]*){0}",
-                                                       recordDefinition.FieldSeparator)
-                                       : recordDefinition.FieldSeparator;
-                Regex seperatorRegex = recordDefinition.FieldSeparator.Length == 1
-                                           ? new Regex(seperator, RegexOptions.Compiled)
-                                           : null;
+                var fields = ReadCsvLine(reader, Delimiter);
+                if (definition.HasHeader) fields = ReadCsvLine(reader, Delimiter);
 
-                while (line != null)
+                while (fields != null)
                 {
-                    string[] fields = seperatorRegex != null ? seperatorRegex.Split(line) : line.Split(new[] { recordDefinition.FieldSeparator }, StringSplitOptions.None);
-
                     var state = new DictionaryState { IsNew = true };
 
                     if (!recordDefinition.Fields.Exists(f => f.Name.Equals("ID", StringComparison.OrdinalIgnoreCase)))
@@ -70,7 +64,7 @@ namespace Adf.Base.Messaging
 
                     records.Add(recordDefinition.Create(state));
 
-                    line = reader.ReadLine();
+                    fields = ReadCsvLine(reader, Delimiter);
                     currentLine++;
                     currentRecord = string.Empty;
                 }
@@ -89,11 +83,6 @@ namespace Adf.Base.Messaging
             {
                 if (fieldDefinition.IsOptional) return;
                 throw new MessagingException("Message does not match definition. Too few fields in current record.");
-            }
-
-            if (fields[fieldDefinition.StartPosition].StartsWith("\"") && fields[fieldDefinition.StartPosition].EndsWith("\"")) // Remove quotes
-            {
-                fields[fieldDefinition.StartPosition] = fields[fieldDefinition.StartPosition].Substring(1, fields[fieldDefinition.StartPosition].Length - 2);
             }
 
             var describer = new ColumnDescriber(fieldDefinition.Name, table);
@@ -126,6 +115,15 @@ namespace Adf.Base.Messaging
                     state[describer] = Decimal.Negate(((decimal)state[describer]));
                 }
             }
+            else if (fieldDefinition.Type == FieldDefinitionType.Number)
+            {
+                var number = !string.IsNullOrWhiteSpace(fields[fieldDefinition.StartPosition].Trim('"'))
+                             ? int.Parse(fields[fieldDefinition.StartPosition].Trim('"'),
+                               fieldDefinition.Format.IsNullOrEmpty() ? CultureInfo.InvariantCulture : new CultureInfo(fieldDefinition.Format))
+                             : null as int?;
+
+                state[describer] = number;
+            }
             else
             {
                 object oldvalue;
@@ -140,7 +138,7 @@ namespace Adf.Base.Messaging
             return fieldDefinition.Format.Equals(value, StringComparison.OrdinalIgnoreCase);
         }
 
-        public object Commit(string messagename, params object[] p)
+        public virtual object Commit(string messagename, params object[] p)
         {
             MessageDefinition definition = MessagingManager.Read(MessageDefinitionType.Xml, messagename);
 
@@ -157,10 +155,10 @@ namespace Adf.Base.Messaging
             if (internalStates != null)
                 lines.AddRange(internalStates.Select(state => CreateLine(definition.Records[0], state)));
 
-            return Encoding.UTF8.GetBytes(string.Join("\r\n", lines));
+            return Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(string.Join("\r\n", lines))).ToArray();
         }
 
-        private static string CreateLine(RecordDefinition recordDefinition, IInternalState state)
+        private string CreateLine(RecordDefinition recordDefinition, IInternalState state)
         {
             var columns = new List<string>();
             int currentPosition = 0;
@@ -173,11 +171,11 @@ namespace Adf.Base.Messaging
                     currentPosition++;
                 }
 
-                columns.Add(FormatFieldValue(GetValueForField(fieldDefinition, state), recordDefinition.FieldSeparator));
+                columns.Add(FormatFieldValue(GetValueForField(fieldDefinition, state), Delimiter ?? recordDefinition.FieldSeparator));
                 currentPosition++;
             }
 
-            return string.Join(recordDefinition.FieldSeparator, columns);
+            return string.Join(Delimiter ?? recordDefinition.FieldSeparator, columns);
         }
 
         private static string FormatFieldValue(string value, string separator)
@@ -254,7 +252,7 @@ namespace Adf.Base.Messaging
             return false;
         }
 
-        private static string ConstructHeader(RecordDefinition recordDefinition)
+        private string ConstructHeader(RecordDefinition recordDefinition)
         {
             var header = new List<string>();
             int currentPosition = 0;
@@ -271,12 +269,30 @@ namespace Adf.Base.Messaging
                 currentPosition++;
             }
 
-            return string.Join(recordDefinition.FieldSeparator, header);
+            return string.Join(Delimiter ?? recordDefinition.FieldSeparator, header);
         }
 
         public IInternalState GetEmpty(string messagename, string tablename)
         {
             throw new NotSupportedException();
+        }
+
+        protected static string[] ReadCsvLine(StreamReader reader, string separator)
+        {
+            var line = reader.ReadLine();
+
+            if (line == null) return null;
+
+            while (line.Count(c => c == '"') % 2 != 0)
+            {
+                var nextLine = reader.ReadLine();
+
+                if (nextLine == null) throw new MessagingException("Unable to import file, missing quote in the last line.");
+
+                line += Environment.NewLine + nextLine;
+            }
+
+            return line.SplitCsvLine(separator);
         }
     }
 }

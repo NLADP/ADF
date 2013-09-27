@@ -56,12 +56,12 @@ namespace Adf.Base.Objects
 
         public IEnumerable<T> BuildAll<T>()
         {
-            return from type in _types where type.Key.Type == typeof(T) select type.Value.New<T>();
+            return (from type in _types where type.Key.Type == typeof(T) select type.Value.New<T>()).ToList();
         }
 
         public IEnumerable<object> BuildAll(Type serviceType, bool inherited)
         {
-            return from type in _types where type.Key.Type == serviceType select type.Value.New<object>();
+            return (from type in _types where type.Key.Type == serviceType select type.Value.New<object>()).ToList();
         }
 
         public void Register<TInterface, TImplementation>(string instanceName = null) where TImplementation : TInterface

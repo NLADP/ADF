@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.UI.WebControls;
 using Adf.Base.Domain;
@@ -87,6 +88,31 @@ namespace Adf.Web.UI.SmartView
 
                 PropertyHelper.SetValue(source[row.DataItemIndex], pi, selected);
             }
+        }
+
+        public static TextField ShowTextField<T>(this SmartView grid, Expression<Func<T, object>> property, string header)
+        {
+            var field = new TextField { DataField = property.Name, Header = header, SortExpression = property.Name};
+
+            grid.Columns.Add(field);
+
+            return field;
+        }
+
+        public static NumberField ShowNumberField<T>(this SmartView grid, Expression<Func<T, object>> property, string header)
+        {
+            var field = new NumberField { DataField = property.Name, Header = header, SortExpression = property.Name };
+
+            grid.Columns.Add(field);
+
+            return field;
+        }
+
+        public static void SetColumnVisibility<T>(this SmartView grid, Expression<Func<T, object>> property, bool visible)
+        {
+            var column = grid.Columns.Cast<SmartField>().FirstOrDefault(c => c.DataField == property.GetMemberInfo().Name);
+
+            if (column != null) column.Visible = visible;
         }
     }
 }

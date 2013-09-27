@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Adf.Base.Domain;
 
-namespace Adf.Business.ValueObject
+namespace Adf.Domain.ValueObject
 {
     public static class ValueObjectExtensions
     {

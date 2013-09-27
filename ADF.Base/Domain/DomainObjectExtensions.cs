@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Adf.Base.Validation;
 using Adf.Core.Domain;
+using Adf.Core.TypeExtensions;
 using Adf.Core.Validation;
 using Adf.Core.Extensions;
 

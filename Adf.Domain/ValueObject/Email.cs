@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Adf.Core;
 using Adf.Core.Domain;
 
-namespace Adf.Business.ValueObject
+namespace Adf.Domain.ValueObject
 {
     //}
 	/// <summary>

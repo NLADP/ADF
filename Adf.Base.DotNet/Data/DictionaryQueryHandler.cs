@@ -133,7 +133,14 @@ namespace Adf.Base.Data
                 }
                 else
                 {
-                    lock(_lock) _cachedDescribers.Add(table.DataSource, new Dictionary<ITable, Dictionary<string, ColumnDescriber>>());
+                    lock (_lock)
+                    {
+                        // double checked locking
+                        if (!_cachedDescribers.ContainsKey(table.DataSource))
+                        {
+                            _cachedDescribers.Add(table.DataSource, new Dictionary<ITable, Dictionary<string, ColumnDescriber>>());
+                        }
+                    }
                 }
             }
 

@@ -17,43 +17,53 @@ namespace Adf.Web.Process
         {
             if (control == null) return;
 
-		if (!AuthorizationManager.IsAllowed(typeof(T).Name, action))
-		{
-	            if(disable)
-        	        control.Enabled = false;
-	            else
-        	        control.Visible = false;
-		}
+            if (!AuthorizationManager.IsAllowed(typeof(T).Name, action))
+            {
+                if(disable)
+                    control.Enabled = false;
+                else
+                    control.Visible = false;
+            }
         }
 
         public static void SetPermission(this WebControl control, Type subject, IAction action, bool disable = false)
         {
             if (control == null) return;
 
-		if (!AuthorizationManager.IsAllowed(subject.Name, action))
-		{
-	            if(disable)
-        	        control.Enabled = false;
-	            else
-        	        control.Visible = false;
-		}
+            if (!AuthorizationManager.IsAllowed(subject.Name, action))
+            {
+                if(disable)
+                    control.Enabled = false;
+                else
+                    control.Visible = false;
+            }
         }
 
         #endregion
 
-        #region SmartPanel Authorization
+        #region SmartPanel/PanelControl Authorization
 
         public static void SetPermission<T>(this SmartPanel control, IAction action)
         {
-            if (control == null) return;
+            control.SetPanelPermission<T>(action);
+        }
 
-            if (!AuthorizationManager.IsAllowed(typeof (T).Name, action))
+        public static void SetPermission<T>(this PanelControl control, IAction action)
+        {
+            control.SetPanelPermission<T>(action);
+        }
+
+        private static void SetPanelPermission<T>(this WebControl panel, IAction action)
+        {
+            if (panel == null) return;
+
+            if (!AuthorizationManager.IsAllowed(typeof(T).Name, action))
             {
-                control.Enabled = false;
+                panel.Enabled = false;
 
                 if (!AuthorizationManager.IsAllowed(typeof(T).Name, Actions.View))
                 {
-                    control.Visible = false;
+                    panel.Visible = false;
                 }
             }
         }
@@ -67,13 +77,18 @@ namespace Adf.Web.Process
             SetPermission(control, typeof(T), action);
         }
 
-        public static void SetPermission(this GridView control, Type subject, IAction action) 
+        public static void SetPermission(this GridView control, Type subject, IAction action)
         {
             if (control == null) return;
 
             if (!AuthorizationManager.IsAllowed(subject.Name, action))
             {
                 control.SelectedIndexChanging += (sender, args) => args.Cancel = true;
+
+                if (!AuthorizationManager.IsAllowed(subject.Name, Actions.View))
+                {
+                    control.Visible = false;
+                }
             }
         }
 
@@ -91,7 +106,7 @@ namespace Adf.Web.Process
             }
         }
 
-        public static void SetPermission(this MessageButton button, Type subject,IAction action) 
+        public static void SetPermission(this MessageButton button, Type subject,IAction action)
         {
             if (button == null) return;
 

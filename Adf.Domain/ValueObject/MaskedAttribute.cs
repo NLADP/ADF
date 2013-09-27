@@ -1,6 +1,6 @@
 using System;
 
-namespace Adf.Business.ValueObject
+namespace Adf.Domain.ValueObject
 {
     /// <summary>
     /// Represents MaskedAttribute.

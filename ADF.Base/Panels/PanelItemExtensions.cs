@@ -90,6 +90,15 @@ namespace Adf.Base.Panels
             return panel;
         }
 
+        public static PanelObject ShowMultiLineTextBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, int? height = null, bool? mandatory = true, bool? editable = true)
+        {
+            panel.CreateItem(RenderItemType.MultiLineText, property, label, width, mandatory, editable);
+
+            if (height.HasValue) panel.LastItem().Height = height.Value;
+
+            return panel;
+        }
+
         public static PanelObject ShowNonEditable<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null)
         {
             panel.CreateItem(RenderItemType.NonEditableText, property, label, width, false, false);
@@ -306,12 +315,14 @@ namespace Adf.Base.Panels
         {
             panel.AddPanelItem();
 
-            panel.LastItem().Member = expression.GetMemberInfo();
-            panel.LastItem().Optional = !panel.LastItem().Member.IsDefined(typeof(NonEmptyAttribute), false);
-            if (panel.AutoGenerateLabels) panel.LastItem().Label = expression.GetMemberInfo().Name;
+            var panelItem = panel.LastItem();
+            panelItem.Member = expression.GetMemberInfo();
+            panelItem.ReflectedType = expression.GetMemberType();
+            panelItem.Optional = !panelItem.Member.IsDefined(typeof(NonEmptyAttribute), false);
+            if (panel.AutoGenerateLabels) panelItem.Label = expression.GetMemberInfo().Name;
 
-            var maxlength = panel.LastItem().Member.GetCustomAttributes(typeof(MaxLengthAttribute), false).FirstOrDefault() as MaxLengthAttribute;
-            if (maxlength != null) panel.LastItem().MaxLength = maxlength.Length;
+            var maxlength = panelItem.Member.GetCustomAttributes(typeof(MaxLengthAttribute), false).FirstOrDefault() as MaxLengthAttribute;
+            if (maxlength != null) panelItem.MaxLength = maxlength.Length;
 
             return panel;
         }

@@ -1,7 +1,7 @@
 using System;
 using Adf.Core.Domain;
 
-namespace Adf.Business.ValueObject
+namespace Adf.Domain.ValueObject
 {
     /// <summary>
     /// Class representing the _value object Url.

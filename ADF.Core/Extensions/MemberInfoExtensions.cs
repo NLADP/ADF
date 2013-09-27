@@ -33,6 +33,21 @@ namespace Adf.Core.Extensions
 
         public static MemberInfo GetMemberInfo<T, V>(this Expression<Func<T, V>> expression)
         {
+            var body = GetExpressionBody(expression);
+
+            // body.Member doesn't return always the correct DeclaringType (for example when a property is overridden in a sub class)
+            return body.Expression.Type.GetMember(body.Member.Name).Single();
+//
+//            return body.Member;
+        }
+
+        public static Type GetMemberType<T, V>(this Expression<Func<T, V>> expression)
+        {
+            return GetExpressionBody(expression).Expression.Type;
+        }
+
+        private static MemberExpression GetExpressionBody<T, V>(Expression<Func<T, V>> expression)
+        {
             var body = ((expression.Body is MemberExpression)
                            ? expression.Body
                            : (expression.Body is UnaryExpression)
@@ -41,10 +56,7 @@ namespace Adf.Core.Extensions
 
             if (body == null) throw new ArgumentException("Expression is not a valid member expression");
 
-            // body.Member doesn't return always the correct DeclaringType (for example when a property is overridden in a sub class)
-            return body.Expression.Type.GetMember(body.Member.Name).Single();
-//
-//            return body.Member;
+            return body;
         }
 
         public static string GetPropertyPath<T>(this Expression<Func<T, object>> propertyExpression)

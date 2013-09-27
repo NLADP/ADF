@@ -110,14 +110,7 @@ namespace Adf.Core.Types
         private static ConstructorInfo FindConstructor(Type type, Type[] argTypes)
         {
             return type.GetTypeInfo().DeclaredConstructors
-                .FirstOrDefault(c =>
-                {
-                    var parameters = c.GetParameters();
-
-                    if (parameters.Length != argTypes.Length) return false;
-
-                    return !parameters.Where((p, i) => !p.ParameterType.IsAssignableFrom(argTypes[i]) && argTypes[i] != typeof(object)).Any();
-                });
+                .FirstOrDefault(c => c.ParameterTypesMap(argTypes));
         }
     }
 }

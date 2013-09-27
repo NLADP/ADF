@@ -71,6 +71,7 @@
     <Compile Include="Mail\DummyMailProvider.cs" />
     <Compile Include="Mail\SmtpMailProvider.cs" />
     <Compile Include="Messaging\CsvMessageHandler.cs" />
+    <Compile Include="Messaging\UnorderedCsvMessageHandler.cs" />
     <Compile Include="Messaging\XmlMessageDefinitionProvider.cs" />
     <Compile Include="Messaging\XmlMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,15 +88,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
-      <Project>{e7f721b6-7250-4254-927a-a4f1ad3e6dfe}</Project>
+      <Project>{E7F721B6-7250-4254-927A-A4F1AD3E6DFE}</Project>
       <Name>ADF.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adf.Core.DotNet\Adf.Core.DotNet.csproj">
-      <Project>{03a1c360-4fa6-4148-a988-ce634b29f247}</Project>
+      <Project>{03A1C360-4FA6-4148-A988-CE634B29F247}</Project>
       <Name>Adf.Core.DotNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
-      <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
+      <Project>{CE90750E-9F30-4008-B113-321D2D3135CE}</Project>
       <Name>ADF.Core</Name>
     </ProjectReference>
   </ItemGroup>

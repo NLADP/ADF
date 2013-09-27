@@ -74,7 +74,7 @@
       <Name>ADF.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adf.Domain\Adf.Domain.csproj">
-      <Project>{45916573-9fe3-4f1c-94d8-baf5f0535c85}</Project>
+      <Project>{45916573-9FE3-4F1C-94D8-BAF5F0535C85}</Project>
       <Name>Adf.Domain</Name>
     </ProjectReference>
   </ItemGroup>

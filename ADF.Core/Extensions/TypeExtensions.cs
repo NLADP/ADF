@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Adf.Core.Domain;
+using Adf.Core.TypeExtensions;
 using Adf.Core.Types;
 
 namespace Adf.Core.Extensions
@@ -52,6 +53,18 @@ namespace Adf.Core.Extensions
             return type.GetMethod(method, types);
         }
 
+        public static bool ParameterTypesMap(this MethodBase method, Type[] argTypes)
+        {
+            var parameters = method.GetParameters();
+
+            if (parameters.Length != argTypes.Length) return false;
+
+            return
+                !parameters.Where((p, i) => !p.ParameterType.IsAssignableFrom(argTypes[i]) && argTypes[i] != typeof(object))
+                    .Any();
+        }
+
+
         #region Extensions for TypeInfo
 
         public static IEnumerable<FieldInfo> GetFields(this Type type, BindingFlags bindingAttr = BindingFlags.Default)
@@ -75,11 +88,11 @@ namespace Adf.Core.Extensions
             return type.GetTypeInfo().IsGenericType;
         }
 
-        public static Type ReflectedType(this MemberInfo memberInfo)
-        {
-            // hack!! this is not the same as ReflectedType!
-            return memberInfo.DeclaringType;
-        }
+//        public static Type ReflectedType(this MemberInfo memberInfo)
+//        {
+//            // hack!! this is not the same as ReflectedType!
+//            return memberInfo.DeclaringType;
+//        }
 
         public static bool IsInstanceOfType(this Type t, object o)
         {
@@ -89,7 +102,20 @@ namespace Adf.Core.Extensions
 
         public static IEnumerable<PropertyInfo> GetProperties(this Type type)
         {
-            return type.GetTypeInfo().DeclaredProperties;
+//            return type.GetTypeInfo().DeclaredProperties;
+            return type.GetRuntimeProperties();
+
+            // bug: this is a workaround for Xamarin.Android, which throws an stackoverflowexc
+//            var properties = type.GetTypeInfo().DeclaredProperties.ToList();
+//
+//            var baseType = type.GetTypeInfo().BaseType;
+//            if (baseType != typeof(object))
+//            {
+//                var baseProperties = GetProperties(baseType);
+//                properties.AddRange(baseProperties);
+//        }
+//
+//            return properties;
         }
 
         public static MethodInfo GetMethod(this Type type, string methodName, BindingFlags flags)
@@ -99,7 +125,7 @@ namespace Adf.Core.Extensions
 
         public static MethodInfo GetMethod(this Type type, string methodName, Type[] types)
         {
-            return type.GetTypeInfo().GetDeclaredMethod(methodName);
+            return type.GetTypeInfo().GetDeclaredMethods(methodName).FirstOrDefault(m => m.ParameterTypesMap(types));
         }
 
         public static IEnumerable<MethodInfo> GetMethods(this Type type, string name = null)
@@ -107,9 +133,14 @@ namespace Adf.Core.Extensions
             return name == null ? type.GetTypeInfo().DeclaredMethods : type.GetTypeInfo().GetDeclaredMethods(name);
         }
 
-        public static MemberInfo[] GetMember(this Type type, string name, BindingFlags flags = BindingFlags.Default)
+        public static IEnumerable<MemberInfo> GetMember(this Type type, string name, BindingFlags flags = BindingFlags.Default)
         {
-            return type.GetTypeInfo().DeclaredMembers.Where(m => m.Name == name).ToArray();
+            var prop = type.GetRuntimeProperty(name);
+            var field = type.GetRuntimeField(name);
+
+            if (prop != null) yield return prop;
+
+            if (field != null) yield return field;
         }
 
         public static FieldInfo GetField(this Type type, string value)
@@ -134,18 +165,5 @@ namespace Adf.Core.Extensions
 
         #endregion Extensions for TypeInfo
 
-    }
-
-    [Flags]
-    public enum BindingFlags
-    {
-        Default = 0,
-        IgnoreCase = 1,
-        DeclaredOnly = 2,
-        Instance = 4,
-        Static = 8,
-        Public = 16,
-        NonPublic = 32,
-        FlattenHierarchy = 64,
     }
 }

@@ -32,7 +32,7 @@ namespace Adf.Base.Domain
 
             IValueObject parsedValue = null;
 
-            var args = new object[] {newvalue.ToString(), culture, parsedValue};
+            var args = new object[] {(newvalue ?? string.Empty).ToString(), culture, parsedValue};
             var types = new[] { typeof(string), typeof(IFormatProvider), propertyType.MakeByRefType() };
 
             var isValid = (bool)propertyType.GetMethod("TryParse", types).Invoke(null, args);

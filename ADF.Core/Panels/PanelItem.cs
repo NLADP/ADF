@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Adf.Core.Rendering;
@@ -21,6 +22,7 @@ namespace Adf.Core.Panels
         public string Text { get; set; }
         public string Alias { get; set; }
         public MemberInfo Member { get; set; }
+        public Type ReflectedType { get; set; }
         public bool RequiresValidation { get; set; }
         public bool AttachToPrevious { get; set; }
         public List<PanelItem> AttachedItems { get { return attacheditems; } }

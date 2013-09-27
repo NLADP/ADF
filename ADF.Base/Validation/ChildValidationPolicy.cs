@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 using Adf.Core.Extensions;
+using Adf.Core.TypeExtensions;
 using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
