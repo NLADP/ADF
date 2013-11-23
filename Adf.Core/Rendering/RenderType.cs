@@ -6,6 +6,7 @@ namespace Adf.Core.Rendering
 
         public static readonly RenderType Grid = new RenderType("Grid");
         public static readonly RenderType Panel = new RenderType("Panel");
+        public static readonly RenderType View = new RenderType("View");
         public static readonly RenderType Menu = new RenderType("Menu");
     }
 }

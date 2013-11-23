@@ -83,14 +83,30 @@ namespace Adf.Base.Panels
             return panel;
         }
 
-        public static PanelObject ShowTextBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowLink<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null)
+        {
+            panel.Show(property);
+
+            var panelItem = panel.LastItem();
+
+            panelItem.Type = RenderItemType.Link;
+            panelItem.Optional = true;
+
+            if (width != null) panelItem.Width = width.Value;
+            if (label != null) panelItem.Label = label;
+
+            return panel;
+        }
+
+
+        public static PanelObject ShowTextBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.EditableText, property, label, width, mandatory, editable);
 
             return panel;
         }
 
-        public static PanelObject ShowMultiLineTextBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, int? height = null, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowMultiLineTextBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, int? height = null, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.MultiLineText, property, label, width, mandatory, editable);
 
@@ -106,21 +122,21 @@ namespace Adf.Base.Panels
             return panel;
         }
 
-        public static PanelObject ShowCheckBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowCheckBox<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.CheckBox, property, label, width, mandatory, editable);
 
             return panel;
         }
 
-        public static PanelObject ShowColorPicker<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowColorPicker<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.ColorPicker, property, label, width, mandatory, editable);
 
             return panel;
         }
 
-        public static PanelObject ShowCheckBoxList<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowCheckBoxList<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = null, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.CheckBoxList, property, label, width, mandatory, editable);
 
@@ -136,7 +152,7 @@ namespace Adf.Base.Panels
         }
 
 
-        public static PanelObject ShowCalendar<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 10, bool? mandatory = true, bool? editable = true)
+        public static PanelObject ShowCalendar<TDomainObject>(this PanelObject panel, Expression<Func<TDomainObject, object>> property, string label = null, int? width = 10, bool? mandatory = null, bool? editable = true)
         {
             panel.CreateItem(RenderItemType.Calendar, property, label, width, mandatory, editable);
 

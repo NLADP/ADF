@@ -8,6 +8,7 @@ namespace Adf.Web.UI
     public class PanelControl : WebControl, INamingContainer
     {
         public PanelObject Panel = new PanelObject();
+        public RenderType Type = RenderType.Panel;
 
         public override ControlCollection Controls
         {
@@ -25,7 +26,7 @@ namespace Adf.Web.UI
 
         protected override void CreateChildControls()
         {
-            var table = RenderManager.Render(RenderType.Panel, Panel) as Table;
+            var table = RenderManager.Render(Type, Panel) as Table;
 
             if (table != null) Controls.Add(table);
         }
