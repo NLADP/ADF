@@ -66,6 +66,10 @@ namespace Adf.Web.Process
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoServerCaching();
 
+            // prevent back button
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+
             if (!IsPostBack)
                 using (new TracingScope("Bind " + typeof(T).Name)) Bind();
         }
