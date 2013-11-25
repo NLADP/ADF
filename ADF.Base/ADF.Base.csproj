@@ -149,9 +149,9 @@
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADF.Core\Adf.Core.csproj">
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
-      <Name>Adf.Core</Name>
+      <Name>ADF.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

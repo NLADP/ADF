@@ -61,13 +61,13 @@
     <Compile Include="ValueObject\ValueObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADF.Base\Adf.Base.csproj">
+    <ProjectReference Include="..\ADF.Base\ADF.Base.csproj">
       <Project>{e7f721b6-7250-4254-927a-a4f1ad3e6dfe}</Project>
-      <Name>Adf.Base</Name>
+      <Name>ADF.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ADF.Core\Adf.Core.csproj">
+    <ProjectReference Include="..\ADF.Core\ADF.Core.csproj">
       <Project>{ce90750e-9f30-4008-b113-321d2d3135ce}</Project>
-      <Name>Adf.Core</Name>
+      <Name>ADF.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
