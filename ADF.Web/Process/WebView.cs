@@ -91,9 +91,11 @@ namespace Adf.Web.Process
         {
             base.OnPreInit(e);
 
-            if ((Id == Guid.Empty) && (Request.QueryString["ID"] != null))
+            var id = RouteData.Values["id"] ?? Request.QueryString["id"];
+
+            if ((Id == Guid.Empty) && (id != null))
             {
-                Id = new Guid(Request.QueryString["ID"]);
+                Id = new Guid(id.ToString());
             }
 
             //reading requestem theme from cookie

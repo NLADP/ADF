@@ -178,6 +178,7 @@
     <Compile Include="Panels\PanelRenderer.cs" />
     <Compile Include="Panels\TreeViewRenderer.cs" />
     <Compile Include="Panels\ViewRenderer.cs" />
+    <Compile Include="Process\RoutedWebViewProvider.cs" />
     <Compile Include="Process\WebViewAuthorizationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
