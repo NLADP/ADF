@@ -38,7 +38,6 @@ namespace Adf.Base.Resources
         /// </exception>
         public string GetString(string key, CultureInfo culture)
         {
-            //TODO add culture specific functionality
             return GetString(key);
 
         }

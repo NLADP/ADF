@@ -7,7 +7,7 @@ using Adf.Core.Validation;
 
 namespace Adf.Base.Mail
 {
-    class DummyMailProvider : IMailProvider
+    class FileSystemMailProvider : IMailProvider
     {
         /// <summary>
         /// Send a message to the 'MailDumpLocation', which indicates the PickupDirectory

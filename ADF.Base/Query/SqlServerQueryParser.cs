@@ -193,7 +193,7 @@ namespace Adf.Base.Query
             {
                 if (where.Parameter.Name.IsNullOrEmpty())
                 {
-                    where.Parameter.Name = where.Column.ColumnName;
+                    where.Parameter.Name = where.Column.Column.ColumnName;
                 }
 
                 if (list.Contains(where.Parameter.Name))
@@ -251,7 +251,7 @@ namespace Adf.Base.Query
 
             var wheres = query.Wheres.Where(w => w.Parameter.Type == ParameterType.QueryParameter).ToList();
 
-            var columns = string.Join(", ", wheres.Select(w => w.Column.EncloseInBrackets()));
+            var columns = string.Join(", ", wheres.Select(w => w.Column.Column.EncloseInBrackets()));
 
             ParseWheres(query.Wheres);      // give the parameters a name
 
@@ -274,7 +274,7 @@ namespace Adf.Base.Query
                                    query.Wheres
                                        .Where(w => w.Parameter.Type == ParameterType.QueryParameter)
                                        .Select(
-                                           w => string.Format("{0} = {1}", w.Column.EncloseInBrackets(),
+                                           w => string.Format("{0} = {1}", w.Column.Column.EncloseInBrackets(),
                                                          w.Parameter.Value == null ? "NULL" : "@" + w.Parameter.Name)));
 
             var result = string.Format("UPDATE {0} SET {1} {2}", from, sets, where);
@@ -327,7 +327,7 @@ namespace Adf.Base.Query
                 if (parValue is IEnumerable && !(parValue is string))
                 {
                     var enumerable = ((IEnumerable) parValue).Cast<object>();
-                    var values = string.Join(",", enumerable.Select(o => string.Format("'{0}'", o.ToString())));
+                    var values = string.Join(",", enumerable.Select(o => o == null ? "NULL" : string.Format("'{0}'", o.ToString())));
                     var parnames = string.Join(",", enumerable.Select((o, i) => string.Format("@{0}_v{1}", @where.Parameter.Name, i)));
                     if (!parnames.IsNullOrEmpty())
                     {
@@ -364,6 +364,9 @@ namespace Adf.Base.Query
 
             if (expression.Type == ExpressionType.Table)
                 return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", expression.Column.Table.EscapeFunction(), expression.Column.ColumnName);
+
+            if (expression.Type == ExpressionType.Year || expression.Type == ExpressionType.Month || expression.Type == ExpressionType.Day)
+                return string.Format(CultureInfo.InvariantCulture, "DATEPART({0},{1}){2}", expression.Type, column, expression.Alias);
 
             return string.Format(CultureInfo.InvariantCulture, "{0}({1}){2}", expression.Type, column, expression.Alias);
         }

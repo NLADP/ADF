@@ -4,7 +4,6 @@ using System.Linq;
 using Adf.Base.Data;
 using Adf.Base.Query;
 using Adf.Core;
-using Adf.Core.Data;
 using Adf.Core.Extensions;
 using Adf.Core.Query;
 
@@ -22,9 +21,8 @@ namespace Adf.Data.Search
 
                 if (parameter.Value == null) continue;
 
-                var where = new Where
+                var where = new Where(column)
                 {
-                    Column = column,
                     Operator = parameter.OperatorType,
                     Parameter = new Parameter(parameter.Value, parameter.ParameterType) { Name = column.ColumnName },
                     Collation = parameter.Collation
@@ -46,9 +44,8 @@ namespace Adf.Data.Search
             {
                 var joinsForParameter = joinsList.GetJoinsFor(filterParameter, query.LeadTable());
 
-                var where = new Where
+                var where = new Where(filterParameter.Property.Column)
                                 {
-                                    Column = filterParameter.Property.Column,
                                     Operator = filterParameter.Operator,
                                     Predicate = Descriptor.Parse<PredicateType>(filterParameter.Predicate.ToString()),
                                     Collation = filterParameter.Property != null ? filterParameter.Property.Collation : null

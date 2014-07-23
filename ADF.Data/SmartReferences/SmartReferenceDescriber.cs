@@ -10,6 +10,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
+using Adf.Base.Data;
 using Adf.Core.Data;
 
 namespace Adf.Data.SmartReferences

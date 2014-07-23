@@ -20,10 +20,10 @@ namespace Adf.Core.Data
         /// </summary>
         public static readonly IInternalState Null = new NullInternalState();
 
-        //        /// <summary>
-        //        /// Creates a new array instance of the <see cref="NullInternalState"/> class with array size 0.
-        //        /// </summary>
-        //        public static readonly NullInternalState[] NullArray = new NullInternalState[0];
+//        /// <summary>
+//        /// Creates a new array instance of the <see cref="NullInternalState"/> class with array size 0.
+//        /// </summary>
+//        public static readonly NullInternalState[] NullArray = new NullInternalState[0];
 
         /// <summary>
         /// Creates an empty list if <see cref="NullInternalState"/>  
@@ -38,6 +38,30 @@ namespace Adf.Core.Data
         public bool Has(IColumn property)
         {
             return false;
+        }
+
+        /// <summary>
+        /// Get the data of specified <see cref="IColumn"/>.
+        /// Used only for Adf.Core.IValueObject object.
+        /// </summary>
+        /// <typeparam name="T">The type of element to get.</typeparam>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>An instance of specified type.</returns>
+        public T GetValue<T>(IColumn property) where T : IValueObject
+        {
+            return typeof(T).New<T>(string.Empty);
+        }
+
+        /// <summary>
+        /// Get the data for nullable value type.
+        /// Returns null value.
+        /// </summary>
+        /// <typeparam name="T">The type of element to get.</typeparam>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
+        /// <returns>Null value.</returns>
+        public T? GetNullable<T>(IColumn property) where T : struct
+        {
+            return null;
         }
 
         /// <summary>

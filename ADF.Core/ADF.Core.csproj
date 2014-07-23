@@ -110,8 +110,6 @@
     <Compile Include="Binding\IControlBinder.cs" />
     <Compile Include="Binding\IControlPersister.cs" />
     <Compile Include="Binding\IPlatformBinder.cs" />
-    <Compile Include="Data\BusinessDescriber.cs" />
-    <Compile Include="Data\ColumnDescriber.cs" />
     <Compile Include="Data\DataException.cs" />
     <Compile Include="Data\DataSources.cs" />
     <Compile Include="Data\DataSourceType.cs" />

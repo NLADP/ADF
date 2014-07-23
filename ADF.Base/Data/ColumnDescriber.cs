@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Globalization;
+using Adf.Core.Data;
 
-namespace Adf.Core.Data
+namespace Adf.Base.Data
 {
 
     /// <summary>
@@ -19,6 +20,9 @@ namespace Adf.Core.Data
         /// <param name="attribute">The attribute which contains the datatype, length etc.</param>
         /// <param name="table">The <see cref="ITable"/> which contains the table name.</param>
         /// <param name="column">Column name of a table.</param>
+        /// <param name="isIdentity"> </param>
+        /// <param name="isAutoIncrement"> </param>
+        /// <param name="isTimestamp"> </param>
         public ColumnDescriber(string attribute, ITable table, string column = null, bool isIdentity = false, bool isAutoIncrement = false, bool isTimestamp = false)
         {
             _attribute = attribute;
@@ -196,5 +200,10 @@ namespace Adf.Core.Data
         {
             return _hashCode;
         }
+
+//        public static implicit operator Expression(ColumnDescriber column)
+//        {
+//            return new Expression {Column = column, Type = ExpressionType.Column};
+//        }
     }
 }

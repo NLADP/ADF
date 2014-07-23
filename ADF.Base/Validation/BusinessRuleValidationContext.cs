@@ -38,7 +38,6 @@ namespace Adf.Base.Validation
         /// </summary>
         public void Clear()
         {
-            //TODO: audit Olaf Conijn
             _scope.Clear();
             _scope.Push(new ValidationResultCollectionScope(this));
         }

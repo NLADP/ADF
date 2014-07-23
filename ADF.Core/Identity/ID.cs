@@ -40,8 +40,8 @@ namespace Adf.Core.Identity
             if (hashCode == 0) value = null;    // is empty
         }
 
-        #endregion Constructors
-
+        #endregion Constructors        
+        
         #region Operators
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Adf.Core.Identity
             if (obj == null || !(obj is ID))
                 return false;
 
-            return (this == (ID)obj);
+            return (this == (ID) obj);
         }
 
         /// <summary>

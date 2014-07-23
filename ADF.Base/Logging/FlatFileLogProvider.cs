@@ -75,7 +75,7 @@ namespace Adf.Base.Logging
             }
             catch
             {
-                // TODO: should this be logged? this could cause a hang-up
+                // this should not be logged, this could cause a hang-up
                 //LogManager.Log(ex);
             }
         }

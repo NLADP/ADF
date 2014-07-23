@@ -1,5 +1,5 @@
 ﻿using System;
-using Adf.Base.Data;
+using System.Runtime.Serialization;
 using Adf.Core.Data;
 using Adf.Core.Domain;
 using Adf.Core.Identity;
@@ -11,6 +11,7 @@ namespace Adf.Base.Domain
     /// Represents base DomainObject. Provides functionalities to manage a DomainObject.
     /// </summary>
     [Serializable]
+    [DataContract]
     public abstract class DomainObject : IDomainObject
     {
         /// <summary>

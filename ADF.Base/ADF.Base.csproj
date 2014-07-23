@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +66,8 @@
     <Compile Include="Authorization\NoAuthorizationProvider.cs" />
     <Compile Include="Configuration\AssemblyQualifiedTypeNameConverter.cs" />
     <Compile Include="Configuration\ObjectFactoryConfigurationSection.cs" />
+    <Compile Include="Data\BusinessDescriber.cs" />
+    <Compile Include="Data\ColumnDescriber.cs" />
     <Compile Include="Data\CompositeState.cs" />
     <Compile Include="Data\DomainCompositeState.cs" />
     <Compile Include="Data\DictionaryQueryHandler.cs" />
@@ -100,7 +103,7 @@
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\EventLogProvider.cs" />
     <Compile Include="Logging\FlatFileLogProvider.cs" />
-    <Compile Include="Mail\DummyMailProvider.cs" />
+    <Compile Include="Mail\FileSystemMailProvider.cs" />
     <Compile Include="Mail\SmtpMailProvider.cs" />
     <Compile Include="Messaging\FixedLengthMessageHandler.cs" />
     <Compile Include="Messaging\MessagingException.cs" />
@@ -144,6 +147,7 @@
     <Compile Include="State\NullStateProvider.cs" />
     <Compile Include="State\SimpleStateProvider.cs" />
     <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\AsyncTaskData.cs" />
     <Compile Include="Tasks\TaskExecutionExtensions.cs" />
     <Compile Include="Tasks\TaskNotFoundException.cs" />
     <Compile Include="Tasks\TaskViewExtensions.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="Validation\InRangeAttribute.cs" />
     <Compile Include="Validation\InSqlDateTimeRangeAttribute.cs" />
     <Compile Include="Validation\InSqlSmallDateTimeRangeAttribute.cs" />
+    <Compile Include="Validation\MaxDataLengthAttribute.cs" />
     <Compile Include="Validation\MaxLengthAttribute.cs" />
     <Compile Include="Validation\MinLengthAttribute.cs" />
     <Compile Include="Validation\NonEmptyAttribute.cs" />

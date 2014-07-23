@@ -48,7 +48,12 @@ namespace Adf.Base.Query
 
         public static Q IsFalse<Q>(this Q query) where Q : IAdfQuery
         {
-            return query.CompleteLast(Operation, false);
+            return query.CompleteLast(OperatorType.IsEqual, false);
+        }
+
+        public static Q IsFalseOrNull<Q>(this Q query) where Q : IAdfQuery
+        {
+            return query.IsNotEqualOrNull(true);
         }
     }
 }

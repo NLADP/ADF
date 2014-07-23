@@ -5,13 +5,13 @@ using Adf.Core.Validation;
 
 namespace Adf.Base.Validation
 {
-    /// <summary>
-    /// Attribute to determine if the value to check exceeds the specified max length.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
-    public sealed class MaxLengthAttribute : Attribute, IPropertyValidator
-    {
-        private readonly int length;
+	/// <summary>
+	/// Attribute to determine if the value to check exceeds the specified max length.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
+	public sealed class MaxLengthAttribute : Attribute, IPropertyValidator
+	{
+		private readonly int length;
 
         /// <summary>
         /// Creates a new <see cref="MaxLengthAttribute"/> instance with the supplied length.
@@ -22,7 +22,7 @@ namespace Adf.Base.Validation
             this.length = length;
         }
 
-        /// <summary>
+		/// <summary>
         /// Determines whether the specified value is valid for the supplied property. 
         /// </summary>
         /// <param name="propertyToValidate">The supplied property.</param>
@@ -31,12 +31,12 @@ namespace Adf.Base.Validation
         /// 	<c>true</c> if the specified value is valid; otherwise, <c>false</c>.
         /// </returns>
         public ValidationResult IsValid(PropertyInfo propertyToValidate, object value)
-        {
+		{
             if (value == null) return ValidationResult.Success;
-
+		    
             return !value.ToString().HasMaxLength(length) ? ValidationResult.CreateError(propertyToValidate, "Adf.Business.AttributeMaxLengthInvalid", propertyToValidate.Name, length) : ValidationResult.Success;
-        }
-
+		}
+	    
         /// <summary>
         /// Returns the maximum length.
         /// </summary>

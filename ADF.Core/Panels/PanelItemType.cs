@@ -25,5 +25,6 @@
         public static readonly PanelItemType RadioButtonList = new PanelItemType("rbl", "RadioButtonList");
         public static readonly PanelItemType CheckBoxList = new PanelItemType("cbl", "CheckBoxList");
         public static readonly PanelItemType SelectButton = new PanelItemType("lb", "SelectButton");
+        public static readonly PanelItemType BlankItem = new PanelItemType("lbl", "Blank");
     }
 }

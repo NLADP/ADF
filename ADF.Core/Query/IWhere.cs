@@ -4,7 +4,7 @@ namespace Adf.Core.Query
 {
     public interface IWhere
     {
-        IColumn Column { get; set; }
+        IExpression Column { get; set; }
         OperatorType Operator { get; set; }
         Parameter Parameter { get; set; }
         PredicateType Predicate { get; set; }
