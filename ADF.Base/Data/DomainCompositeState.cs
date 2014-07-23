@@ -2,6 +2,7 @@
 using System.Linq;
 using Adf.Base.Domain;
 using Adf.Core.Data;
+using Adf.Core.Domain;
 using Adf.Core.Identity;
 
 namespace Adf.Base.Data
@@ -58,6 +59,26 @@ namespace Adf.Base.Data
         public void Set<T>(IColumn property, T value)
         {
             if (states.ContainsKey(property.Table.Name)) states[property.Table.Name].Set(property, value);
+        }
+
+        public T? GetNullable<T>(IColumn property) where T : struct
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetNullable<T>(IColumn property, T? value) where T : struct
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public T GetValue<T>(IColumn property) where T : IValueObject
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetValue<T>(IColumn property, T value) where T : IValueObject
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

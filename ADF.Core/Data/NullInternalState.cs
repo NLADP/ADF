@@ -68,7 +68,7 @@ namespace Adf.Core.Data
         /// Get the default data of specified type.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>Converts the specified type into default value.</returns>
         public T Get<T>(IColumn property)
         {
@@ -122,7 +122,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void Set<T>(IColumn property, T value)
         {
@@ -133,7 +133,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void SetNullable<T>(IColumn property, T? value) where T : struct
         {
@@ -144,7 +144,7 @@ namespace Adf.Core.Data
         /// Declared for future use.
         /// </summary>
         /// <typeparam name="T">The type of element to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value which will set into the column.</param>
         public void SetValue<T>(IColumn property, T value) where T : IValueObject
         {

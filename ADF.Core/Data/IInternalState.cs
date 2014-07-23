@@ -43,16 +43,16 @@ namespace Adf.Core.Data
         /// Also converts the column value by the specified type.
         /// </summary>
         /// <typeparam name="T">The type of element to get.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <returns>Converts the column value by the specified type if the value is not empty; otherwise, default value.</returns>
         T Get<T>(IColumn property);
 
         /// <summary>
         /// Set the specified value to the column.
-        /// Here the column is specified <see cref="ColumnDescriber"/>.
+        /// Here the column is specified <see cref="IColumn"/>.
         /// </summary>
         /// <typeparam name="T">The type of value to set.</typeparam>
-        /// <param name="property">The <see cref="ColumnDescriber"/> used to provides the column name.</param>
+        /// <param name="property">The <see cref="IColumn"/> used to provides the column name.</param>
         /// <param name="value">The value will set into the column.</param>
         void Set<T>(IColumn property, T value);
 

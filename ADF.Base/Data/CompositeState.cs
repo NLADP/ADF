@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adf.Core.Data;
+using Adf.Core.Domain;
 using Adf.Core.Identity;
 
 namespace Adf.Base.Data
@@ -61,6 +62,26 @@ namespace Adf.Base.Data
             var state = states.FirstOrDefault(s => s.Has(property));
 
             if (state != null) state.Set(property, value);
+        }
+
+        public T? GetNullable<T>(IColumn property) where T : struct
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetNullable<T>(IColumn property, T? value) where T : struct
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public T GetValue<T>(IColumn property) where T : IValueObject
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetValue<T>(IColumn property, T value) where T : IValueObject
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

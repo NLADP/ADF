@@ -215,18 +215,12 @@ namespace Adf.Core.Extensions
 
         public static bool IsIn(this string value, StringComparison comparison, params string[] values)
         {
-            return !value.IsNullOrEmpty() && values.Any(val => value.Equals(val, comparison));
+            return !value.IsNullOrEmpty() && values != null && values.Any(val => value.Equals(val, comparison));
         }
 
         public static bool IsIn(this string value, params string[] values)
         {
             return value.IsIn(StringComparison.OrdinalIgnoreCase, values);
-        }
-      public static bool IsIn(this string value, params string[] p)
-        {
-            if (p == null || p.Length == 0) return false;
-
-            return p.Any(s => value.ToUpper() == s.ToUpper());
         }
 
         public static string FillRight(this string value, int length, char fillwith)
