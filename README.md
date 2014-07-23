@@ -19,3 +19,4 @@ The Accelerated Delivery Framework (ADF in short) captures the most important se
 - Validation
 
 See for more info: http://www.smartusecase.com/Frameworks.ashx
+
